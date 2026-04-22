@@ -3,247 +3,1218 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<meta name="theme-color" content="#080810"/>
+<meta name="theme-color" content="#0A0A0F"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="YA Pro"/>
-<title>Yönetici Asistan Pro</title>
+<meta name="apple-mobile-web-app-title" content="Executive Pro"/>
+<title>Executive Pro | Yönetici Asistanı</title>
 <link rel="manifest" href="manifest.json"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{
-  --ink:#08080F;--ink2:#2A2A3A;--ink3:#72728A;--ink4:#A0A0B8;
-  --gold:#B8962E;--gold2:#D4AF50;--gold3:#F0CC7A;--goldBg:rgba(184,150,46,0.1);
-  --bg:#F8F7F4;--sur:#FFFFFF;--sur2:#F2F1EE;
-  --brd:rgba(8,8,15,0.07);--brd2:rgba(8,8,15,0.12);--brdGold:rgba(184,150,46,0.25);
-  --green:#0F6B4F;--greenBg:rgba(15,107,79,0.08);
-  --red:#B02020;--redBg:rgba(176,32,32,0.08);
-  --blue:#1A3F7A;--blueBg:rgba(26,63,122,0.08);
-  --r:12px;--r2:18px;--r3:24px;
-  --shadow:0 2px 12px rgba(8,8,15,0.06);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
-html,body{height:100%;overflow:hidden;background:var(--ink)}
-body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height:1.5}
-.shell{width:100%;height:100vh;max-width:480px;margin:0 auto;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
 
-/* SETUP EKRANI */
-.setup-screen{background:var(--ink);padding:60px 28px 48px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;z-index:200}
-.setup-logo{font-family:'Cormorant Garamond';font-size:12px;color:var(--gold2);letter-spacing:.35em;text-transform:uppercase;margin-bottom:36px;opacity:.7}
-.setup-title{font-family:'Cormorant Garamond';font-size:30px;font-weight:500;color:#fff;text-align:center;line-height:1.3;margin-bottom:8px}
-.setup-sub{font-size:12px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.8;margin-bottom:32px}
-.setup-divider{width:40px;height:1px;background:var(--brdGold);margin:0 auto 32px}
-.setup-label{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;align-self:flex-start;width:100%}
-.setup-input{width:100%;padding:14px 16px;border-radius:var(--r);border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:15px;font-family:'Cormorant Garamond';outline:none;margin-bottom:10px;letter-spacing:.05em;transition:border-color .2s}
-.setup-input::placeholder{color:rgba(255,255,255,0.2)}
-.setup-input:focus{border-color:var(--gold)}
-.setup-btn{width:100%;padding:14px;background:transparent;color:var(--gold2);border:1px solid var(--brdGold);border-radius:var(--r);font-family:'Outfit';font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.08em;transition:all .2s;margin-bottom:10px}
-.setup-btn:hover{background:var(--goldBg)}
-.setup-err{font-size:11px;color:#e07070;text-align:center;min-height:14px}
+:root {
+  --primary: #1a5c4a;
+  --primary-dark: #0e3d31;
+  --primary-light: #2a7a64;
+  --primary-bg: rgba(26, 92, 74, 0.08);
+  --accent: #c9a03d;
+  --accent-dark: #b08a2e;
+  --accent-bg: rgba(201, 160, 61, 0.08);
+  --gray-900: #1a1a1f;
+  --gray-800: #2a2a30;
+  --gray-700: #3a3a42;
+  --gray-600: #5a5a62;
+  --gray-500: #7a7a82;
+  --gray-400: #9a9aa2;
+  --gray-300: #babaC2;
+  --gray-200: #dadae2;
+  --gray-100: #f0f0f5;
+  --bg-light: #fafafd;
+  --bg-white: #ffffff;
+  --success: #1a7a5a;
+  --success-bg: rgba(26, 122, 90, 0.08);
+  --error: #c44a3a;
+  --error-bg: rgba(196, 74, 58, 0.08);
+  --warning: #d4a02a;
+  --warning-bg: rgba(212, 160, 42, 0.08);
+  --info: #3a6a9a;
+  --info-bg: rgba(58, 106, 154, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+}
 
-/* KEY SCREEN */
-.keyscreen{background:var(--ink);padding:60px 28px 48px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;z-index:100}
-.key-logo{font-family:'Cormorant Garamond';font-size:12px;color:var(--gold2);letter-spacing:.35em;text-transform:uppercase;margin-bottom:36px;opacity:.7}
-.key-title{font-family:'Cormorant Garamond';font-size:30px;font-weight:500;color:#fff;text-align:center;line-height:1.2;margin-bottom:10px}
-.key-divider{width:40px;height:1px;background:var(--brdGold);margin:0 auto 28px}
-.key-sub{font-size:12px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.8;margin-bottom:32px}
-.key-input{width:100%;padding:14px 16px;border-radius:var(--r);border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:13px;font-family:'Outfit';outline:none;margin-bottom:10px;letter-spacing:.08em;transition:border-color .2s}
-.key-input::placeholder{color:rgba(255,255,255,0.2)}
-.key-input:focus{border-color:var(--gold)}
-.key-btn{width:100%;padding:14px;background:transparent;color:var(--gold2);border:1px solid var(--brdGold);border-radius:var(--r);font-family:'Outfit';font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.08em;transition:all .2s;margin-bottom:10px}
-.key-btn:hover{background:var(--goldBg)}
-.key-err{font-size:11px;color:#e07070;text-align:center;min-height:16px;margin-bottom:8px}
-.key-note{font-size:11px;color:rgba(255,255,255,0.2);text-align:center;line-height:1.7}
-.key-note a{color:var(--gold);text-decoration:none}
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--gray-900);
+}
 
-/* HEADER */
-.sbar{background:var(--ink);padding:max(env(safe-area-inset-top),14px) 22px 10px;display:flex;justify-content:space-between;align-items:center}
-.sbar-time{font-family:'Cormorant Garamond';font-size:17px;color:#fff;letter-spacing:.05em}
-.sbar-badge{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:.15em;text-transform:uppercase}
-.hdr{background:var(--ink);padding:0 22px 22px}
-.hdr-line{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(184,150,46,0.3),transparent);margin-bottom:18px}
-.hdr-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px}
-.hdr-eyebrow{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:.25em;text-transform:uppercase;margin-bottom:6px}
-.hdr-title{font-family:'Cormorant Garamond';font-size:26px;font-weight:500;color:#fff;line-height:1.1}
-.hdr-title span{color:var(--gold2)}
-.hdr-avatar{width:40px;height:40px;border-radius:50%;border:1px solid var(--brdGold);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;background:rgba(184,150,46,0.08)}
-.kpi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.kpi{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r);padding:12px 10px;position:relative;overflow:hidden}
-.kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(184,150,46,0.4),transparent)}
-.kpi-n{font-family:'Cormorant Garamond';font-size:26px;font-weight:500;color:var(--gold3);line-height:1}
-.kpi-l{font-size:9px;color:rgba(255,255,255,0.3);margin-top:4px;letter-spacing:.12em;text-transform:uppercase}
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--gray-800);
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+}
 
-.nav-pills{display:flex;gap:6px;padding:14px 16px 10px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;background:var(--sur);border-bottom:1px solid var(--brd)}
-.nav-pills::-webkit-scrollbar{display:none}
-.pill{padding:7px 16px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid var(--brd2);background:transparent;color:var(--ink3);cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0;letter-spacing:.04em}
-.pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.shell {
+  width: 100%;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--bg-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
 
-.content{flex:1;overflow-y:auto;padding:16px;display:none;-webkit-overflow-scrolling:touch}
-.content.active{display:block}
-.sec{font-size:9px;font-weight:600;color:var(--ink4);letter-spacing:.18em;text-transform:uppercase;margin:18px 0 10px;display:flex;align-items:center;gap:10px}
-.sec::after{content:'';flex:1;height:1px;background:var(--brd)}
-.sec:first-child{margin-top:0}
+/* Setup Screen */
+.setup-screen, .keyscreen {
+  background: linear-gradient(135deg, var(--gray-900) 0%, #0a0a0f 100%);
+  padding: 60px 28px 48px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: 200;
+  overflow-y: auto;
+}
 
-/* SES KAYIT BUTONU — tüm bölümlerde */
-.voice-input-row{display:flex;gap:8px;margin-bottom:10px;align-items:flex-start}
-.voice-input-row textarea,.voice-input-row input{flex:1}
-.mic-btn{width:44px;height:44px;border-radius:var(--r);background:var(--ink);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;margin-top:0}
-.mic-btn.recording{background:var(--red);animation:mbp 1.2s infinite}
-.mic-btn svg{width:20px;height:20px;fill:#fff}
-@keyframes mbp{0%,100%{box-shadow:0 0 0 rgba(176,32,32,0)}50%{box-shadow:0 0 12px rgba(176,32,32,0.5)}}
-.voice-hint{font-size:10px;color:var(--ink4);margin-bottom:8px;letter-spacing:.02em}
+.setup-logo, .key-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 48px;
+  text-align: center;
+  font-weight: 500;
+}
 
-/* AQ PANEL */
-.aq-panel{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:12px 16px;margin-bottom:12px;display:none;align-items:center;gap:12px}
-.aq-panel.show{display:flex}
-.aq-bars{display:flex;align-items:center;gap:2px;height:20px}
-.aq-bar{width:3px;border-radius:2px;background:var(--brd2);height:4px;transition:height .08s,background .08s}
-.aq-bar.on{background:var(--green)}
-.aq-info{flex:1}
-.aq-title{font-size:12px;font-weight:500;color:var(--ink)}
-.aq-sub{font-size:10px;color:var(--ink4);margin-top:2px}
-.aq-badge{font-size:9px;padding:3px 8px;border-radius:20px;background:var(--greenBg);color:var(--green);border:1px solid rgba(15,107,79,0.15);font-weight:500;letter-spacing:.06em}
+.setup-title, .key-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
 
-/* RECORD HERO */
-.rec-hero{background:var(--sur);border-radius:var(--r3);border:1px solid var(--brd);padding:24px 20px 22px;text-align:center;margin-bottom:12px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.rec-hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--brdGold),transparent)}
-.wave{display:flex;align-items:center;justify-content:center;gap:4px;height:32px;margin-bottom:18px}
-.wb{width:3px;border-radius:2px;height:5px;background:var(--brd2);transition:background .3s}
-.wb.on{background:var(--gold);animation:wa .9s ease-in-out infinite}
-.wb:nth-child(2){animation-delay:.08s}.wb:nth-child(3){animation-delay:.16s}
-.wb:nth-child(4){animation-delay:.24s}.wb:nth-child(5){animation-delay:.12s}
-.wb:nth-child(6){animation-delay:.20s}.wb:nth-child(7){animation-delay:.04s}
-@keyframes wa{0%,100%{height:5px}50%{height:28px}}
-.rec-btn{width:74px;height:74px;border-radius:50%;background:var(--ink);border:1px solid rgba(255,255,255,0.1);cursor:pointer;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;transition:transform .15s;box-shadow:0 6px 24px rgba(8,8,15,0.2)}
-.rec-btn.on{background:var(--red);animation:rp 1.6s infinite}
-.rec-btn:active{transform:scale(.91)}
-.rec-btn svg{width:28px;height:28px;fill:#fff}
-@keyframes rp{0%,100%{box-shadow:0 6px 24px rgba(176,32,32,0.25)}50%{box-shadow:0 6px 36px rgba(176,32,32,0.5)}}
-.rec-lbl{font-size:13px;font-weight:400;color:var(--ink2);letter-spacing:.04em}
-.rec-time{font-family:'Cormorant Garamond';font-size:15px;color:var(--ink3);margin-top:4px;letter-spacing:.1em}
-.ldot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:bl 1.2s infinite;display:none}
-.ldot.on{display:inline-block;margin-right:6px}
-@keyframes bl{0%,100%{opacity:1}50%{opacity:.1}}
-.time-warn{background:rgba(184,150,46,0.1);border:1px solid var(--brdGold);border-radius:var(--r);padding:8px 12px;font-size:11px;color:var(--gold);margin-bottom:10px;display:none;text-align:center}
-.time-warn.show{display:block}
+.setup-sub, .key-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
 
-.tbox{background:var(--sur2);border-radius:var(--r2);border:1px solid var(--brd);padding:14px 16px;margin-bottom:12px}
-.tlbl{font-size:9px;font-weight:600;color:var(--ink4);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.tlbl::after{content:'';flex:1;height:1px;background:var(--brd)}
-#ttext{font-size:13px;line-height:1.75;color:var(--ink);min-height:60px;max-height:130px;overflow-y:auto;font-weight:300}
-.ph{color:var(--ink4);font-style:italic;font-size:12px}
-.im{color:var(--gold);opacity:.75}
+.setup-divider, .key-divider {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin: 0 auto 32px;
+}
 
-.btn-primary{width:100%;padding:14px;background:var(--ink);color:#fff;border:none;border-radius:var(--r2);font-family:'Outfit';font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s;margin-bottom:8px;letter-spacing:.06em}
-.btn-primary:disabled{opacity:.3;cursor:default}
-.btn-outline{width:100%;padding:13px;background:transparent;color:var(--gold);border:1px solid var(--brdGold);border-radius:var(--r2);font-family:'Outfit';font-size:13px;cursor:pointer;letter-spacing:.06em;transition:all .2s}
+.setup-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
 
-.ares{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:18px;margin-top:12px;display:none;box-shadow:var(--shadow)}
-.ares.show{display:block}
-.ares-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--brd)}
-.ares-icon{width:32px;height:32px;border-radius:10px;background:var(--goldBg);border:1px solid var(--brdGold);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.ares-title{font-size:13px;font-weight:500;color:var(--ink)}
-.ares-sub{font-size:10px;color:var(--ink4);margin-top:2px}
-.spin{width:12px;height:12px;border:1.5px solid var(--brd2);border-top-color:var(--gold);border-radius:50%;animation:sp .8s linear infinite;display:none;margin-left:auto;flex-shrink:0}
-@keyframes sp{to{transform:rotate(360deg)}}
-.atext{font-size:13px;line-height:1.8;color:var(--ink2);white-space:pre-wrap;font-weight:300}
+.setup-input, .key-input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: all 0.2s;
+}
 
-.card{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:18px;margin-bottom:12px;box-shadow:var(--shadow)}
-.card-title{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:14px}
-.fi{width:100%;padding:11px 14px;border:1px solid var(--brd2);border-radius:var(--r);font-size:13px;color:var(--ink);background:var(--sur2);font-family:'Outfit';resize:none;margin-bottom:10px;transition:border-color .2s;-webkit-appearance:none;font-weight:300}
-.fi:focus{outline:none;border-color:var(--gold);background:var(--sur)}
-.fi-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.setup-input:focus, .key-input:focus {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
+}
 
-.ncard{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:16px;margin-bottom:10px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.ncard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),transparent)}
-.ncard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
-.ncard-title{font-size:13px;font-weight:500;color:var(--ink);flex:1}
-.ncard-actions{display:flex;align-items:center;gap:6px;margin-left:8px;flex-shrink:0}
-.ncard-date{font-size:10px;color:var(--ink4)}
-.ncard-body{font-size:12px;color:var(--ink2);line-height:1.6;font-weight:300}
-.badge{display:inline-block;font-size:9px;padding:3px 9px;border-radius:20px;font-weight:500;margin:8px 3px 0 0;letter-spacing:.08em;text-transform:uppercase}
-.badge-gold{background:var(--goldBg);color:var(--gold);border:1px solid var(--brdGold)}
-.badge-green{background:var(--greenBg);color:var(--green);border:1px solid rgba(15,107,79,0.15)}
-.badge-blue{background:var(--blueBg);color:var(--blue);border:1px solid rgba(26,63,122,0.15)}
-.badge-red{background:var(--redBg);color:var(--red);border:1px solid rgba(176,32,32,0.15)}
-.del-btn{width:26px;height:26px;border-radius:8px;background:var(--redBg);border:1px solid rgba(176,32,32,0.15);color:var(--red);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;line-height:1}
+.setup-btn, .key-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: var(--gray-900);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+  margin-top: 24px;
+}
 
-.appt{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:14px 16px;margin-bottom:10px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)}
-.appt-time{background:var(--ink);border-radius:var(--r);min-width:52px;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
-.appt-h{font-family:'Cormorant Garamond';font-size:18px;line-height:1}
-.appt-m{font-size:9px;opacity:.5}
-.appt-info{flex:1;min-width:0}
-.appt-name{font-size:13px;font-weight:500;color:var(--ink)}
-.appt-sub{font-size:11px;color:var(--ink4);margin-top:3px;font-weight:300}
+.setup-btn:hover, .key-btn:hover {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+}
 
-.rem{background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:13px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-.rem-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--brd2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.rem-check.done{background:var(--green);border-color:var(--green)}
-.rem-check.done::after{content:'✓';color:#fff;font-size:12px;font-weight:600}
-.rem-text{flex:1;font-size:13px;color:var(--ink);font-weight:300;min-width:0}
-.rem-text.done{text-decoration:line-through;color:var(--ink4)}
-.rem-when{font-size:10px;color:var(--gold);font-weight:500;letter-spacing:.06em;flex-shrink:0}
+/* Header */
+.sbar {
+  background: var(--gray-900);
+  padding: max(env(safe-area-inset-top), 16px) 24px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-.qrow{display:flex;gap:8px;align-items:center}
-.qi{flex:1;padding:12px 14px;border:1px solid var(--brd2);border-radius:var(--r);font-size:13px;color:var(--ink);background:var(--sur);font-family:'Outfit';font-weight:300;-webkit-appearance:none}
-.qi:focus{outline:none;border-color:var(--gold)}
-.qb{padding:12px 16px;background:var(--ink);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;font-family:'Outfit'}
+.sbar-time {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
 
-.set-card{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow)}
-.set-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--brd)}
-.set-row:last-child{border-bottom:none}
-.set-lbl{font-size:13px;color:var(--ink)}
-.set-val{font-size:12px;color:var(--ink4);font-weight:300}
-.set-val.ok{color:var(--green);font-weight:500}
-.set-name-row{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid var(--brd);gap:10px}
-.set-name-input{flex:1;border:none;background:transparent;font-size:13px;color:var(--ink);font-family:'Outfit';text-align:right;outline:none}
-.danger-btn{width:100%;padding:13px;background:transparent;color:var(--red);border:1px solid rgba(176,32,32,0.2);border-radius:var(--r);font-family:'Outfit';font-size:13px;cursor:pointer;letter-spacing:.04em;transition:all .2s;margin-bottom:8px}
+.sbar-badge {
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
 
-.divider{height:1px;background:var(--brd);margin:14px 0}
-.hint{font-size:10px;color:var(--ink4);margin-bottom:8px;letter-spacing:.02em}
+.hdr {
+  background: var(--gray-900);
+  padding: 0 24px 20px;
+}
 
-.bnav{background:var(--sur);border-top:1px solid var(--brd);padding:10px 4px;padding-bottom:max(10px,env(safe-area-inset-bottom));display:flex;justify-content:space-around;flex-shrink:0}
-.bni{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:7px 8px;border-radius:var(--r);transition:background .15s;min-width:52px}
-.bni.active{background:var(--sur2)}
-.bni svg{width:20px;height:20px;fill:var(--ink4)}
-.bni.active svg{fill:var(--ink)}
-.bni-lbl{font-size:8px;color:var(--ink4);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
-.bni.active .bni-lbl{color:var(--ink)}
+.hdr-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin-bottom: 20px;
+  opacity: 0.3;
+}
+
+.hdr-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.hdr-eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.hdr-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.hdr-title span {
+  color: var(--accent);
+}
+
+.hdr-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(201, 160, 61, 0.1);
+  border: 1px solid rgba(201, 160, 61, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hdr-avatar:hover {
+  background: rgba(201, 160, 61, 0.2);
+  transform: scale(1.02);
+}
+
+/* KPI Cards */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.kpi {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 14px 12px;
+  transition: all 0.2s;
+}
+
+.kpi-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.kpi-l {
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Navigation Pills */
+.nav-pills {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-shrink: 0;
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.nav-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.pill {
+  padding: 8px 18px;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--gray-300);
+  background: transparent;
+  color: var(--gray-600);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.pill.active {
+  background: var(--gray-900);
+  color: #ffffff;
+  border-color: var(--gray-900);
+}
+
+/* Content */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: none;
+}
+
+.content.active {
+  display: block;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-500);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 20px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title:first-child {
+  margin-top: 0;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gray-300);
+}
+
+/* Cards */
+.card {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 16px;
+}
+
+/* Form Elements */
+.fi {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--gray-800);
+  background: var(--bg-white);
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.fi:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-bg);
+}
+
+.fi-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Voice Input */
+.voice-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.voice-input-row textarea, .voice-input-row input {
+  flex: 1;
+}
+
+.mic-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.mic-btn:hover {
+  background: var(--gray-200);
+}
+
+.mic-btn.recording {
+  background: var(--error);
+  border-color: var(--error);
+  animation: pulse 1.2s infinite;
+}
+
+.mic-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--gray-600);
+}
+
+.mic-btn.recording svg {
+  fill: #ffffff;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 74, 58, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(196, 74, 58, 0); }
+}
+
+.voice-hint {
+  font-size: 11px;
+  color: var(--gray-500);
+  margin-bottom: 8px;
+}
+
+/* Recording Hero */
+.rec-hero {
+  background: linear-gradient(135deg, var(--bg-white) 0%, var(--gray-100) 100%);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--gray-200);
+  padding: 32px 20px 28px;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+}
+
+.wave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  margin-bottom: 24px;
+}
+
+.wb {
+  width: 3px;
+  border-radius: 2px;
+  height: 6px;
+  background: var(--gray-400);
+  transition: all 0.2s;
+}
+
+.wb.on {
+  background: var(--accent);
+  animation: waveAnim 0.9s ease-in-out infinite;
+}
+
+.wb:nth-child(2) { animation-delay: 0.08s; }
+.wb:nth-child(3) { animation-delay: 0.16s; }
+.wb:nth-child(4) { animation-delay: 0.24s; }
+.wb:nth-child(5) { animation-delay: 0.12s; }
+.wb:nth-child(6) { animation-delay: 0.20s; }
+.wb:nth-child(7) { animation-delay: 0.04s; }
+
+@keyframes waveAnim {
+  0%, 100% { height: 6px; }
+  50% { height: 32px; }
+}
+
+.rec-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--gray-900);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-lg);
+}
+
+.rec-btn:hover {
+  transform: scale(1.02);
+}
+
+.rec-btn:active {
+  transform: scale(0.98);
+}
+
+.rec-btn.on {
+  background: var(--error);
+  animation: recordingPulse 1.6s infinite;
+}
+
+.rec-btn svg {
+  width: 32px;
+  height: 32px;
+  fill: #ffffff;
+}
+
+@keyframes recordingPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 74, 58, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(196, 74, 58, 0); }
+}
+
+.rec-lbl {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.rec-time {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--gray-600);
+  margin-top: 6px;
+}
+
+.ldot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--error);
+  animation: blink 1s infinite;
+  display: none;
+}
+
+.ldot.on {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* Transcript Box */
+.tbox {
+  background: var(--gray-100);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.tlbl {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gray-500);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tlbl::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gray-300);
+}
+
+#transcriptText {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--gray-800);
+  min-height: 80px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.ph {
+  color: var(--gray-500);
+  font-style: italic;
+}
+
+.im {
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+/* Buttons */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 10px;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-outline {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary-bg);
+  border-radius: var(--radius-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  background: var(--primary-bg);
+}
+
+/* Analysis Result */
+.ares {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  padding: 20px;
+  margin-top: 16px;
+  display: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.ares.show {
+  display: block;
+}
+
+.ares-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.ares-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--accent-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.ares-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.ares-sub {
+  font-size: 11px;
+  color: var(--gray-500);
+  margin-top: 2px;
+}
+
+.spin {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--gray-300);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: none;
+  margin-left: auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.atext {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--gray-700);
+  white-space: pre-wrap;
+  font-weight: 400;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Notes Cards */
+.ncard {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  padding: 18px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+  position: relative;
+}
+
+.ncard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.ncard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  padding-right: 30px;
+}
+
+.ncard-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+  flex: 1;
+}
+
+.ncard-date {
+  font-size: 10px;
+  color: var(--gray-500);
+}
+
+.ncard-body {
+  font-size: 12px;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-right: 6px;
+  margin-top: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-primary { background: var(--primary-bg); color: var(--primary); border: 1px solid rgba(26, 92, 74, 0.15); }
+.badge-accent { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid rgba(201, 160, 61, 0.15); }
+.badge-success { background: var(--success-bg); color: var(--success); border: 1px solid rgba(26, 122, 90, 0.15); }
+.badge-error { background: var(--error-bg); color: var(--error); border: 1px solid rgba(196, 74, 58, 0.15); }
+.badge-info { background: var(--info-bg); color: var(--info); border: 1px solid rgba(58, 106, 154, 0.15); }
+
+/* Appointments */
+.appt {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+  position: relative;
+}
+
+.appt:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.appt-time {
+  background: var(--primary);
+  border-radius: var(--radius-md);
+  min-width: 56px;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.appt-h {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.appt-m {
+  font-size: 9px;
+  opacity: 0.8;
+}
+
+.appt-info {
+  flex: 1;
+}
+
+.appt-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.appt-sub {
+  font-size: 11px;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+/* Reminders */
+.rem {
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+}
+
+.rem-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--gray-400);
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.rem-check.done {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.rem-check.done::after {
+  content: '✓';
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rem-text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--gray-800);
+}
+
+.rem-text.done {
+  text-decoration: line-through;
+  color: var(--gray-500);
+}
+
+.rem-when {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  flex-shrink: 0;
+}
+
+.del-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: var(--error-bg);
+  border: 1px solid rgba(196, 74, 58, 0.2);
+  color: var(--error);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.del-btn:hover {
+  background: var(--error);
+  color: #ffffff;
+}
+
+/* Settings */
+.set-card {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.set-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.set-row:last-child {
+  border-bottom: none;
+}
+
+.set-lbl {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-800);
+}
+
+.set-val {
+  font-size: 12px;
+  color: var(--gray-500);
+}
+
+.set-val.ok {
+  color: var(--success);
+}
+
+.set-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--gray-200);
+  gap: 12px;
+}
+
+.set-name-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--gray-700);
+  font-family: 'Inter', sans-serif;
+  text-align: right;
+  outline: none;
+  padding: 8px 0;
+}
+
+.set-name-input:focus {
+  color: var(--gray-900);
+}
+
+.danger-btn {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  color: var(--error);
+  border: 1px solid rgba(196, 74, 58, 0.3);
+  border-radius: var(--radius-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 10px;
+}
+
+.danger-btn:hover {
+  background: var(--error-bg);
+  border-color: var(--error);
+}
+
+/* Bottom Navigation */
+.bnav {
+  background: var(--bg-white);
+  border-top: 1px solid var(--gray-200);
+  padding: 8px 12px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: space-around;
+  flex-shrink: 0;
+}
+
+.bni {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  transition: all 0.2s;
+  min-width: 60px;
+}
+
+.bni.active {
+  background: var(--gray-100);
+}
+
+.bni svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--gray-500);
+}
+
+.bni.active svg {
+  fill: var(--primary);
+}
+
+.bni-lbl {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--gray-500);
+  letter-spacing: 0.05em;
+}
+
+.bni.active .bni-lbl {
+  color: var(--primary);
+}
+
+/* Utilities */
+.divider {
+  height: 1px;
+  background: var(--gray-200);
+  margin: 16px 0;
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--gray-500);
+  margin-bottom: 10px;
+}
+
+.time-warn {
+  background: var(--warning-bg);
+  border: 1px solid rgba(212, 160, 42, 0.3);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 11px;
+  color: var(--warning);
+  margin-bottom: 16px;
+  display: none;
+  text-align: center;
+}
+
+.time-warn.show {
+  display: block;
+}
+
+.aq-panel {
+  background: linear-gradient(135deg, var(--gray-900) 0%, #1a1a1f 100%);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  display: none;
+  align-items: center;
+  gap: 14px;
+}
+
+.aq-panel.show {
+  display: flex;
+}
+
+.aq-bars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 24px;
+}
+
+.aq-bar {
+  width: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  height: 4px;
+  transition: all 0.08s;
+}
+
+.aq-bar.on {
+  background: var(--success);
+}
+
+.aq-info {
+  flex: 1;
+}
+
+.aq-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.aq-sub {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 2px;
+}
+
+.aq-badge {
+  font-size: 9px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--success-bg);
+  color: var(--success);
+  font-weight: 500;
+}
+
+/* Toast */
+#customToast {
+  position: fixed;
+  bottom: 90px;
+  left: 20px;
+  right: 20px;
+  background: var(--gray-900);
+  color: white;
+  padding: 16px 20px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  z-index: 1000;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  transform: translateY(120px);
+  transition: transform 0.3s ease;
+  text-align: left;
+  max-width: 440px;
+  margin: 0 auto;
+  white-space: pre-line;
+  border-left: 4px solid var(--accent);
+}
 </style>
 </head>
 <body>
 <div class="shell">
 
-  <!-- İSİM KURULUM EKRANI -->
+  <!-- Setup Screen -->
   <div class="setup-screen" id="setupScreen">
     <div class="setup-logo">Executive Assistant</div>
-    <div class="setup-title">Hoş Geldiniz</div>
+    <div class="setup-title">Welcome</div>
     <div class="setup-divider"></div>
-    <div class="setup-sub">Asistanınızı kişiselleştirmek için<br>adınızı ve unvanınızı girin.</div>
-    <div class="setup-label">Adınız</div>
-    <input class="setup-input" id="setupName" placeholder="Ali Yılmaz" maxlength="30"/>
-    <div class="setup-label" style="margin-top:8px">Unvanınız (isteğe bağlı)</div>
-    <input class="setup-input" id="setupTitle" placeholder="Genel Müdür" maxlength="40"/>
-    <button class="setup-btn" style="margin-top:16px" onclick="saveSetup()">DEVAM ET →</button>
-    <div class="setup-err" id="setupErr"></div>
+    <div class="setup-sub">Kişiselleştirilmiş asistan deneyimi için<br>bilgilerinizi girin</div>
+    <div class="setup-label">Adınız Soyadınız</div>
+    <input class="setup-input" id="setupName" placeholder="Örn: Ahmet Yılmaz" maxlength="30"/>
+    <div class="setup-label" style="margin-top: 12px">Pozisyon / Unvan</div>
+    <input class="setup-input" id="setupTitle" placeholder="Örn: Genel Müdür Yardımcısı" maxlength="40"/>
+    <button class="setup-btn" onclick="saveSetup()">Başlat →</button>
+    <div class="setup-err" id="setupErr" style="margin-top: 16px; font-size: 11px; color: var(--error); text-align: center;"></div>
   </div>
 
-  <!-- API KEY EKRANI -->
-  <div class="keyscreen" id="keyscreen" style="display:none">
+  <!-- API Key Screen -->
+  <div class="keyscreen" id="keyscreen" style="display: none">
     <div class="key-logo">Executive Assistant</div>
-    <div class="key-title">API Kurulumu</div>
+    <div class="key-title">API Configuration</div>
     <div class="key-divider"></div>
-    <div class="key-sub">Anthropic API anahtarınızı girin.<br>Cihazınızda güvenle saklanır.</div>
+    <div class="key-sub">Anthropic API anahtarınızı girin.<br>Verileriniz cihazınızda güvenle saklanır.</div>
     <input class="key-input" id="keyinput" type="password" placeholder="sk-ant-api03-..."/>
-    <button class="key-btn" onclick="saveKey()">BAĞLANTI KURULUMU →</button>
-    <div class="key-err" id="keyerr"></div>
-    <div class="key-note">Anahtar için <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a></div>
+    <button class="key-btn" onclick="saveKey()">Doğrula & Devam →</button>
+    <div class="key-err" id="keyerr" style="margin-top: 12px; font-size: 11px; color: var(--error); text-align: center;"></div>
+    <div class="key-note" style="margin-top: 20px; font-size: 11px; color: rgba(255,255,255,0.3); text-align: center;">Anahtarınızı <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color: var(--accent); text-decoration: none;">console.anthropic.com</a> adresinden alabilirsiniz</div>
   </div>
 
-  <!-- ANA UYGULAMA -->
-  <div id="mainapp" style="display:none;flex-direction:column;height:100%">
+  <!-- Main App -->
+  <div id="mainapp" style="display: none; flex-direction: column; height: 100%">
     <div class="sbar">
       <span class="sbar-time" id="clk">--:--</span>
       <span class="sbar-badge">Executive Pro</span>
@@ -252,174 +1223,191 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
       <div class="hdr-line"></div>
       <div class="hdr-top">
         <div>
-          <div class="hdr-eyebrow">Yönetici Asistan</div>
-          <div class="hdr-title" id="hdrTitle">Merhaba,<br><span id="hdrName">Ali Bey</span></div>
+          <div class="hdr-eyebrow">Executive Assistant</div>
+          <div class="hdr-title" id="hdrTitle">Merhaba,<br><span id="hdrName"></span></div>
         </div>
-        <div class="hdr-avatar" onclick="sw('settings')">⚙️</div>
+        <div class="hdr-avatar" onclick="switchTab('settings')">⚙️</div>
       </div>
       <div class="kpi-row">
-        <div class="kpi"><div class="kpi-n" id="km">0</div><div class="kpi-l">Kayıt</div></div>
-        <div class="kpi"><div class="kpi-n" id="kn">0</div><div class="kpi-l">Not</div></div>
-        <div class="kpi"><div class="kpi-n" id="kr">0</div><div class="kpi-l">Görev</div></div>
+        <div class="kpi"><div class="kpi-n" id="kpiRecordings">0</div><div class="kpi-l">Analiz</div></div>
+        <div class="kpi"><div class="kpi-n" id="kpiNotes">0</div><div class="kpi-l">Not</div></div>
+        <div class="kpi"><div class="kpi-n" id="kpiTasks">0</div><div class="kpi-l">Görev</div></div>
       </div>
-    </div>
-    <div class="nav-pills">
-      <div class="pill active" id="pill-record" onclick="sw('record')">Ses Kaydı</div>
-      <div class="pill" id="pill-notes" onclick="sw('notes')">Notlar</div>
-      <div class="pill" id="pill-appt" onclick="sw('appt')">Randevu</div>
-      <div class="pill" id="pill-remind" onclick="sw('remind')">Görevler</div>
-      <div class="pill" id="pill-settings" onclick="sw('settings')">Ayarlar</div>
     </div>
 
-    <!-- KAYIT -->
+    <!-- Navigation Pills -->
+    <div class="nav-pills">
+      <div class="pill active" onclick="switchTab('record')">🎙️ Kayıt</div>
+      <div class="pill" onclick="switchTab('notes')">📝 Notlar</div>
+      <div class="pill" onclick="switchTab('appointments')">📅 Randevular</div>
+      <div class="pill" onclick="switchTab('tasks')">✓ Görevler</div>
+      <div class="pill" onclick="switchTab('settings')">⚙️ Ayarlar</div>
+    </div>
+
+    <!-- Record Tab -->
     <div class="content active" id="tab-record">
       <div class="aq-panel" id="aqPanel">
-        <div class="aq-bars"><div class="aq-bar" id="aq1"></div><div class="aq-bar" id="aq2"></div><div class="aq-bar" id="aq3"></div><div class="aq-bar" id="aq4"></div><div class="aq-bar" id="aq5"></div><div class="aq-bar" id="aq6"></div><div class="aq-bar" id="aq7"></div><div class="aq-bar" id="aq8"></div></div>
-        <div class="aq-info"><div class="aq-title">HD Ses Aktif</div><div class="aq-sub">Echo · Gürültü filtresi · Boost</div></div>
-        <div class="aq-badge">HD</div>
+        <div class="aq-bars">
+          <div class="aq-bar"></div><div class="aq-bar"></div><div class="aq-bar"></div>
+          <div class="aq-bar"></div><div class="aq-bar"></div><div class="aq-bar"></div>
+          <div class="aq-bar"></div><div class="aq-bar"></div>
+        </div>
+        <div class="aq-info"><div class="aq-title">HD Ses Aktif</div><div class="aq-sub">Gürültü filtresi · Echo cancellation · Boost</div></div>
+        <div class="aq-badge">Pro Audio</div>
       </div>
-      <div class="time-warn" id="timeWarn">⏱ 45 dakika — transkripti kaydetmeniz önerilir</div>
+      <div class="time-warn" id="timeWarn">⏱ 45 dakika — Kaydınızı kaydetmeniz önerilir</div>
       <div class="rec-hero">
-        <div class="wave"><div class="wb" id="b1"></div><div class="wb" id="b2"></div><div class="wb" id="b3"></div><div class="wb" id="b4"></div><div class="wb" id="b5"></div><div class="wb" id="b6"></div><div class="wb" id="b7"></div></div>
-        <button class="rec-btn" id="rbtn" onclick="toggleRec()">
+        <div class="wave">
+          <div class="wb"></div><div class="wb"></div><div class="wb"></div>
+          <div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div>
+        </div>
+        <button class="rec-btn" id="recordBtn" onclick="toggleRecording()">
           <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
         </button>
-        <div class="rec-lbl" id="rlbl">Kaydı Başlat</div>
-        <div class="rec-time" id="rtime"><span class="ldot" id="ldot"></span>00:00</div>
+        <div class="rec-lbl" id="recordLabel">Kaydı Başlat</div>
+        <div class="rec-time"><span class="ldot" id="recordDot"></span><span id="recordTime">00:00</span></div>
       </div>
       <div class="tbox">
         <div class="tlbl">Canlı Transkript</div>
-        <div id="ttext"><span class="ph">Kayıt başlatıldığında konuşmanız buraya yazılacak...</span></div>
+        <div id="transcriptText"><span class="ph">Kayıt başlatıldığında konuşma metni burada görünecek...</span></div>
       </div>
-      <button class="btn-primary" id="abtn" disabled onclick="analyzeNow()">✦  Yapay Zeka Analizi</button>
-      <div class="ares" id="ares">
+      <button class="btn-primary" id="analyzeBtn" disabled onclick="analyzeTranscript()">✨ AI ile Analiz Et</button>
+      <div class="ares" id="analysisResult">
         <div class="ares-header">
-          <div class="ares-icon">✦</div>
-          <div><div class="ares-title">Analiz Sonucu</div><div class="ares-sub">Claude AI · Detaylı</div></div>
-          <div class="spin" id="spin"></div>
+          <div class="ares-icon">✨</div>
+          <div><div class="ares-title">Analiz Sonucu</div><div class="ares-sub">Claude AI · Detaylı Rapor</div></div>
+          <div class="spin" id="analysisSpin"></div>
         </div>
-        <div class="atext" id="atext"></div>
+        <div class="atext" id="analysisText"></div>
         <div class="divider"></div>
-        <button class="btn-outline" onclick="saveToNotes()">Nota Kaydet</button>
+        <button class="btn-outline" onclick="saveAnalysisToNotes()">📋 Notlara Kaydet</button>
       </div>
     </div>
 
-    <!-- NOTLAR -->
+    <!-- Notes Tab -->
     <div class="content" id="tab-notes">
       <div class="card">
-        <div class="card-title">Yeni Not</div>
-        <input class="fi" id="ni" placeholder="Başlık..."/>
-        <div class="voice-hint">Sesle yazmak için mikrofona basın 🎙</div>
-        <div class="voice-input-row">
-          <textarea class="fi" id="nb" rows="3" placeholder="İçerik veya sesle dikte edin..." style="margin-bottom:0"></textarea>
-          <button class="mic-btn" id="noteMic" onclick="toggleSectionMic('noteMic','nb')" title="Sesle yaz">
-            <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
-          </button>
+        <div class="card-title">✍️ Yeni Not</div>
+        <button class="btn-primary" id="voiceNoteBtn" onclick="startVoiceNote()" style="background: var(--accent); margin-bottom: 16px;">
+          🎙️ Sesle Not Oluştur
+        </button>
+        <div class="voice-hint">🎙️ Örnek: "Pazartesi günü saat 10'da toplantı var, sunumu hazırlamalıyım"</div>
+        <input class="fi" id="noteTitle" placeholder="Not başlığı..."/>
+        <textarea class="fi" id="noteContent" rows="3" placeholder="Not içeriği..." style="margin-bottom: 10px"></textarea>
+        <div class="fi-row">
+          <select class="fi" id="noteCategory"><option value="Toplantı">📊 Toplantı</option><option value="Müşteri">🤝 Müşteri</option><option value="Strateji">🎯 Strateji</option><option value="Kişisel">💼 Kişisel</option><option value="Fikir">💡 Fikir</option></select>
+          <select class="fi" id="notePriority"><option value="Normal">🟢 Normal</option><option value="Öncelikli">🟡 Öncelikli</option><option value="Acil">🔴 Acil</option></select>
         </div>
-        <div class="fi-row" style="margin-top:10px">
-          <select class="fi" id="ncat" style="margin-bottom:0"><option>Toplantı</option><option>Müşteri</option><option>Strateji</option><option>Kişisel</option><option>Diğer</option></select>
-          <select class="fi" id="npri" style="margin-bottom:0"><option>Normal</option><option>Öncelikli</option><option>Acil</option></select>
-        </div>
-        <button class="btn-primary" style="margin-top:10px" onclick="addNote()">Kaydet</button>
+        <button class="btn-primary" style="margin-top: 12px" onclick="addNote()">Notu Kaydet</button>
       </div>
-      <div class="sec">Notlarım</div>
-      <div class="hint">Silmek için × butonuna basın</div>
-      <div id="nlist"></div>
+      <div class="section-title">📋 Tüm Notlar</div>
+      <div id="notesList"></div>
     </div>
 
-    <!-- RANDEVU -->
-    <div class="content" id="tab-appt">
+    <!-- Appointments Tab -->
+    <div class="content" id="tab-appointments">
       <div class="card">
-        <div class="card-title">Yeni Randevu</div>
-        <input class="fi" id="ain" placeholder="Başlık ve katılımcı..."/>
-        <div class="fi-row"><input class="fi" type="date" id="adt" style="margin-bottom:0"/><input class="fi" type="time" id="atm" style="margin-bottom:0"/></div>
-        <input class="fi" id="alc" placeholder="Yer / Zoom linki..."/>
-        <div class="voice-hint">Notlar için sesle yazmak üzere mikrofona basın 🎙</div>
-        <div class="voice-input-row">
-          <textarea class="fi" id="anote" rows="2" placeholder="Randevu notları (sesle veya yazarak)..." style="margin-bottom:0"></textarea>
-          <button class="mic-btn" id="apptMic" onclick="toggleSectionMic('apptMic','anote')" title="Sesle not">
+        <div class="card-title">📅 Yeni Randevu</div>
+        <button class="btn-primary" id="voiceAppointmentBtn" onclick="startVoiceAppointment()" style="background: var(--accent); margin-bottom: 16px;">
+          🎙️ Sesle Randevu Oluştur
+        </button>
+        <div class="voice-hint">🎙️ Örnek: "Ahmet Bey ile yarın saat 14:30'da toplantı, bana 1 saat önce hatırlat"</div>
+        <input class="fi" id="apptTitle" placeholder="Randevu başlığı / Katılımcı..."/>
+        <div class="fi-row">
+          <input class="fi" type="date" id="apptDate"/>
+          <input class="fi" type="time" id="apptTime"/>
+        </div>
+        <input class="fi" id="apptLocation" placeholder="Konum / Toplantı linki..."/>
+        <div class="fi-row" style="margin-top: 10px;">
+          <select class="fi" id="apptReminder">
+            <option value="0">🔔 Hatırlatıcı yok</option>
+            <option value="5">⏰ 5 dakika önce</option>
+            <option value="10">⏰ 10 dakika önce</option>
+            <option value="15">⏰ 15 dakika önce</option>
+            <option value="30">⏰ 30 dakika önce</option>
+            <option value="60">⏰ 1 saat önce</option>
+            <option value="120">⏰ 2 saat önce</option>
+            <option value="1440">📅 1 gün önce</option>
+            <option value="2880">📅 2 gün önce</option>
+            <option value="10080">📅 1 hafta önce</option>
+          </select>
+          <select class="fi" id="apptReminderType">
+            <option value="toast">🔔 Bildirim</option>
+            <option value="sound">🔊 Sesli hatırlatıcı</option>
+            <option value="both">🔔🔊 İkisi de</option>
+          </select>
+        </div>
+        <div class="voice-input-row" style="margin-top: 10px;">
+          <textarea class="fi" id="apptNotes" rows="2" placeholder="Randevu notları..." style="margin-bottom: 0"></textarea>
+          <button class="mic-btn" id="apptMicBtn" onclick="toggleDictation('apptMicBtn', 'apptNotes')">
             <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
           </button>
         </div>
-        <button class="btn-primary" style="margin-top:10px" onclick="addAppt()">Randevu Ekle</button>
+        <button class="btn-primary" style="margin-top: 12px" onclick="addAppointment()">Randevu Ekle</button>
       </div>
-      <div class="sec">Randevularım</div>
-      <div class="hint">Silmek için × butonuna basın</div>
-      <div id="alist">
-        <div class="appt">
-          <div class="appt-time"><div class="appt-h">10</div><div class="appt-m">:30</div></div>
-          <div class="appt-info"><div class="appt-name">Ahmet Yılmaz — Satış</div><div class="appt-sub">Zoom · 45 dakika</div></div>
-          <button class="del-btn" onclick="delItem(this)">×</button>
-        </div>
-      </div>
+      <div class="section-title">📆 Randevularım <span id="reminderCount" style="font-size: 10px; color: var(--accent);"></span></div>
+      <div id="appointmentsList"></div>
     </div>
 
-    <!-- GÖREVLER -->
-    <div class="content" id="tab-remind">
-      <div class="sec">Görevler</div>
-      <div class="hint">Silmek için × butonuna basın</div>
-      <div id="rlist">
-        <div class="rem"><div class="rem-check done"></div><div class="rem-text done">Fatura kontrolü</div><div class="rem-when">TAMAM</div><button class="del-btn" style="margin-left:8px" onclick="delItem(this)">×</button></div>
-        <div class="rem"><div class="rem-check" onclick="chk(this)"></div><div class="rem-text">Pazarlama raporu</div><div class="rem-when">10:00</div><button class="del-btn" style="margin-left:8px" onclick="delItem(this)">×</button></div>
-      </div>
+    <!-- Tasks Tab -->
+    <div class="content" id="tab-tasks">
+      <div class="section-title">✓ Aktif Görevler</div>
+      <div id="tasksList"></div>
       <div class="divider"></div>
-      <div class="sec">Yeni Görev</div>
-      <div class="voice-hint">Sesle eklemek için mikrofona basın 🎙</div>
-      <div class="qrow" style="margin-bottom:8px">
-        <input class="qi" id="rin" placeholder="Görev ekle..."/>
-        <button class="mic-btn" id="remMic" onclick="toggleSectionMic('remMic','rin')" title="Sesle ekle">
+      <div class="section-title">➕ Yeni Görev</div>
+      <button class="btn-primary" id="voiceTaskBtn" onclick="startVoiceTask()" style="background: var(--accent); margin-bottom: 16px;">
+        🎙️ Sesle Görev Oluştur
+      </button>
+      <div class="voice-hint">🎙️ Örnek: "Yarın saat 14:00'te raporu teslim et" veya "Bugün faturayı gönder"</div>
+      <div class="voice-input-row" style="margin-bottom: 10px">
+        <input class="fi" id="taskInput" placeholder="Yeni görev..."/>
+        <button class="mic-btn" id="taskMicBtn" onclick="toggleDictation('taskMicBtn', 'taskInput')">
           <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
         </button>
-        <button class="qb" onclick="addRem()">Ekle</button>
+        <button class="btn-primary" style="width: auto; padding: 12px 20px; margin: 0;" onclick="addTask()">Ekle</button>
       </div>
-      <input class="qi" type="datetime-local" id="rdt" style="width:100%;margin-top:6px"/>
+      <input class="fi" type="datetime-local" id="taskDueDate" style="margin-top: 8px"/>
     </div>
 
-    <!-- AYARLAR -->
+    <!-- Settings Tab -->
     <div class="content" id="tab-settings">
-      <div class="sec">Profil</div>
+      <div class="section-title">👤 Profil</div>
       <div class="set-card">
-        <div class="set-name-row">
-          <span class="set-lbl">Adınız</span>
-          <input class="set-name-input" id="settingName" placeholder="Adınız..." onchange="updateName()"/>
-        </div>
-        <div class="set-name-row" style="border-bottom:none">
-          <span class="set-lbl">Unvanınız</span>
-          <input class="set-name-input" id="settingTitle" placeholder="Unvanınız..." onchange="updateName()"/>
-        </div>
+        <div class="set-name-row"><span class="set-lbl">Adınız Soyadınız</span><input class="set-name-input" id="settingsName" onchange="updateProfile()"/></div>
+        <div class="set-name-row"><span class="set-lbl">Pozisyon / Unvan</span><input class="set-name-input" id="settingsTitle" onchange="updateProfile()"/></div>
       </div>
-      <div class="sec">Sistem</div>
+      <div class="section-title">🔧 Sistem</div>
       <div class="set-card">
-        <div class="set-row"><span class="set-lbl">API Durumu</span><span class="set-val ok">✓ Aktif</span></div>
-        <div class="set-row"><span class="set-lbl">Model</span><span class="set-val">Claude Haiku 4.5</span></div>
-        <div class="set-row"><span class="set-lbl">Ses Kalitesi</span><span class="set-val ok">HD · 48kHz</span></div>
-        <div class="set-row"><span class="set-lbl">Echo Cancellation</span><span class="set-val ok">Aktif</span></div>
-        <div class="set-row"><span class="set-lbl">Gürültü Filtresi</span><span class="set-val ok">Aktif</span></div>
-        <div class="set-row"><span class="set-lbl">Sürüm</span><span class="set-val">Pro 4.0</span></div>
+        <div class="set-row"><span class="set-lbl">API Durumu</span><span class="set-val ok">✓ Bağlı</span></div>
+        <div class="set-row"><span class="set-lbl">AI Model</span><span class="set-val">Claude Haiku</span></div>
+        <div class="set-row"><span class="set-lbl">Ses Kalitesi</span><span class="set-val ok">HD 48kHz</span></div>
+        <div class="set-row"><span class="set-lbl">Gürültü Engelleme</span><span class="set-val ok">Aktif</span></div>
+        <div class="set-row"><span class="set-lbl">Sürüm</span><span class="set-val">Executive Pro 4.0</span></div>
       </div>
-      <button class="danger-btn" onclick="resetKey()">API Anahtarını Sıfırla</button>
-      <button class="danger-btn" style="color:var(--ink3);border-color:var(--brd2)" onclick="resetAll()">Tüm Verileri Sıfırla</button>
-      <div style="font-size:11px;color:var(--ink4);line-height:1.8;margin-top:14px">Tüm veriler yalnızca bu cihazda saklanır.</div>
+      <button class="danger-btn" onclick="resetApiKey()">🔄 API Anahtarını Sıfırla</button>
+      <button class="danger-btn" style="color: var(--gray-600); border-color: var(--gray-300);" onclick="resetAllData()">🗑️ Tüm Verileri Sil</button>
+      <div class="hint" style="text-align: center; margin-top: 16px;">Tüm verileriniz yalnızca bu cihazda saklanır.</div>
     </div>
 
+    <!-- Bottom Navigation -->
     <div class="bnav">
-      <div class="bni active" id="nav-record" onclick="sw('record')">
+      <div class="bni active" onclick="switchTab('record')">
         <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
         <span class="bni-lbl">Kayıt</span>
       </div>
-      <div class="bni" id="nav-notes" onclick="sw('notes')">
+      <div class="bni" onclick="switchTab('notes')">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
         <span class="bni-lbl">Notlar</span>
       </div>
-      <div class="bni" id="nav-appt" onclick="sw('appt')">
+      <div class="bni" onclick="switchTab('appointments')">
         <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5v-5z"/></svg>
         <span class="bni-lbl">Randevu</span>
       </div>
-      <div class="bni" id="nav-remind" onclick="sw('remind')">
+      <div class="bni" onclick="switchTab('tasks')">
         <svg viewBox="0 0 24 24"><path d="M18 16v-5a6 6 0 00-5-5.92V4a1 1 0 00-2 0v1.08A6 6 0 006 11v5l-2 2v1h16v-1l-2-2zm-6 4a2 2 0 002-2h-4a2 2 0 002 2z"/></svg>
         <span class="bni-lbl">Görevler</span>
       </div>
-      <div class="bni" id="nav-settings" onclick="sw('settings')">
+      <div class="bni" onclick="switchTab('settings')">
         <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96a7 7 0 00-1.62-.94l-.36-2.54A.484.484 0 0014 2h-3.84a.484.484 0 00-.48.41l-.36 2.54a7.38 7.38 0 00-1.62.94l-2.39-.96a.48.48 0 00-.59.22L2.74 8.87a.47.47 0 00.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.47.47 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.36 1.04.67 1.62.94l.36 2.54c.05.24.27.41.48.41H14c.24 0 .44-.17.47-.41l.36-2.54a7.38 7.38 0 001.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 00-.12-.61l-2.09-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
         <span class="bni-lbl">Ayarlar</span>
       </div>
@@ -428,305 +1416,921 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 </div>
 
 <script>
-const SK='ya_pro_v4',NK='ya_name_v1',TK='ya_title_v1';
-let recording=false,timer=null,sec=0,finalT='',interimT='',recog=null;
-let audioCtx=null,analyser=null,micStream=null,animFrame=null;
-let sectionRecog=null,sectionMicId=null,sectionTargetId=null;
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+// ============ CONSTANTS & STORAGE ============
+const STORAGE_KEYS = {
+  API_KEY: 'exec_pro_api_key',
+  USER_NAME: 'exec_pro_user_name',
+  USER_TITLE: 'exec_pro_user_title',
+  NOTES: 'exec_pro_notes',
+  APPOINTMENTS: 'exec_pro_appointments',
+  TASKS: 'exec_pro_tasks',
+  ANALYSES: 'exec_pro_analyses'
+};
 
-function tick(){const n=new Date();const el=document.getElementById('clk');if(el)el.textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')}
-tick();setInterval(tick,30000);
-function getKey(){try{return localStorage.getItem(SK)||''}catch(e){return''}}
-function setKey(k){try{localStorage.setItem(SK,k)}catch(e){}}
-function delKey(){try{localStorage.removeItem(SK)}catch(e){}}
-function getName(){try{return localStorage.getItem(NK)||''}catch(e){return''}}
-function getTitle(){try{return localStorage.getItem(TK)||''}catch(e){return''}}
-function saveName(n,t){try{localStorage.setItem(NK,n);localStorage.setItem(TK,t)}catch(e){}}
+// ============ GLOBAL STATE ============
+let isRecording = false;
+let recordingTimer = null;
+let recordingSeconds = 0;
+let finalTranscript = '';
+let interimTranscript = '';
+let speechRecognizer = null;
+let audioContext = null;
+let audioAnalyser = null;
+let audioStream = null;
+let meterAnimation = null;
+let activeDictation = null;
+let dictationRecognizer = null;
+let reminderInterval = null;
 
-function updateHeaderName(){
-  const n=getName(),t=getTitle();
-  const el=document.getElementById('hdrName');
-  if(el)el.textContent=n+(t?' — '+t:'');
+const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+// ============ UTILITIES ============
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
-function init(){
-  const n=getName(),k=getKey();
-  if(!n){
-    // İsim kurulumu
-    document.getElementById('setupScreen').style.display='flex';
-  } else if(!k){
-    document.getElementById('setupScreen').style.display='none';
-    document.getElementById('keyscreen').style.display='flex';
-  } else {
-    showMain();
+function formatDate(dateStr) {
+  if (!dateStr) return 'Tarih yok';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('tr-TR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function showToast(message, duration = 4000) {
+  let toast = document.getElementById('customToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'customToast';
+    document.body.appendChild(toast);
   }
-}
-init();
-
-function saveSetup(){
-  const n=document.getElementById('setupName').value.trim();
-  const t=document.getElementById('setupTitle').value.trim();
-  if(!n){document.getElementById('setupErr').textContent='Lütfen adınızı girin.';return}
-  saveName(n,t);
-  document.getElementById('setupScreen').style.display='none';
-  if(!getKey()){document.getElementById('keyscreen').style.display='flex'}
-  else showMain();
+  toast.textContent = message;
+  toast.style.transform = 'translateY(0)';
+  setTimeout(() => {
+    toast.style.transform = 'translateY(120px)';
+  }, duration);
 }
 
-async function saveKey(){
-  const k=document.getElementById('keyinput').value.trim();
-  const err=document.getElementById('keyerr');
-  if(!k||!k.startsWith('sk-')){err.textContent='Geçersiz anahtar.';return}
-  err.textContent='Doğrulanıyor...';
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:5,messages:[{role:'user',content:'hi'}]})});
-    if(r.ok){setKey(k);document.getElementById('keyscreen').style.display='none';showMain();err.textContent=''}
-    else{const d=await r.json();err.textContent='Hata: '+(d.error?.message||'Geçersiz anahtar')}
-  }catch(e){err.textContent='Bağlantı hatası.'}
-}
-
-function showMain(){
-  const ma=document.getElementById('mainapp');ma.style.display='flex';ma.style.flexDirection='column';ma.style.height='100%';
-  updateHeaderName();
-  const sn=document.getElementById('settingName'),st=document.getElementById('settingTitle');
-  if(sn)sn.value=getName();if(st)st.value=getTitle();
-}
-
-function updateName(){
-  const n=document.getElementById('settingName').value.trim();
-  const t=document.getElementById('settingTitle').value.trim();
-  if(n){saveName(n,t);updateHeaderName()}
-}
-
-function resetKey(){if(confirm('API anahtarı silinecek?')){delKey();location.reload()}}
-function resetAll(){if(confirm('Tüm veriler silinecek. Emin misiniz?')){localStorage.clear();location.reload()}}
-
-// ============ BÖLÜM MİKROFON ============
-function toggleSectionMic(btnId,targetId){
-  if(sectionMicId&&sectionMicId!==btnId){
-    stopSectionMic();
-  }
-  if(sectionMicId===btnId){
-    stopSectionMic();return;
-  }
-  if(!SR){alert('Bu tarayıcı ses tanımayı desteklemiyor.');return}
-  sectionMicId=btnId;sectionTargetId=targetId;
-  const btn=document.getElementById(btnId);
-  btn.classList.add('recording');
-  sectionRecog=new SR();
-  sectionRecog.continuous=true;sectionRecog.interimResults=false;sectionRecog.lang='tr-TR';
-  sectionRecog.onresult=e=>{
-    let text='';
-    for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)text+=e.results[i][0].transcript+' ';}
-    const el=document.getElementById(targetId);
-    if(el)el.value=(el.value+text).trim();
-  };
-  sectionRecog.onerror=e=>{if(e.error==='not-allowed')alert('Mikrofon izni gerekli.');stopSectionMic()};
-  sectionRecog.onend=()=>{if(sectionMicId===btnId)try{sectionRecog.start()}catch(e){}};
-  try{sectionRecog.start()}catch(e){stopSectionMic()}
-}
-
-function stopSectionMic(){
-  if(sectionRecog){try{sectionRecog.stop()}catch(e){}sectionRecog=null}
-  if(sectionMicId){const btn=document.getElementById(sectionMicId);if(btn)btn.classList.remove('recording')}
-  sectionMicId=null;sectionTargetId=null;
-}
-
-// ============ ANA KAYIT ============
-async function setupAudio(){
-  try{
-    micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,sampleRate:48000,sampleSize:16,channelCount:1}});
-    audioCtx=new(window.AudioContext||window.webkitAudioContext)({sampleRate:48000});
-    await audioCtx.resume();
-    const src=audioCtx.createMediaStreamSource(micStream);
-    const gain=audioCtx.createGain();gain.gain.value=2.5;
-    const hp=audioCtx.createBiquadFilter();hp.type='highpass';hp.frequency.value=120;hp.Q.value=0.7;
-    const lp=audioCtx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=8000;lp.Q.value=0.7;
-    const pk=audioCtx.createBiquadFilter();pk.type='peaking';pk.frequency.value=2500;pk.gain.value=4;pk.Q.value=1.5;
-    const cmp=audioCtx.createDynamicsCompressor();cmp.threshold.value=-24;cmp.knee.value=30;cmp.ratio.value=12;cmp.attack.value=0.003;cmp.release.value=0.25;
-    analyser=audioCtx.createAnalyser();analyser.fftSize=256;
-    src.connect(gain);gain.connect(hp);hp.connect(lp);lp.connect(pk);pk.connect(cmp);cmp.connect(analyser);
-    document.getElementById('aqPanel').classList.add('show');
-    updateMeter();
-  }catch(e){}
-}
-
-function updateMeter(){
-  if(!analyser||!recording)return;
-  const d=new Uint8Array(analyser.frequencyBinCount);
-  analyser.getByteFrequencyData(d);
-  const avg=d.slice(0,32).reduce((a,b)=>a+b,0)/32;
-  const lvl=Math.min(8,Math.floor(avg/8));
-  document.querySelectorAll('.aq-bar').forEach((b,i)=>{
-    if(i<lvl){b.classList.add('on');b.style.height=Math.max(4,5+i*2)+'px'}
-    else{b.classList.remove('on');b.style.height='4px'}
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
   });
-  animFrame=requestAnimationFrame(updateMeter);
 }
 
-function stopAudio(){
-  if(animFrame)cancelAnimationFrame(animFrame);
-  if(micStream)micStream.getTracks().forEach(t=>t.stop());
-  if(audioCtx){try{audioCtx.close()}catch(e){}}
-  audioCtx=null;analyser=null;micStream=null;
-  document.getElementById('aqPanel').classList.remove('show');
-  document.querySelectorAll('.aq-bar').forEach(b=>{b.classList.remove('on');b.style.height='4px'});
+function updateClock() {
+  const now = new Date();
+  const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+  const clockEl = document.getElementById('clk');
+  if (clockEl) clockEl.textContent = timeStr;
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+function updateKPIs() {
+  const notes = JSON.parse(localStorage.getItem(STORAGE_KEYS.NOTES) || '[]');
+  const tasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.TASKS) || '[]');
+  const analyses = JSON.parse(localStorage.getItem(STORAGE_KEYS.ANALYSES) || '[]');
+  document.getElementById('kpiNotes').textContent = notes.length;
+  document.getElementById('kpiTasks').textContent = tasks.length;
+  document.getElementById('kpiRecordings').textContent = analyses.length;
 }
 
-function renderT(){
-  const el=document.getElementById('ttext');
-  if(!finalT&&!interimT){el.innerHTML='<span class="ph">Kayıt başlatıldığında konuşmanız buraya yazılacak...</span>';return}
-  el.innerHTML=finalT+(interimT?'<span class="im">'+interimT+'</span>':'');
-  el.scrollTop=el.scrollHeight;
-  document.getElementById('abtn').disabled=finalT.trim().length<5;
-}
-
-function initRecog(){
-  if(!SR){
-    document.getElementById('ttext').innerHTML='<textarea id="mtxt" style="width:100%;min-height:70px;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--ink);resize:none;outline:none;font-weight:300;" placeholder="Ses tanıma desteklenmiyor. Metni buraya yazın..."></textarea>';
-    return null;
+// ============ SETUP & AUTH ============
+function saveSetup() {
+  const name = document.getElementById('setupName').value.trim();
+  const title = document.getElementById('setupTitle').value.trim();
+  if (!name) {
+    document.getElementById('setupErr').textContent = 'Lütfen adınızı girin.';
+    return;
   }
-  const r=new SR();
-  r.continuous=true;r.interimResults=true;r.lang='tr-TR';
-  r.onresult=e=>{
-    interimT='';
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal)finalT+=e.results[i][0].transcript+' ';
-      else interimT+=e.results[i][0].transcript;
-    }
-    renderT();
-  };
-  r.onerror=e=>{if(e.error==='not-allowed')document.getElementById('ttext').innerHTML='<span style="color:var(--red);font-size:12px;">Mikrofon izni gerekli.</span>'};
-  r.onend=()=>{if(recording)try{r.start()}catch(e){}};
-  return r;
-}
-
-async function toggleRec(){
-  recording=!recording;
-  const btn=document.getElementById('rbtn'),bars=document.querySelectorAll('.wb'),dot=document.getElementById('ldot');
-  if(recording){
-    await setupAudio();
-    btn.classList.add('on');
-    btn.innerHTML='<svg viewBox="0 0 24 24" style="fill:#fff"><rect x="6" y="6" width="4" height="12" rx="1"/><rect x="14" y="6" width="4" height="12" rx="1"/></svg>';
-    document.getElementById('rlbl').textContent='Kaydediliyor...';
-    dot.classList.add('on');bars.forEach(b=>b.classList.add('on'));
-    finalT='';interimT='';renderT();
-    document.getElementById('ares').classList.remove('show');
-    document.getElementById('timeWarn').classList.remove('show');
-    sec=0;
-    timer=setInterval(()=>{
-      sec++;
-      document.getElementById('rtime').innerHTML='<span class="ldot on"></span>'+String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
-      if(sec===2700)document.getElementById('timeWarn').classList.add('show');
-    },1000);
-    recog=initRecog();if(recog)try{recog.start()}catch(e){}
+  localStorage.setItem(STORAGE_KEYS.USER_NAME, name);
+  localStorage.setItem(STORAGE_KEYS.USER_TITLE, title);
+  document.getElementById('setupScreen').style.display = 'none';
+  if (!localStorage.getItem(STORAGE_KEYS.API_KEY)) {
+    document.getElementById('keyscreen').style.display = 'flex';
   } else {
-    recording=false;
-    btn.classList.remove('on');
-    btn.innerHTML='<svg viewBox="0 0 24 24" style="fill:#fff"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>';
-    document.getElementById('rlbl').textContent='Kaydı Başlat';
-    dot.classList.remove('on');bars.forEach(b=>b.classList.remove('on'));
-    clearInterval(timer);document.getElementById('rtime').innerHTML='00:00';
-    if(recog)try{recog.stop()}catch(e){}
-    stopAudio();
-    const m=document.getElementById('mtxt');if(m)finalT=m.value;
-    renderT();
+    showMainApp();
   }
 }
 
-async function analyzeNow(){
-  const text=finalT.trim();if(!text)return;
-  const key=getKey();if(!key){alert('API anahtarı bulunamadı.');return}
-  const ares=document.getElementById('ares'),atext=document.getElementById('atext'),spin=document.getElementById('spin'),abtn=document.getElementById('abtn');
-  ares.classList.add('show');spin.style.display='block';atext.textContent='';abtn.disabled=true;
-  const name=getName();
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001',max_tokens:2000,
-        system:`Sen "${name||'Yönetici'}" için çalışan üst düzey bir Türkçe yönetici asistanısın.
-Görevin:
-1. "Yani","şey","hmm","ee","işte","aslında" gibi dolgu kelimeleri ve tekrarları tamamen çıkar
-2. Yalnızca iş değeri taşıyan bilgileri koru
-3. Profesyonel, özlü ve net dil kullan
-4. Sorunlar için KÖK NEDEN analizi yap
-5. Her sorun için birden fazla çözüm alternatifi sun
-6. Stratejik öneriler için uygulama adımlarını belirt`,
-        messages:[{role:'user',content:`Konuşmayı analiz et:\n\n"${text}"\n\n📋 TOPLANTI ÖZETİ\n[2-3 cümle, yalnızca kritik bilgi]\n\n🎯 ALINAN KARARLAR\n• [Net karar 1]\n• [Net karar 2]\n\n✅ AKSİYON NOKTALARI\n• [Sorumlu kişi] — [Görev] — [Teslim tarihi/süresi]\n\n⚠️ TESPİT EDİLEN SORUNLAR & DERİNLEMESİNE ANALİZ\n\nSorun 1: [Sorunun net tanımı]\n→ Kök Neden: [Neden ortaya çıktı?]\n→ Kısa Vadeli Çözüm: [Hemen yapılabilecek]\n→ Uzun Vadeli Çözüm: [Kalıcı çözüm]\n→ Risk: [Bu çözümlerin riskleri]\n\n(Birden fazla sorun varsa aynı formatta devam et)\n\n💡 STRATEJİK ÖNERİLER & UYGULAMA PLANI\n\nÖneri 1: [Öneri başlığı]\n→ Neden gerekli: [Gerekçe]\n→ Uygulama adımları: [1. adım, 2. adım, 3. adım]\n→ Beklenen fayda: [Somut fayda]\n→ Süre: [Tahmini süre]\n\n(Birden fazla öneri varsa aynı formatta devam et)\n\n📊 GENEL DEĞERLENDİRME\n[Toplantının genel değerlendirmesi ve bir sonraki adım için tavsiye]`}]
+async function saveKey() {
+  const apiKey = document.getElementById('keyinput').value.trim();
+  const errEl = document.getElementById('keyerr');
+  if (!apiKey || !apiKey.startsWith('sk-')) {
+    errEl.textContent = 'Geçerli bir API anahtarı girin.';
+    return;
+  }
+  errEl.textContent = 'Doğrulanıyor...';
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 5,
+        messages: [{ role: 'user', content: 'test' }]
       })
     });
-    const data=await res.json();
-    spin.style.display='none';abtn.disabled=false;
-    if(!res.ok){atext.textContent='Hata: '+(data.error?.message||'Bilinmeyen hata');return}
-    const result=data.content?.[0]?.text||'Analiz tamamlanamadı.';
-    let i=0;const iv=setInterval(()=>{atext.textContent+=result[i]||'';i++;if(i>=result.length){clearInterval(iv);document.getElementById('km').textContent=parseInt(document.getElementById('km').textContent)+1}},8);
-  }catch(e){spin.style.display='none';abtn.disabled=false;atext.textContent='Bağlantı hatası: '+e.message}
+    if (response.ok) {
+      localStorage.setItem(STORAGE_KEYS.API_KEY, apiKey);
+      document.getElementById('keyscreen').style.display = 'none';
+      showMainApp();
+      errEl.textContent = '';
+    } else {
+      const data = await response.json();
+      errEl.textContent = 'Hata: ' + (data.error?.message || 'Geçersiz anahtar');
+    }
+  } catch (e) {
+    errEl.textContent = 'Bağlantı hatası. İnternetinizi kontrol edin.';
+  }
 }
 
-function saveToNotes(){
-  const b=document.getElementById('atext').textContent;if(!b)return;
-  document.getElementById('ni').value='Toplantı — '+new Date().toLocaleDateString('tr-TR');
-  document.getElementById('nb').value=b;sw('notes');
+function showMainApp() {
+  const mainApp = document.getElementById('mainapp');
+  mainApp.style.display = 'flex';
+  updateProfileDisplay();
+  updateKPIs();
+  loadNotes();
+  loadAppointments();
+  loadTasks();
+  startReminderChecker();
+  
+  // Bildirim izni iste
+  if (Notification.permission === 'default') {
+    setTimeout(() => Notification.requestPermission(), 3000);
+  }
 }
 
-function delItem(btn){
-  if(!confirm('Silinsin mi?'))return;
-  const item=btn.closest('.ncard,.appt,.rem');if(!item)return;
-  item.style.transition='opacity .25s,transform .25s';item.style.opacity='0';item.style.transform='translateX(20px)';
-  setTimeout(()=>item.remove(),250);
+function updateProfileDisplay() {
+  const name = localStorage.getItem(STORAGE_KEYS.USER_NAME) || 'Kullanıcı';
+  const title = localStorage.getItem(STORAGE_KEYS.USER_TITLE) || '';
+  document.getElementById('hdrName').textContent = name + (title ? ` — ${title}` : '');
+  const settingsName = document.getElementById('settingsName');
+  const settingsTitle = document.getElementById('settingsTitle');
+  if (settingsName) settingsName.value = name;
+  if (settingsTitle) settingsTitle.value = title;
 }
 
-function sw(tab){
-  stopSectionMic();
-  document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
-  document.querySelectorAll('.pill,.bni').forEach(n=>n.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  const p=document.getElementById('pill-'+tab);if(p)p.classList.add('active');
-  const n=document.getElementById('nav-'+tab);if(n)n.classList.add('active');
+function updateProfile() {
+  const name = document.getElementById('settingsName').value.trim();
+  const title = document.getElementById('settingsTitle').value.trim();
+  if (name) {
+    localStorage.setItem(STORAGE_KEYS.USER_NAME, name);
+    localStorage.setItem(STORAGE_KEYS.USER_TITLE, title);
+    updateProfileDisplay();
+  }
 }
 
-function addNote(){
-  const t=document.getElementById('ni').value.trim(),b=document.getElementById('nb').value.trim();
-  const cat=document.getElementById('ncat').value,pri=document.getElementById('npri').value;
-  if(!t)return;
-  const l=document.getElementById('nlist'),c=document.createElement('div');c.className='ncard';
-  const d=new Date(),pc=pri==='Acil'?'badge-red':pri==='Öncelikli'?'badge-gold':'badge-green';
-  c.innerHTML='<div class="ncard-top"><div class="ncard-title">'+t+'</div><div class="ncard-actions"><div class="ncard-date">'+d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')+'</div><button class="del-btn" onclick="delItem(this)">×</button></div></div><div class="ncard-body">'+(b||'—')+'</div><span class="badge badge-blue">'+cat+'</span><span class="badge '+pc+'">'+pri+'</span>';
-  l.prepend(c);document.getElementById('ni').value='';document.getElementById('nb').value='';
-  document.getElementById('kn').textContent=parseInt(document.getElementById('kn').textContent)+1;
+function resetApiKey() {
+  if (confirm('API anahtarını silmek istediğinize emin misiniz?')) {
+    localStorage.removeItem(STORAGE_KEYS.API_KEY);
+    location.reload();
+  }
 }
 
-function addAppt(){
-  const name=document.getElementById('ain').value.trim(),t=document.getElementById('atm').value;
-  if(!name||!t){alert('Başlık ve saat zorunlu.');return}
-  const d=document.getElementById('adt').value,loc=document.getElementById('alc').value.trim();
-  const note=document.getElementById('anote').value.trim();
-  const [h,m]=t.split(':'),c=document.createElement('div');c.className='appt';
-  c.innerHTML='<div class="appt-time" style="background:var(--blue)"><div class="appt-h">'+h+'</div><div class="appt-m">:'+m+'</div></div><div class="appt-info"><div class="appt-name">'+name+'</div><div class="appt-sub">'+(loc||'—')+' · '+(d||'Bugün')+(note?' · '+note.substring(0,30):'')+'</div></div><button class="del-btn" onclick="delItem(this)">×</button>';
-  document.getElementById('alist').prepend(c);
-  document.getElementById('ain').value='';document.getElementById('alc').value='';document.getElementById('anote').value='';
+function resetAllData() {
+  if (confirm('TÜM verileriniz silinecek. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?')) {
+    localStorage.clear();
+    location.reload();
+  }
 }
 
-function addRem(){
-  const text=document.getElementById('rin').value.trim(),dt=document.getElementById('rdt').value;
-  if(!text)return;
-  const l=document.getElementById('rlist'),item=document.createElement('div');item.className='rem';
-  let w='BUGÜN';if(dt){const d=new Date(dt);w=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')}
-  item.innerHTML='<div class="rem-check" onclick="chk(this)"></div><div class="rem-text">'+text+'</div><div class="rem-when">'+w+'</div><button class="del-btn" style="margin-left:8px" onclick="delItem(this)">×</button>';
-  l.prepend(item);document.getElementById('rin').value='';document.getElementById('rdt').value='';
-  document.getElementById('kr').textContent=parseInt(document.getElementById('kr').textContent)+1;
+// ============ TAB NAVIGATION ============
+function switchTab(tabId) {
+  if (isRecording) toggleRecording();
+  if (activeDictation) stopDictation();
+  
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.pill, .bni').forEach(el => el.classList.remove('active'));
+  
+  document.getElementById(`tab-${tabId}`).classList.add('active');
+  const activePill = Array.from(document.querySelectorAll('.pill')).find(p => 
+    p.textContent.toLowerCase().includes(tabId === 'record' ? 'kayıt' : 
+      tabId === 'notes' ? 'notlar' : 
+      tabId === 'appointments' ? 'randevu' : 
+      tabId === 'tasks' ? 'görev' : 'ayarlar'));
+  if (activePill) activePill.classList.add('active');
+  
+  const navMap = { record: 0, notes: 1, appointments: 2, tasks: 3, settings: 4 };
+  const navIndex = navMap[tabId];
+  if (navIndex !== undefined) {
+    const bniElements = document.querySelectorAll('.bni');
+    if (bniElements[navIndex]) bniElements[navIndex].classList.add('active');
+  }
 }
 
-function chk(el){
-  el.classList.toggle('done');const t=el.nextElementSibling;t.classList.toggle('done');
-  const w=t.nextElementSibling;
-  if(el.classList.contains('done')){w.textContent='TAMAM';w.style.color='var(--ink4)'}
-  else w.style.color='var(--gold)';
+// ============ VOICE DICTATION ============
+function toggleDictation(buttonId, targetId) {
+  if (activeDictation === buttonId) {
+    stopDictation();
+    return;
+  }
+  if (activeDictation) stopDictation();
+  if (!SpeechRecognitionAPI) {
+    alert('Tarayıcınız ses tanımayı desteklemiyor.');
+    return;
+  }
+  
+  activeDictation = buttonId;
+  const button = document.getElementById(buttonId);
+  button.classList.add('recording');
+  
+  dictationRecognizer = new SpeechRecognitionAPI();
+  dictationRecognizer.continuous = true;
+  dictationRecognizer.interimResults = false;
+  dictationRecognizer.lang = 'tr-TR';
+  
+  dictationRecognizer.onresult = (event) => {
+    let text = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        text += event.results[i][0].transcript + ' ';
+      }
+    }
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      targetEl.value = (targetEl.value + text).trim();
+    }
+  };
+  
+  dictationRecognizer.onerror = () => {
+    stopDictation();
+    showToast('❌ Mikrofon hatası', 2000);
+  };
+  
+  dictationRecognizer.onend = () => {
+    if (activeDictation === buttonId) {
+      try { dictationRecognizer.start(); } catch(e) {}
+    }
+  };
+  
+  try { dictationRecognizer.start(); } catch(e) { stopDictation(); }
 }
 
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+function stopDictation() {
+  if (dictationRecognizer) {
+    try { dictationRecognizer.stop(); } catch(e) {}
+    dictationRecognizer = null;
+  }
+  if (activeDictation) {
+    const button = document.getElementById(activeDictation);
+    if (button) button.classList.remove('recording');
+    activeDictation = null;
+  }
+}
+
+// ============ AUDIO METER ============
+async function initAudioMeter() {
+  try {
+    audioStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, sampleRate: 48000 }
+    });
+    audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 48000 });
+    await audioContext.resume();
+    
+    const source = audioContext.createMediaStreamSource(audioStream);
+    const gain = audioContext.createGain();
+    gain.gain.value = 2.0;
+    const highpass = audioContext.createBiquadFilter();
+    highpass.type = 'highpass';
+    highpass.frequency.value = 100;
+    const lowpass = audioContext.createBiquadFilter();
+    lowpass.type = 'lowpass';
+    lowpass.frequency.value = 8000;
+    const compressor = audioContext.createDynamicsCompressor();
+    compressor.threshold.value = -24;
+    compressor.ratio.value = 12;
+    compressor.attack.value = 0.003;
+    compressor.release.value = 0.25;
+    
+    audioAnalyser = audioContext.createAnalyser();
+    audioAnalyser.fftSize = 256;
+    
+    source.connect(gain);
+    gain.connect(highpass);
+    highpass.connect(lowpass);
+    lowpass.connect(compressor);
+    compressor.connect(audioAnalyser);
+    
+    document.getElementById('aqPanel').classList.add('show');
+    startMeterAnimation();
+  } catch(e) { console.error('Audio setup failed:', e); }
+}
+
+function startMeterAnimation() {
+  if (!audioAnalyser) return;
+  const updateMeter = () => {
+    if (!audioAnalyser || !isRecording) return;
+    const dataArray = new Uint8Array(audioAnalyser.frequencyBinCount);
+    audioAnalyser.getByteFrequencyData(dataArray);
+    const avg = dataArray.slice(0, 32).reduce((a,b) => a + b, 0) / 32;
+    const level = Math.min(8, Math.floor(avg / 10));
+    const bars = document.querySelectorAll('.aq-bar');
+    bars.forEach((bar, i) => {
+      if (i < level) {
+        bar.classList.add('on');
+        bar.style.height = Math.max(4, 5 + i * 2) + 'px';
+      } else {
+        bar.classList.remove('on');
+        bar.style.height = '4px';
+      }
+    });
+    meterAnimation = requestAnimationFrame(updateMeter);
+  };
+  updateMeter();
+}
+
+function stopAudioMeter() {
+  if (meterAnimation) cancelAnimationFrame(meterAnimation);
+  if (audioStream) audioStream.getTracks().forEach(track => track.stop());
+  if (audioContext) audioContext.close();
+  audioContext = null;
+  audioAnalyser = null;
+  audioStream = null;
+  document.getElementById('aqPanel').classList.remove('show');
+  document.querySelectorAll('.aq-bar').forEach(bar => {
+    bar.classList.remove('on');
+    bar.style.height = '4px';
+  });
+}
+
+// ============ RECORDING ============
+function updateTranscriptDisplay() {
+  const transcriptEl = document.getElementById('transcriptText');
+  if (!finalTranscript && !interimTranscript) {
+    transcriptEl.innerHTML = '<span class="ph">Kayıt başlatıldığında konuşma metni burada görünecek...</span>';
+    return;
+  }
+  transcriptEl.innerHTML = finalTranscript + (interimTranscript ? `<span class="im">${interimTranscript}</span>` : '');
+  transcriptEl.scrollTop = transcriptEl.scrollHeight;
+  const analyzeBtn = document.getElementById('analyzeBtn');
+  if (analyzeBtn) analyzeBtn.disabled = finalTranscript.trim().length < 10;
+}
+
+function initSpeechRecognition() {
+  if (!SpeechRecognitionAPI) {
+    document.getElementById('transcriptText').innerHTML = '<textarea id="manualTranscript" style="width:100%; min-height:100px; border:none; background:transparent; font-size:13px; resize:none; outline:none;" placeholder="Ses tanıma desteklenmiyor. Metni buraya yazabilirsiniz..."></textarea>';
+    return null;
+  }
+  const recognizer = new SpeechRecognitionAPI();
+  recognizer.continuous = true;
+  recognizer.interimResults = true;
+  recognizer.lang = 'tr-TR';
+  recognizer.onresult = (event) => {
+    interimTranscript = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript + ' ';
+      } else {
+        interimTranscript += event.results[i][0].transcript;
+      }
+    }
+    updateTranscriptDisplay();
+  };
+  recognizer.onerror = () => {
+    document.getElementById('transcriptText').innerHTML = '<span style="color: var(--error);">Mikrofon izni gerekli.</span>';
+  };
+  recognizer.onend = () => {
+    if (isRecording) {
+      try { recognizer.start(); } catch(e) {}
+    }
+  };
+  return recognizer;
+}
+
+async function toggleRecording() {
+  isRecording = !isRecording;
+  const recordBtn = document.getElementById('recordBtn');
+  const recordLabel = document.getElementById('recordLabel');
+  const recordDot = document.getElementById('recordDot');
+  const waveBars = document.querySelectorAll('.wb');
+  
+  if (isRecording) {
+    await initAudioMeter();
+    recordBtn.classList.add('on');
+    recordBtn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="6" width="4" height="12" rx="1"/><rect x="14" y="6" width="4" height="12" rx="1"/></svg>';
+    recordLabel.textContent = 'Kaydediliyor...';
+    recordDot.classList.add('on');
+    waveBars.forEach(bar => bar.classList.add('on'));
+    
+    finalTranscript = '';
+    interimTranscript = '';
+    updateTranscriptDisplay();
+    document.getElementById('analysisResult').classList.remove('show');
+    document.getElementById('timeWarn').classList.remove('show');
+    
+    recordingSeconds = 0;
+    document.getElementById('recordTime').textContent = formatTime(0);
+    recordingTimer = setInterval(() => {
+      recordingSeconds++;
+      document.getElementById('recordTime').textContent = formatTime(recordingSeconds);
+      if (recordingSeconds === 2700) {
+        document.getElementById('timeWarn').classList.add('show');
+      }
+    }, 1000);
+    
+    speechRecognizer = initSpeechRecognition();
+    if (speechRecognizer) {
+      try { speechRecognizer.start(); } catch(e) {}
+    }
+  } else {
+    recordBtn.classList.remove('on');
+    recordBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>';
+    recordLabel.textContent = 'Kaydı Başlat';
+    recordDot.classList.remove('on');
+    waveBars.forEach(bar => bar.classList.remove('on'));
+    
+    clearInterval(recordingTimer);
+    if (speechRecognizer) {
+      try { speechRecognizer.stop(); } catch(e) {}
+    }
+    stopAudioMeter();
+    const manualTranscript = document.getElementById('manualTranscript');
+    if (manualTranscript) finalTranscript = manualTranscript.value;
+    updateTranscriptDisplay();
+  }
+}
+
+// ============ AI ANALYSIS ============
+async function analyzeTranscript() {
+  const text = finalTranscript.trim();
+  if (!text) return;
+  
+  const apiKey = localStorage.getItem(STORAGE_KEYS.API_KEY);
+  if (!apiKey) {
+    alert('API anahtarı bulunamadı. Ayarlardan ekleyin.');
+    return;
+  }
+  
+  const resultDiv = document.getElementById('analysisResult');
+  const analysisText = document.getElementById('analysisText');
+  const spinEl = document.getElementById('analysisSpin');
+  const analyzeBtn = document.getElementById('analyzeBtn');
+  
+  resultDiv.classList.add('show');
+  spinEl.style.display = 'block';
+  analysisText.textContent = '';
+  analyzeBtn.disabled = true;
+  
+  const userName = localStorage.getItem(STORAGE_KEYS.USER_NAME) || 'Yönetici';
+  
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 2000,
+        system: `Sen "${userName}" için çalışan profesyonel bir yönetici asistanısın. Görevin: 1. Gereksiz dolgu kelimelerini çıkar 2. Sadece iş değeri taşıyan bilgileri koru 3. Net, özlü ve profesyonel dil kullan 4. Sorunlar için kök neden analizi yap 5. Her sorun için birden fazla çözüm alternatifi sun`,
+        messages: [{
+          role: 'user',
+          content: `Aşağıdaki konuşma metnini analiz et ve yapılandırılmış bir rapor hazırla:\n\n"${text}"\n\nRapor formatı:\n📋 TOPLANTI ÖZETİ\n[2-3 cümle]\n\n🎯 ALINAN KARARLAR\n• [Karar 1]\n\n✅ AKSİYON MADDELERİ\n• [Sorumlu] — [Görev]\n\n⚠️ SORUNLAR & ANALİZ\n• [Sorun] → [Çözüm]\n\n💡 STRATEJİK ÖNERİLER\n• [Öneri]\n\n📊 DEĞERLENDİRME\n[Genel değerlendirme]`
+        }]
+      })
+    });
+    
+    const data = await response.json();
+    spinEl.style.display = 'none';
+    analyzeBtn.disabled = false;
+    
+    if (!response.ok) {
+      analysisText.textContent = 'Hata: ' + (data.error?.message || 'Analiz başarısız');
+      return;
+    }
+    
+    const result = data.content?.[0]?.text || 'Analiz sonucu alınamadı.';
+    let i = 0;
+    const interval = setInterval(() => {
+      analysisText.textContent += result[i] || '';
+      i++;
+      if (i >= result.length) clearInterval(interval);
+    }, 15);
+    
+    const analyses = JSON.parse(localStorage.getItem(STORAGE_KEYS.ANALYSES) || '[]');
+    analyses.unshift({ text: result, date: new Date().toISOString() });
+    localStorage.setItem(STORAGE_KEYS.ANALYSES, JSON.stringify(analyses.slice(0, 50)));
+    updateKPIs();
+  } catch(e) {
+    spinEl.style.display = 'none';
+    analyzeBtn.disabled = false;
+    analysisText.textContent = 'Bağlantı hatası: ' + e.message;
+  }
+}
+
+function saveAnalysisToNotes() {
+  const analysis = document.getElementById('analysisText').textContent;
+  if (!analysis || analysis === 'Analiz sonucu alınamadı.') return;
+  document.getElementById('noteTitle').value = `Toplantı Analizi — ${new Date().toLocaleDateString('tr-TR')}`;
+  document.getElementById('noteContent').value = analysis;
+  switchTab('notes');
+}
+
+// ============ VOICE NOTE ============
+function startVoiceNote() {
+  if (!SpeechRecognitionAPI) { alert('Tarayıcınız ses tanımayı desteklemiyor.'); return; }
+  const btn = document.getElementById('voiceNoteBtn');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '🎙️ Dinleniyor... 🔴';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+  
+  const recognition = new SpeechRecognitionAPI();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'tr-TR';
+  
+  recognition.onresult = (event) => {
+    const text = event.results[0][0].transcript;
+    let title = text.substring(0, Math.min(50, text.length));
+    let category = 'Toplantı';
+    let priority = 'Normal';
+    
+    if (text.match(/(acil|hemen|şimdi)/i)) priority = 'Acil';
+    else if (text.match(/(öncelikli|yarın)/i)) priority = 'Öncelikli';
+    if (text.match(/(müşteri|satış)/i)) category = 'Müşteri';
+    else if (text.match(/(strateji|plan)/i)) category = 'Strateji';
+    else if (text.match(/(fikir|öneri)/i)) category = 'Fikir';
+    
+    document.getElementById('noteTitle').value = title.charAt(0).toUpperCase() + title.slice(1);
+    document.getElementById('noteContent').value = text;
+    document.getElementById('noteCategory').value = category;
+    document.getElementById('notePriority').value = priority;
+    showToast(`✅ Not hazır! Başlık: ${title.substring(0, 40)}`, 3000);
+    
+    btn.innerHTML = originalHTML;
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  };
+  recognition.onerror = () => {
+    btn.innerHTML = originalHTML;
+    btn.style.opacity = '1';
+    btn.disabled = false;
+    showToast('❌ Ses algılanamadı', 2000);
+  };
+  recognition.start();
+}
+
+// ============ VOICE TASK ============
+function startVoiceTask() {
+  if (!SpeechRecognitionAPI) { alert('Tarayıcınız ses tanımayı desteklemiyor.'); return; }
+  const btn = document.getElementById('voiceTaskBtn');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '🎙️ Dinleniyor... 🔴';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+  
+  const recognition = new SpeechRecognitionAPI();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'tr-TR';
+  
+  recognition.onresult = (event) => {
+    const text = event.results[0][0].transcript;
+    let taskText = text;
+    let dueDate = '';
+    const now = new Date();
+    
+    if (text.match(/yarın/i)) {
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(9, 0, 0, 0);
+      dueDate = tomorrow.toISOString().slice(0, 16);
+      taskText = text.replace(/yarın/gi, '').trim();
+    }
+    const timeMatch = text.match(/(\d{1,2})[:.](\d{1,2})/);
+    if (timeMatch && !dueDate) {
+      const hour = parseInt(timeMatch[1]);
+      const minute = parseInt(timeMatch[2]);
+      const taskDate = new Date(now);
+      taskDate.setHours(hour, minute, 0, 0);
+      if (taskDate < now) taskDate.setDate(taskDate.getDate() + 1);
+      dueDate = taskDate.toISOString().slice(0, 16);
+      taskText = text.replace(timeMatch[0], '').trim();
+    }
+    
+    document.getElementById('taskInput').value = taskText.charAt(0).toUpperCase() + taskText.slice(1);
+    if (dueDate) document.getElementById('taskDueDate').value = dueDate;
+    showToast(`✅ Görev hazır!`, 2000);
+    
+    btn.innerHTML = originalHTML;
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  };
+  recognition.onerror = () => {
+    btn.innerHTML = originalHTML;
+    btn.style.opacity = '1';
+    btn.disabled = false;
+    showToast('❌ Ses algılanamadı', 2000);
+  };
+  recognition.start();
+}
+
+// ============ VOICE APPOINTMENT ============
+function startVoiceAppointment() {
+  if (!SpeechRecognitionAPI) { alert('Tarayıcınız ses tanımayı desteklemiyor.'); return; }
+  const btn = document.getElementById('voiceAppointmentBtn');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '🎙️ Dinleniyor... 🔴';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+  
+  const recognition = new SpeechRecognitionAPI();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'tr-TR';
+  
+  recognition.onresult = (event) => {
+    const text = event.results[0][0].transcript;
+    let title = '';
+    let time = '';
+    let date = '';
+    let location = '';
+    let reminder = '0';
+    let reminderType = 'toast';
+    const now = new Date();
+    
+    // Tarih
+    if (text.match(/bugün/i)) date = now.toISOString().split('T')[0];
+    else if (text.match(/yarın/i)) {
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      date = tomorrow.toISOString().split('T')[0];
+    }
+    // Saat
+    const timeMatch = text.match(/(\d{1,2})[:.](\d{1,2})/);
+    if (timeMatch) time = `${timeMatch[1].padStart(2,'0')}:${timeMatch[2].padStart(2,'0')}`;
+    // Başlık
+    const saatIndex = text.search(/(saat|'da|'de)\s*\d/i);
+    title = (saatIndex > 0 ? text.substring(0, saatIndex) : text.substring(0, 50)).trim();
+    title = title.charAt(0).toUpperCase() + title.slice(1);
+    // Hatırlatıcı
+    if (text.match(/(hatırlat|uyar)/i)) {
+      if (text.match(/(30|otuz)\s*dakika/i)) reminder = '30';
+      else if (text.match(/(1|bir)\s*saat/i)) reminder = '60';
+      else if (text.match(/(1|bir)\s*gün/i)) reminder = '1440';
+      else reminder = '30';
+      if (text.match(/(sesli|ses)/i)) reminderType = 'sound';
+    }
+    
+    if (title) document.getElementById('apptTitle').value = title;
+    if (time) document.getElementById('apptTime').value = time;
+    if (date) document.getElementById('apptDate').value = date;
+    if (reminder !== '0') document.getElementById('apptReminder').value = reminder;
+    if (reminderType !== 'toast') document.getElementById('apptReminderType').value = reminderType;
+    document.getElementById('apptNotes').value = text;
+    
+    showToast(`✅ Randevu bilgileri dolduruldu!`, 3000);
+    btn.innerHTML = originalHTML;
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  };
+  recognition.onerror = () => {
+    btn.innerHTML = originalHTML;
+    btn.style.opacity = '1';
+    btn.disabled = false;
+    showToast('❌ Ses algılanamadı', 2000);
+  };
+  recognition.start();
+}
+
+// ============ REMINDER SYSTEM ============
+function startReminderChecker() {
+  if (reminderInterval) clearInterval(reminderInterval);
+  reminderInterval = setInterval(() => {
+    const appointments = JSON.parse(localStorage.getItem(STORAGE_KEYS.APPOINTMENTS) || '[]');
+    const now = new Date();
+    appointments.forEach((apt, index) => {
+      if (!apt.reminder || apt.reminder === '0') return;
+      if (apt.reminded) return;
+      if (!apt.date || !apt.time) return;
+      
+      const appointmentDate = new Date(`${apt.date}T${apt.time}`);
+      const reminderMinutes = parseInt(apt.reminder);
+      const reminderTime = new Date(appointmentDate.getTime() - (reminderMinutes * 60000));
+      
+      if (now >= reminderTime && now < appointmentDate) {
+        const reminderType = apt.reminderType || 'toast';
+        const timeLeft = Math.floor((appointmentDate - now) / 60000);
+        let message = `🔔 RANDEVU HATIRLATICI\n\n📌 ${apt.title}\n📅 ${formatDate(apt.date)}\n⏰ ${apt.time}\n⏳ ${timeLeft} dakika sonra`;
+        if (apt.location) message += `\n📍 ${apt.location}`;
+        
+        if (reminderType === 'toast' || reminderType === 'both') showToast(message, 10000);
+        if (reminderType === 'sound' || reminderType === 'both') {
+          try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.frequency.value = 880;
+            gainNode.gain.value = 0.3;
+            oscillator.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
+            oscillator.stop(audioCtx.currentTime + 1);
+          } catch(e) {}
+        }
+        if (Notification.permission === 'granted') {
+          new Notification('🔔 Randevu Hatırlatıcısı', { body: `${apt.title} - ${apt.time}` });
+        }
+        
+        apt.reminded = true;
+        localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(appointments));
+        loadAppointments();
+      }
+    });
+  }, 60000);
+}
+
+function getReminderText(minutes) {
+  const m = parseInt(minutes);
+  if (m === 5) return '5 dakika önce';
+  if (m === 10) return '10 dakika önce';
+  if (m === 15) return '15 dakika önce';
+  if (m === 30) return '30 dakika önce';
+  if (m === 60) return '1 saat önce';
+  if (m === 120) return '2 saat önce';
+  if (m === 1440) return '1 gün önce';
+  if (m === 2880) return '2 gün önce';
+  if (m === 10080) return '1 hafta önce';
+  return `${m} dakika önce`;
+}
+
+// ============ NOTES CRUD ============
+function loadNotes() {
+  const notes = JSON.parse(localStorage.getItem(STORAGE_KEYS.NOTES) || '[]');
+  const container = document.getElementById('notesList');
+  if (!container) return;
+  if (notes.length === 0) { container.innerHTML = '<div class="card" style="text-align: center; color: var(--gray-500);">Henüz not eklenmemiş.</div>'; return; }
+  container.innerHTML = notes.map((note, index) => `
+    <div class="ncard">
+      <div class="ncard-top">
+        <div class="ncard-title">${escapeHtml(note.title)}</div>
+        <div class="ncard-date">${note.date}</div>
+      </div>
+      <div class="ncard-body">${escapeHtml(note.content.substring(0, 150))}${note.content.length > 150 ? '...' : ''}</div>
+      <div><span class="badge badge-info">${escapeHtml(note.category)}</span><span class="badge ${note.priority === 'Acil' ? 'badge-error' : note.priority === 'Öncelikli' ? 'badge-accent' : 'badge-success'}">${escapeHtml(note.priority)}</span></div>
+      <button class="del-btn" style="position: absolute; top: 16px; right: 16px;" onclick="deleteNote(${index})">×</button>
+    </div>
+  `).join('');
+}
+
+function addNote() {
+  const title = document.getElementById('noteTitle').value.trim();
+  const content = document.getElementById('noteContent').value.trim();
+  const category = document.getElementById('noteCategory').value;
+  const priority = document.getElementById('notePriority').value;
+  if (!title) { alert('Lütfen bir başlık girin.'); return; }
+  const notes = JSON.parse(localStorage.getItem(STORAGE_KEYS.NOTES) || '[]');
+  notes.unshift({ title, content: content || '(İçerik yok)', category, priority, date: new Date().toLocaleString('tr-TR') });
+  localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(notes));
+  document.getElementById('noteTitle').value = '';
+  document.getElementById('noteContent').value = '';
+  loadNotes();
+  updateKPIs();
+  showToast('✅ Not kaydedildi!', 2000);
+}
+
+function deleteNote(index) {
+  if (confirm('Bu notu silmek istediğinize emin misiniz?')) {
+    const notes = JSON.parse(localStorage.getItem(STORAGE_KEYS.NOTES) || '[]');
+    notes.splice(index, 1);
+    localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(notes));
+    loadNotes();
+    updateKPIs();
+  }
+}
+
+// ============ APPOINTMENTS CRUD ============
+function loadAppointments() {
+  const appointments = JSON.parse(localStorage.getItem(STORAGE_KEYS.APPOINTMENTS) || '[]');
+  const container = document.getElementById('appointmentsList');
+  if (!container) return;
+  const reminderCount = appointments.filter(apt => apt.reminder && apt.reminder !== '0' && !apt.reminded).length;
+  const reminderCountEl = document.getElementById('reminderCount');
+  if (reminderCountEl) reminderCountEl.textContent = reminderCount > 0 ? `🔔 ${reminderCount} hatırlatıcı aktif` : '';
+  if (appointments.length === 0) { container.innerHTML = '<div class="card" style="text-align: center; color: var(--gray-500);">Henüz randevu eklenmemiş.</div>'; return; }
+  const sorted = [...appointments].sort((a, b) => new Date(`${a.date || '2099-01-01'}T${a.time || '00:00'}`) - new Date(`${b.date || '2099-01-01'}T${b.time || '00:00'}`));
+  container.innerHTML = sorted.map((apt, originalIndex) => {
+    const actualIndex = appointments.findIndex(a => a.createdAt === apt.createdAt);
+    const [hours, minutes] = (apt.time || '00:00').split(':');
+    const isPast = apt.date && new Date(`${apt.date}T${apt.time}`) < new Date();
+    const hasReminder = apt.reminder && apt.reminder !== '0';
+    return `
+      <div class="appt" style="${isPast ? 'opacity: 0.6;' : ''}">
+        <div class="appt-time" style="background: ${isPast ? 'var(--gray-500)' : 'var(--primary)'}">
+          <div class="appt-h">${hours}</div><div class="appt-m">:${minutes}</div>
+        </div>
+        <div class="appt-info">
+          <div class="appt-name">${escapeHtml(apt.title)} ${isPast ? '<span style="font-size: 10px; color: var(--gray-500);">(Geçmiş)</span>' : ''}</div>
+          <div class="appt-sub">${apt.date ? formatDate(apt.date) : 'Tarih yok'} ${apt.location ? ` · ${escapeHtml(apt.location)}` : ''} ${apt.notes ? ` · 📝 ${escapeHtml(apt.notes.substring(0, 40))}` : ''}</div>
+          ${hasReminder ? `<div class="appt-sub" style="color: var(--accent); margin-top: 4px;">🔔 ${getReminderText(apt.reminder)} ${apt.reminded ? '✓ Hatırlatıldı' : ''}</div>` : ''}
+        </div>
+        <button class="del-btn" onclick="deleteAppointment(${actualIndex === -1 ? originalIndex : actualIndex})">×</button>
+      </div>
+    `;
+  }).join('');
+}
+
+function addAppointment() {
+  const title = document.getElementById('apptTitle').value.trim();
+  const date = document.getElementById('apptDate').value;
+  const time = document.getElementById('apptTime').value;
+  const location = document.getElementById('apptLocation').value.trim();
+  const notes = document.getElementById('apptNotes').value.trim();
+  const reminder = document.getElementById('apptReminder').value;
+  const reminderType = document.getElementById('apptReminderType').value;
+  if (!title || !time) { alert('Başlık ve saat zorunludur.'); return; }
+  const appointments = JSON.parse(localStorage.getItem(STORAGE_KEYS.APPOINTMENTS) || '[]');
+  appointments.unshift({ title, date, time, location, notes, reminder, reminderType, reminded: false, createdAt: new Date().toISOString() });
+  localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(appointments));
+  document.getElementById('apptTitle').value = '';
+  document.getElementById('apptDate').value = '';
+  document.getElementById('apptTime').value = '';
+  document.getElementById('apptLocation').value = '';
+  document.getElementById('apptNotes').value = '';
+  loadAppointments();
+  showToast('✅ Randevu eklendi!', 2000);
+}
+
+function deleteAppointment(index) {
+  if (confirm('Bu randevuyu silmek istediğinize emin misiniz?')) {
+    const appointments = JSON.parse(localStorage.getItem(STORAGE_KEYS.APPOINTMENTS) || '[]');
+    appointments.splice(index, 1);
+    localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(appointments));
+    loadAppointments();
+  }
+}
+
+// ============ TASKS CRUD ============
+function loadTasks() {
+  const tasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.TASKS) || '[]');
+  const container = document.getElementById('tasksList');
+  if (!container) return;
+  if (tasks.length === 0) { container.innerHTML = '<div class="card" style="text-align: center; color: var(--gray-500);">Henüz görev eklenmemiş.</div>'; return; }
+  container.innerHTML = tasks.map((task, index) => `
+    <div class="rem">
+      <div class="rem-check ${task.completed ? 'done' : ''}" onclick="toggleTask(${index})"></div>
+      <div class="rem-text ${task.completed ? 'done' : ''}">${escapeHtml(task.text)}</div>
+      <div class="rem-when">${task.dueDate ? new Date(task.dueDate).toLocaleString('tr-TR') : 'Bugün'}</div>
+      <button class="del-btn" onclick="deleteTask(${index})">×</button>
+    </div>
+  `).join('');
+}
+
+function addTask() {
+  const text = document.getElementById('taskInput').value.trim();
+  const dueDate = document.getElementById('taskDueDate').value;
+  if (!text) { alert('Lütfen bir görev girin.'); return; }
+  const tasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.TASKS) || '[]');
+  tasks.unshift({ text, completed: false, dueDate });
+  localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
+  document.getElementById('taskInput').value = '';
+  document.getElementById('taskDueDate').value = '';
+  loadTasks();
+  updateKPIs();
+  showToast('✅ Görev eklendi!', 2000);
+}
+
+function toggleTask(index) {
+  const tasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.TASKS) || '[]');
+  tasks[index].completed = !tasks[index].completed;
+  localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
+  loadTasks();
+}
+
+function deleteTask(index) {
+  if (confirm('Bu görevi silmek istediğinize emin misiniz?')) {
+    const tasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.TASKS) || '[]');
+    tasks.splice(index, 1);
+    localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
+    loadTasks();
+    updateKPIs();
+  }
+}
+
+// ============ INITIALIZE ============
+function init() {
+  const userName = localStorage.getItem(STORAGE_KEYS.USER_NAME);
+  const apiKey = localStorage.getItem(STORAGE_KEYS.API_KEY);
+  if (!userName) { document.getElementById('setupScreen').style.display = 'flex'; }
+  else if (!apiKey) { document.getElementById('setupScreen').style.display = 'none'; document.getElementById('keyscreen').style.display = 'flex'; }
+  else { document.getElementById('setupScreen').style.display = 'none'; document.getElementById('keyscreen').style.display = 'none'; showMainApp(); }
+}
+init();
 </script>
 </body>
 </html>
