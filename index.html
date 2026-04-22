@@ -29,20 +29,36 @@ html,body{height:100%;overflow:hidden;background:var(--ink)}
 body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height:1.5}
 .shell{width:100%;height:100vh;max-width:480px;margin:0 auto;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
 
+/* SETUP EKRANI */
+.setup-screen{background:var(--ink);padding:60px 28px 48px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;z-index:200}
+.setup-logo{font-family:'Cormorant Garamond';font-size:12px;color:var(--gold2);letter-spacing:.35em;text-transform:uppercase;margin-bottom:36px;opacity:.7}
+.setup-title{font-family:'Cormorant Garamond';font-size:30px;font-weight:500;color:#fff;text-align:center;line-height:1.3;margin-bottom:8px}
+.setup-sub{font-size:12px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.8;margin-bottom:32px}
+.setup-divider{width:40px;height:1px;background:var(--brdGold);margin:0 auto 32px}
+.setup-label{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;align-self:flex-start;width:100%}
+.setup-input{width:100%;padding:14px 16px;border-radius:var(--r);border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:15px;font-family:'Cormorant Garamond';outline:none;margin-bottom:10px;letter-spacing:.05em;transition:border-color .2s}
+.setup-input::placeholder{color:rgba(255,255,255,0.2)}
+.setup-input:focus{border-color:var(--gold)}
+.setup-btn{width:100%;padding:14px;background:transparent;color:var(--gold2);border:1px solid var(--brdGold);border-radius:var(--r);font-family:'Outfit';font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.08em;transition:all .2s;margin-bottom:10px}
+.setup-btn:hover{background:var(--goldBg)}
+.setup-err{font-size:11px;color:#e07070;text-align:center;min-height:14px}
+
+/* KEY SCREEN */
 .keyscreen{background:var(--ink);padding:60px 28px 48px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;z-index:100}
-.key-logo{font-family:'Cormorant Garamond';font-size:13px;color:var(--gold2);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:40px;opacity:.8}
-.key-title{font-family:'Cormorant Garamond';font-size:32px;font-weight:500;color:#fff;text-align:center;line-height:1.2;margin-bottom:10px}
+.key-logo{font-family:'Cormorant Garamond';font-size:12px;color:var(--gold2);letter-spacing:.35em;text-transform:uppercase;margin-bottom:36px;opacity:.7}
+.key-title{font-family:'Cormorant Garamond';font-size:30px;font-weight:500;color:#fff;text-align:center;line-height:1.2;margin-bottom:10px}
 .key-divider{width:40px;height:1px;background:var(--brdGold);margin:0 auto 28px}
-.key-sub{font-size:12px;color:rgba(255,255,255,0.35);text-align:center;line-height:1.8;margin-bottom:32px}
+.key-sub{font-size:12px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.8;margin-bottom:32px}
 .key-input{width:100%;padding:14px 16px;border-radius:var(--r);border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:13px;font-family:'Outfit';outline:none;margin-bottom:10px;letter-spacing:.08em;transition:border-color .2s}
 .key-input::placeholder{color:rgba(255,255,255,0.2)}
 .key-input:focus{border-color:var(--gold)}
-.key-btn{width:100%;padding:14px;background:transparent;color:var(--gold2);border:1px solid var(--brdGold);border-radius:var(--r);font-family:'Outfit';font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.08em;margin-bottom:12px;transition:all .2s}
+.key-btn{width:100%;padding:14px;background:transparent;color:var(--gold2);border:1px solid var(--brdGold);border-radius:var(--r);font-family:'Outfit';font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.08em;transition:all .2s;margin-bottom:10px}
 .key-btn:hover{background:var(--goldBg)}
 .key-err{font-size:11px;color:#e07070;text-align:center;min-height:16px;margin-bottom:8px}
 .key-note{font-size:11px;color:rgba(255,255,255,0.2);text-align:center;line-height:1.7}
 .key-note a{color:var(--gold);text-decoration:none}
 
+/* HEADER */
 .sbar{background:var(--ink);padding:max(env(safe-area-inset-top),14px) 22px 10px;display:flex;justify-content:space-between;align-items:center}
 .sbar-time{font-family:'Cormorant Garamond';font-size:17px;color:#fff;letter-spacing:.05em}
 .sbar-badge{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:.15em;text-transform:uppercase}
@@ -70,7 +86,16 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 .sec::after{content:'';flex:1;height:1px;background:var(--brd)}
 .sec:first-child{margin-top:0}
 
-/* SES KALİTESİ */
+/* SES KAYIT BUTONU — tüm bölümlerde */
+.voice-input-row{display:flex;gap:8px;margin-bottom:10px;align-items:flex-start}
+.voice-input-row textarea,.voice-input-row input{flex:1}
+.mic-btn{width:44px;height:44px;border-radius:var(--r);background:var(--ink);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;margin-top:0}
+.mic-btn.recording{background:var(--red);animation:mbp 1.2s infinite}
+.mic-btn svg{width:20px;height:20px;fill:#fff}
+@keyframes mbp{0%,100%{box-shadow:0 0 0 rgba(176,32,32,0)}50%{box-shadow:0 0 12px rgba(176,32,32,0.5)}}
+.voice-hint{font-size:10px;color:var(--ink4);margin-bottom:8px;letter-spacing:.02em}
+
+/* AQ PANEL */
 .aq-panel{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:12px 16px;margin-bottom:12px;display:none;align-items:center;gap:12px}
 .aq-panel.show{display:flex}
 .aq-bars{display:flex;align-items:center;gap:2px;height:20px}
@@ -81,7 +106,7 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 .aq-sub{font-size:10px;color:var(--ink4);margin-top:2px}
 .aq-badge{font-size:9px;padding:3px 8px;border-radius:20px;background:var(--greenBg);color:var(--green);border:1px solid rgba(15,107,79,0.15);font-weight:500;letter-spacing:.06em}
 
-/* KAYIT HERO */
+/* RECORD HERO */
 .rec-hero{background:var(--sur);border-radius:var(--r3);border:1px solid var(--brd);padding:24px 20px 22px;text-align:center;margin-bottom:12px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .rec-hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--brdGold),transparent)}
 .wave{display:flex;align-items:center;justify-content:center;gap:4px;height:32px;margin-bottom:18px}
@@ -101,9 +126,7 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 .ldot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:bl 1.2s infinite;display:none}
 .ldot.on{display:inline-block;margin-right:6px}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:.1}}
-
-/* MAX SÜRE UYARISI */
-.time-warn{background:rgba(184,150,46,0.1);border:1px solid var(--brdGold);border-radius:var(--r);padding:8px 12px;font-size:11px;color:var(--gold);margin-bottom:10px;display:none;text-align:center;letter-spacing:.02em}
+.time-warn{background:rgba(184,150,46,0.1);border:1px solid var(--brdGold);border-radius:var(--r);padding:8px 12px;font-size:11px;color:var(--gold);margin-bottom:10px;display:none;text-align:center}
 .time-warn.show{display:block}
 
 .tbox{background:var(--sur2);border-radius:var(--r2);border:1px solid var(--brd);padding:14px 16px;margin-bottom:12px}
@@ -133,12 +156,11 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 .fi:focus{outline:none;border-color:var(--gold);background:var(--sur)}
 .fi-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 
-/* NOT KARTI — SİLME BUTONU İLE */
 .ncard{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:16px;margin-bottom:10px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .ncard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),transparent)}
 .ncard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
 .ncard-title{font-size:13px;font-weight:500;color:var(--ink);flex:1}
-.ncard-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:8px}
+.ncard-actions{display:flex;align-items:center;gap:6px;margin-left:8px;flex-shrink:0}
 .ncard-date{font-size:10px;color:var(--ink4)}
 .ncard-body{font-size:12px;color:var(--ink2);line-height:1.6;font-weight:300}
 .badge{display:inline-block;font-size:9px;padding:3px 9px;border-radius:20px;font-weight:500;margin:8px 3px 0 0;letter-spacing:.08em;text-transform:uppercase}
@@ -146,21 +168,16 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 .badge-green{background:var(--greenBg);color:var(--green);border:1px solid rgba(15,107,79,0.15)}
 .badge-blue{background:var(--blueBg);color:var(--blue);border:1px solid rgba(26,63,122,0.15)}
 .badge-red{background:var(--redBg);color:var(--red);border:1px solid rgba(176,32,32,0.15)}
-
-/* SİLME BUTONU */
 .del-btn{width:26px;height:26px;border-radius:8px;background:var(--redBg);border:1px solid rgba(176,32,32,0.15);color:var(--red);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;line-height:1}
-.del-btn:hover{background:rgba(176,32,32,0.15)}
 
-/* RANDEVU */
 .appt{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:14px 16px;margin-bottom:10px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)}
 .appt-time{background:var(--ink);border-radius:var(--r);min-width:52px;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
 .appt-h{font-family:'Cormorant Garamond';font-size:18px;line-height:1}
 .appt-m{font-size:9px;opacity:.5}
 .appt-info{flex:1;min-width:0}
-.appt-name{font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.appt-name{font-size:13px;font-weight:500;color:var(--ink)}
 .appt-sub{font-size:11px;color:var(--ink4);margin-top:3px;font-weight:300}
 
-/* GÖREV */
 .rem{background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:13px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
 .rem-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--brd2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .rem-check.done{background:var(--green);border-color:var(--green)}
@@ -169,10 +186,10 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 .rem-text.done{text-decoration:line-through;color:var(--ink4)}
 .rem-when{font-size:10px;color:var(--gold);font-weight:500;letter-spacing:.06em;flex-shrink:0}
 
-.qrow{display:flex;gap:8px}
+.qrow{display:flex;gap:8px;align-items:center}
 .qi{flex:1;padding:12px 14px;border:1px solid var(--brd2);border-radius:var(--r);font-size:13px;color:var(--ink);background:var(--sur);font-family:'Outfit';font-weight:300;-webkit-appearance:none}
 .qi:focus{outline:none;border-color:var(--gold)}
-.qb{padding:12px 18px;background:var(--ink);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;font-family:'Outfit'}
+.qb{padding:12px 16px;background:var(--ink);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;font-family:'Outfit'}
 
 .set-card{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow)}
 .set-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--brd)}
@@ -180,9 +197,12 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 .set-lbl{font-size:13px;color:var(--ink)}
 .set-val{font-size:12px;color:var(--ink4);font-weight:300}
 .set-val.ok{color:var(--green);font-weight:500}
-.danger-btn{width:100%;padding:13px;background:transparent;color:var(--red);border:1px solid rgba(176,32,32,0.2);border-radius:var(--r);font-family:'Outfit';font-size:13px;cursor:pointer;letter-spacing:.04em;transition:all .2s}
-.danger-btn:hover{background:var(--redBg)}
+.set-name-row{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid var(--brd);gap:10px}
+.set-name-input{flex:1;border:none;background:transparent;font-size:13px;color:var(--ink);font-family:'Outfit';text-align:right;outline:none}
+.danger-btn{width:100%;padding:13px;background:transparent;color:var(--red);border:1px solid rgba(176,32,32,0.2);border-radius:var(--r);font-family:'Outfit';font-size:13px;cursor:pointer;letter-spacing:.04em;transition:all .2s;margin-bottom:8px}
+
 .divider{height:1px;background:var(--brd);margin:14px 0}
+.hint{font-size:10px;color:var(--ink4);margin-bottom:8px;letter-spacing:.02em}
 
 .bnav{background:var(--sur);border-top:1px solid var(--brd);padding:10px 4px;padding-bottom:max(10px,env(safe-area-inset-bottom));display:flex;justify-content:space-around;flex-shrink:0}
 .bni{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:7px 8px;border-radius:var(--r);transition:background .15s;min-width:52px}
@@ -191,16 +211,29 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 .bni.active svg{fill:var(--ink)}
 .bni-lbl{font-size:8px;color:var(--ink4);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
 .bni.active .bni-lbl{color:var(--ink)}
-
-/* SWIPE TO DELETE HİNT */
-.hint{font-size:10px;color:var(--ink4);text-align:right;margin-bottom:6px;letter-spacing:.02em}
 </style>
 </head>
 <body>
 <div class="shell">
-  <div class="keyscreen" id="keyscreen">
+
+  <!-- İSİM KURULUM EKRANI -->
+  <div class="setup-screen" id="setupScreen">
+    <div class="setup-logo">Executive Assistant</div>
+    <div class="setup-title">Hoş Geldiniz</div>
+    <div class="setup-divider"></div>
+    <div class="setup-sub">Asistanınızı kişiselleştirmek için<br>adınızı ve unvanınızı girin.</div>
+    <div class="setup-label">Adınız</div>
+    <input class="setup-input" id="setupName" placeholder="Ali Yılmaz" maxlength="30"/>
+    <div class="setup-label" style="margin-top:8px">Unvanınız (isteğe bağlı)</div>
+    <input class="setup-input" id="setupTitle" placeholder="Genel Müdür" maxlength="40"/>
+    <button class="setup-btn" style="margin-top:16px" onclick="saveSetup()">DEVAM ET →</button>
+    <div class="setup-err" id="setupErr"></div>
+  </div>
+
+  <!-- API KEY EKRANI -->
+  <div class="keyscreen" id="keyscreen" style="display:none">
     <div class="key-logo">Executive Assistant</div>
-    <div class="key-title">Yapay Zeka<br>Kurulumu</div>
+    <div class="key-title">API Kurulumu</div>
     <div class="key-divider"></div>
     <div class="key-sub">Anthropic API anahtarınızı girin.<br>Cihazınızda güvenle saklanır.</div>
     <input class="key-input" id="keyinput" type="password" placeholder="sk-ant-api03-..."/>
@@ -209,6 +242,7 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
     <div class="key-note">Anahtar için <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a></div>
   </div>
 
+  <!-- ANA UYGULAMA -->
   <div id="mainapp" style="display:none;flex-direction:column;height:100%">
     <div class="sbar">
       <span class="sbar-time" id="clk">--:--</span>
@@ -219,7 +253,7 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
       <div class="hdr-top">
         <div>
           <div class="hdr-eyebrow">Yönetici Asistan</div>
-          <div class="hdr-title">Merhaba,<br><span>Ali Bey</span></div>
+          <div class="hdr-title" id="hdrTitle">Merhaba,<br><span id="hdrName">Ali Bey</span></div>
         </div>
         <div class="hdr-avatar" onclick="sw('settings')">⚙️</div>
       </div>
@@ -240,21 +274,11 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
     <!-- KAYIT -->
     <div class="content active" id="tab-record">
       <div class="aq-panel" id="aqPanel">
-        <div class="aq-bars" id="aqBars">
-          <div class="aq-bar" id="aq1"></div><div class="aq-bar" id="aq2"></div>
-          <div class="aq-bar" id="aq3"></div><div class="aq-bar" id="aq4"></div>
-          <div class="aq-bar" id="aq5"></div><div class="aq-bar" id="aq6"></div>
-          <div class="aq-bar" id="aq7"></div><div class="aq-bar" id="aq8"></div>
-        </div>
-        <div class="aq-info">
-          <div class="aq-title">HD Ses Aktif</div>
-          <div class="aq-sub">Echo · Gürültü filtresi · Boost</div>
-        </div>
+        <div class="aq-bars"><div class="aq-bar" id="aq1"></div><div class="aq-bar" id="aq2"></div><div class="aq-bar" id="aq3"></div><div class="aq-bar" id="aq4"></div><div class="aq-bar" id="aq5"></div><div class="aq-bar" id="aq6"></div><div class="aq-bar" id="aq7"></div><div class="aq-bar" id="aq8"></div></div>
+        <div class="aq-info"><div class="aq-title">HD Ses Aktif</div><div class="aq-sub">Echo · Gürültü filtresi · Boost</div></div>
         <div class="aq-badge">HD</div>
       </div>
-
-      <div class="time-warn" id="timeWarn">⏱ 45 dakikayı geçtiniz — transkripti kaydetmeniz önerilir</div>
-
+      <div class="time-warn" id="timeWarn">⏱ 45 dakika — transkripti kaydetmeniz önerilir</div>
       <div class="rec-hero">
         <div class="wave"><div class="wb" id="b1"></div><div class="wb" id="b2"></div><div class="wb" id="b3"></div><div class="wb" id="b4"></div><div class="wb" id="b5"></div><div class="wb" id="b6"></div><div class="wb" id="b7"></div></div>
         <button class="rec-btn" id="rbtn" onclick="toggleRec()">
@@ -271,7 +295,7 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
       <div class="ares" id="ares">
         <div class="ares-header">
           <div class="ares-icon">✦</div>
-          <div><div class="ares-title">Analiz Sonucu</div><div class="ares-sub">Claude AI · Türkçe</div></div>
+          <div><div class="ares-title">Analiz Sonucu</div><div class="ares-sub">Claude AI · Detaylı</div></div>
           <div class="spin" id="spin"></div>
         </div>
         <div class="atext" id="atext"></div>
@@ -285,60 +309,67 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
       <div class="card">
         <div class="card-title">Yeni Not</div>
         <input class="fi" id="ni" placeholder="Başlık..."/>
-        <textarea class="fi" id="nb" rows="3" placeholder="İçerik..."></textarea>
-        <div class="fi-row">
+        <div class="voice-hint">Sesle yazmak için mikrofona basın 🎙</div>
+        <div class="voice-input-row">
+          <textarea class="fi" id="nb" rows="3" placeholder="İçerik veya sesle dikte edin..." style="margin-bottom:0"></textarea>
+          <button class="mic-btn" id="noteMic" onclick="toggleSectionMic('noteMic','nb')" title="Sesle yaz">
+            <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
+          </button>
+        </div>
+        <div class="fi-row" style="margin-top:10px">
           <select class="fi" id="ncat" style="margin-bottom:0"><option>Toplantı</option><option>Müşteri</option><option>Strateji</option><option>Kişisel</option><option>Diğer</option></select>
           <select class="fi" id="npri" style="margin-bottom:0"><option>Normal</option><option>Öncelikli</option><option>Acil</option></select>
         </div>
         <button class="btn-primary" style="margin-top:10px" onclick="addNote()">Kaydet</button>
       </div>
       <div class="sec">Notlarım</div>
-      <div class="hint">Silmek için 🗑 butonuna basın</div>
+      <div class="hint">Silmek için × butonuna basın</div>
       <div id="nlist"></div>
     </div>
 
     <!-- RANDEVU -->
     <div class="content" id="tab-appt">
-      <div class="sec">Bugün</div>
-      <div class="hint">Silmek için 🗑 butonuna basın</div>
-      <div id="alist">
-        <div class="appt">
-          <div class="appt-time"><div class="appt-h">10</div><div class="appt-m">:30</div></div>
-          <div class="appt-info"><div class="appt-name">Ahmet Yılmaz — Satış</div><div class="appt-sub">Zoom · 45 dakika</div></div>
-          <button class="del-btn" onclick="delItem(this,'appt')">×</button>
-        </div>
-      </div>
-      <div class="card" style="margin-top:8px">
+      <div class="card">
         <div class="card-title">Yeni Randevu</div>
         <input class="fi" id="ain" placeholder="Başlık ve katılımcı..."/>
         <div class="fi-row"><input class="fi" type="date" id="adt" style="margin-bottom:0"/><input class="fi" type="time" id="atm" style="margin-bottom:0"/></div>
         <input class="fi" id="alc" placeholder="Yer / Zoom linki..."/>
-        <button class="btn-primary" onclick="addAppt()">Randevu Ekle</button>
+        <div class="voice-hint">Notlar için sesle yazmak üzere mikrofona basın 🎙</div>
+        <div class="voice-input-row">
+          <textarea class="fi" id="anote" rows="2" placeholder="Randevu notları (sesle veya yazarak)..." style="margin-bottom:0"></textarea>
+          <button class="mic-btn" id="apptMic" onclick="toggleSectionMic('apptMic','anote')" title="Sesle not">
+            <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
+          </button>
+        </div>
+        <button class="btn-primary" style="margin-top:10px" onclick="addAppt()">Randevu Ekle</button>
+      </div>
+      <div class="sec">Randevularım</div>
+      <div class="hint">Silmek için × butonuna basın</div>
+      <div id="alist">
+        <div class="appt">
+          <div class="appt-time"><div class="appt-h">10</div><div class="appt-m">:30</div></div>
+          <div class="appt-info"><div class="appt-name">Ahmet Yılmaz — Satış</div><div class="appt-sub">Zoom · 45 dakika</div></div>
+          <button class="del-btn" onclick="delItem(this)">×</button>
+        </div>
       </div>
     </div>
 
     <!-- GÖREVLER -->
     <div class="content" id="tab-remind">
       <div class="sec">Görevler</div>
-      <div class="hint">Silmek için 🗑 butonuna basın</div>
+      <div class="hint">Silmek için × butonuna basın</div>
       <div id="rlist">
-        <div class="rem">
-          <div class="rem-check done"></div>
-          <div class="rem-text done">Fatura kontrolü</div>
-          <div class="rem-when">TAMAM</div>
-          <button class="del-btn" style="margin-left:8px" onclick="delItem(this,'rem')">×</button>
-        </div>
-        <div class="rem">
-          <div class="rem-check" onclick="chk(this)"></div>
-          <div class="rem-text">Pazarlama raporu</div>
-          <div class="rem-when">10:00</div>
-          <button class="del-btn" style="margin-left:8px" onclick="delItem(this,'rem')">×</button>
-        </div>
+        <div class="rem"><div class="rem-check done"></div><div class="rem-text done">Fatura kontrolü</div><div class="rem-when">TAMAM</div><button class="del-btn" style="margin-left:8px" onclick="delItem(this)">×</button></div>
+        <div class="rem"><div class="rem-check" onclick="chk(this)"></div><div class="rem-text">Pazarlama raporu</div><div class="rem-when">10:00</div><button class="del-btn" style="margin-left:8px" onclick="delItem(this)">×</button></div>
       </div>
       <div class="divider"></div>
       <div class="sec">Yeni Görev</div>
-      <div class="qrow" style="margin-bottom:10px">
+      <div class="voice-hint">Sesle eklemek için mikrofona basın 🎙</div>
+      <div class="qrow" style="margin-bottom:8px">
         <input class="qi" id="rin" placeholder="Görev ekle..."/>
+        <button class="mic-btn" id="remMic" onclick="toggleSectionMic('remMic','rin')" title="Sesle ekle">
+          <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
+        </button>
         <button class="qb" onclick="addRem()">Ekle</button>
       </div>
       <input class="qi" type="datetime-local" id="rdt" style="width:100%;margin-top:6px"/>
@@ -346,6 +377,17 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 
     <!-- AYARLAR -->
     <div class="content" id="tab-settings">
+      <div class="sec">Profil</div>
+      <div class="set-card">
+        <div class="set-name-row">
+          <span class="set-lbl">Adınız</span>
+          <input class="set-name-input" id="settingName" placeholder="Adınız..." onchange="updateName()"/>
+        </div>
+        <div class="set-name-row" style="border-bottom:none">
+          <span class="set-lbl">Unvanınız</span>
+          <input class="set-name-input" id="settingTitle" placeholder="Unvanınız..." onchange="updateName()"/>
+        </div>
+      </div>
       <div class="sec">Sistem</div>
       <div class="set-card">
         <div class="set-row"><span class="set-lbl">API Durumu</span><span class="set-val ok">✓ Aktif</span></div>
@@ -353,12 +395,11 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
         <div class="set-row"><span class="set-lbl">Ses Kalitesi</span><span class="set-val ok">HD · 48kHz</span></div>
         <div class="set-row"><span class="set-lbl">Echo Cancellation</span><span class="set-val ok">Aktif</span></div>
         <div class="set-row"><span class="set-lbl">Gürültü Filtresi</span><span class="set-val ok">Aktif</span></div>
-        <div class="set-row"><span class="set-lbl">Maks Kayıt Süresi</span><span class="set-val">Sınırsız*</span></div>
-        <div class="set-row"><span class="set-lbl">Sürüm</span><span class="set-val">Pro 3.1</span></div>
+        <div class="set-row"><span class="set-lbl">Sürüm</span><span class="set-val">Pro 4.0</span></div>
       </div>
-      <div style="font-size:11px;color:var(--ink4);line-height:1.8;margin-bottom:14px">* Tarayıcı tabanlı kayıt teorik olarak sınırsızdır. 45+ dakika kayıtlarda transkripti ara ara kaydetmeniz önerilir.</div>
       <button class="danger-btn" onclick="resetKey()">API Anahtarını Sıfırla</button>
-      <div style="font-size:11px;color:var(--ink4);line-height:1.8;margin-top:14px">Anahtarınız yalnızca bu cihazda saklanır.</div>
+      <button class="danger-btn" style="color:var(--ink3);border-color:var(--brd2)" onclick="resetAll()">Tüm Verileri Sıfırla</button>
+      <div style="font-size:11px;color:var(--ink4);line-height:1.8;margin-top:14px">Tüm veriler yalnızca bu cihazda saklanır.</div>
     </div>
 
     <div class="bnav">
@@ -387,33 +428,111 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);font-size:14px;line-height
 </div>
 
 <script>
+const SK='ya_pro_v4',NK='ya_name_v1',TK='ya_title_v1';
 let recording=false,timer=null,sec=0,finalT='',interimT='',recog=null;
 let audioCtx=null,analyser=null,micStream=null,animFrame=null;
+let sectionRecog=null,sectionMicId=null,sectionTargetId=null;
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-const SK='ya_pro_v3';
 
 function tick(){const n=new Date();const el=document.getElementById('clk');if(el)el.textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')}
 tick();setInterval(tick,30000);
 function getKey(){try{return localStorage.getItem(SK)||''}catch(e){return''}}
 function setKey(k){try{localStorage.setItem(SK,k)}catch(e){}}
 function delKey(){try{localStorage.removeItem(SK)}catch(e){}}
-function init(){if(getKey().startsWith('sk-')){document.getElementById('keyscreen').style.display='none';const ma=document.getElementById('mainapp');ma.style.display='flex';ma.style.flexDirection='column';ma.style.height='100%'}}
+function getName(){try{return localStorage.getItem(NK)||''}catch(e){return''}}
+function getTitle(){try{return localStorage.getItem(TK)||''}catch(e){return''}}
+function saveName(n,t){try{localStorage.setItem(NK,n);localStorage.setItem(TK,t)}catch(e){}}
+
+function updateHeaderName(){
+  const n=getName(),t=getTitle();
+  const el=document.getElementById('hdrName');
+  if(el)el.textContent=n+(t?' — '+t:'');
+}
+
+function init(){
+  const n=getName(),k=getKey();
+  if(!n){
+    // İsim kurulumu
+    document.getElementById('setupScreen').style.display='flex';
+  } else if(!k){
+    document.getElementById('setupScreen').style.display='none';
+    document.getElementById('keyscreen').style.display='flex';
+  } else {
+    showMain();
+  }
+}
 init();
+
+function saveSetup(){
+  const n=document.getElementById('setupName').value.trim();
+  const t=document.getElementById('setupTitle').value.trim();
+  if(!n){document.getElementById('setupErr').textContent='Lütfen adınızı girin.';return}
+  saveName(n,t);
+  document.getElementById('setupScreen').style.display='none';
+  if(!getKey()){document.getElementById('keyscreen').style.display='flex'}
+  else showMain();
+}
 
 async function saveKey(){
   const k=document.getElementById('keyinput').value.trim();
   const err=document.getElementById('keyerr');
-  if(!k||!k.startsWith('sk-')){err.textContent='Geçersiz anahtar — "sk-" ile başlamalıdır.';return}
+  if(!k||!k.startsWith('sk-')){err.textContent='Geçersiz anahtar.';return}
   err.textContent='Doğrulanıyor...';
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:5,messages:[{role:'user',content:'hi'}]})});
-    if(r.ok){setKey(k);document.getElementById('keyscreen').style.display='none';const ma=document.getElementById('mainapp');ma.style.display='flex';ma.style.flexDirection='column';ma.style.height='100%';err.textContent=''}
+    if(r.ok){setKey(k);document.getElementById('keyscreen').style.display='none';showMain();err.textContent=''}
     else{const d=await r.json();err.textContent='Hata: '+(d.error?.message||'Geçersiz anahtar')}
   }catch(e){err.textContent='Bağlantı hatası.'}
 }
-function resetKey(){if(confirm('API anahtarı silinecek. Devam?')){delKey();location.reload()}}
 
-// SES KALİTESİ
+function showMain(){
+  const ma=document.getElementById('mainapp');ma.style.display='flex';ma.style.flexDirection='column';ma.style.height='100%';
+  updateHeaderName();
+  const sn=document.getElementById('settingName'),st=document.getElementById('settingTitle');
+  if(sn)sn.value=getName();if(st)st.value=getTitle();
+}
+
+function updateName(){
+  const n=document.getElementById('settingName').value.trim();
+  const t=document.getElementById('settingTitle').value.trim();
+  if(n){saveName(n,t);updateHeaderName()}
+}
+
+function resetKey(){if(confirm('API anahtarı silinecek?')){delKey();location.reload()}}
+function resetAll(){if(confirm('Tüm veriler silinecek. Emin misiniz?')){localStorage.clear();location.reload()}}
+
+// ============ BÖLÜM MİKROFON ============
+function toggleSectionMic(btnId,targetId){
+  if(sectionMicId&&sectionMicId!==btnId){
+    stopSectionMic();
+  }
+  if(sectionMicId===btnId){
+    stopSectionMic();return;
+  }
+  if(!SR){alert('Bu tarayıcı ses tanımayı desteklemiyor.');return}
+  sectionMicId=btnId;sectionTargetId=targetId;
+  const btn=document.getElementById(btnId);
+  btn.classList.add('recording');
+  sectionRecog=new SR();
+  sectionRecog.continuous=true;sectionRecog.interimResults=false;sectionRecog.lang='tr-TR';
+  sectionRecog.onresult=e=>{
+    let text='';
+    for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)text+=e.results[i][0].transcript+' ';}
+    const el=document.getElementById(targetId);
+    if(el)el.value=(el.value+text).trim();
+  };
+  sectionRecog.onerror=e=>{if(e.error==='not-allowed')alert('Mikrofon izni gerekli.');stopSectionMic()};
+  sectionRecog.onend=()=>{if(sectionMicId===btnId)try{sectionRecog.start()}catch(e){}};
+  try{sectionRecog.start()}catch(e){stopSectionMic()}
+}
+
+function stopSectionMic(){
+  if(sectionRecog){try{sectionRecog.stop()}catch(e){}sectionRecog=null}
+  if(sectionMicId){const btn=document.getElementById(sectionMicId);if(btn)btn.classList.remove('recording')}
+  sectionMicId=null;sectionTargetId=null;
+}
+
+// ============ ANA KAYIT ============
 async function setupAudio(){
   try{
     micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,sampleRate:48000,sampleSize:16,channelCount:1}});
@@ -429,7 +548,7 @@ async function setupAudio(){
     src.connect(gain);gain.connect(hp);hp.connect(lp);lp.connect(pk);pk.connect(cmp);cmp.connect(analyser);
     document.getElementById('aqPanel').classList.add('show');
     updateMeter();
-  }catch(e){console.log('audio err',e)}
+  }catch(e){}
 }
 
 function updateMeter(){
@@ -484,9 +603,7 @@ function initRecog(){
 
 async function toggleRec(){
   recording=!recording;
-  const btn=document.getElementById('rbtn');
-  const bars=document.querySelectorAll('.wb');
-  const dot=document.getElementById('ldot');
+  const btn=document.getElementById('rbtn'),bars=document.querySelectorAll('.wb'),dot=document.getElementById('ldot');
   if(recording){
     await setupAudio();
     btn.classList.add('on');
@@ -500,19 +617,16 @@ async function toggleRec(){
     timer=setInterval(()=>{
       sec++;
       document.getElementById('rtime').innerHTML='<span class="ldot on"></span>'+String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
-      // 45 dakika uyarısı
       if(sec===2700)document.getElementById('timeWarn').classList.add('show');
     },1000);
-    recog=initRecog();
-    if(recog)try{recog.start()}catch(e){}
+    recog=initRecog();if(recog)try{recog.start()}catch(e){}
   } else {
     recording=false;
     btn.classList.remove('on');
     btn.innerHTML='<svg viewBox="0 0 24 24" style="fill:#fff"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>';
     document.getElementById('rlbl').textContent='Kaydı Başlat';
     dot.classList.remove('on');bars.forEach(b=>b.classList.remove('on'));
-    clearInterval(timer);
-    document.getElementById('rtime').innerHTML='00:00';
+    clearInterval(timer);document.getElementById('rtime').innerHTML='00:00';
     if(recog)try{recog.stop()}catch(e){}
     stopAudio();
     const m=document.getElementById('mtxt');if(m)finalT=m.value;
@@ -525,14 +639,22 @@ async function analyzeNow(){
   const key=getKey();if(!key){alert('API anahtarı bulunamadı.');return}
   const ares=document.getElementById('ares'),atext=document.getElementById('atext'),spin=document.getElementById('spin'),abtn=document.getElementById('abtn');
   ares.classList.add('show');spin.style.display='block';atext.textContent='';abtn.disabled=true;
+  const name=getName();
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001',max_tokens:1200,
-        system:'Sen üst düzey bir Türkçe yönetici asistanısın. "Yani","şey","hmm","ee","işte","aslında" gibi dolgu kelimelerini ve tekrarları çıkar. Profesyonel, özlü, net dil kullan.',
-        messages:[{role:'user',content:'Konuşmayı analiz et, gereksiz kelimeleri temizle:\n\n"'+text+'"\n\n📋 ÖZET\n[Maks 2 cümle]\n\n🎯 KARARLAR\n• ...\n\n✅ AKSİYONLAR\n• [Kişi] — [Görev] — [Süre]\n\n⚠️ SORUNLAR & ÇÖZÜM\n• [Sorun] → [Çözüm]\n\n💡 ÖNERİLER\n• ...'}]
+        model:'claude-haiku-4-5-20251001',max_tokens:2000,
+        system:`Sen "${name||'Yönetici'}" için çalışan üst düzey bir Türkçe yönetici asistanısın.
+Görevin:
+1. "Yani","şey","hmm","ee","işte","aslında" gibi dolgu kelimeleri ve tekrarları tamamen çıkar
+2. Yalnızca iş değeri taşıyan bilgileri koru
+3. Profesyonel, özlü ve net dil kullan
+4. Sorunlar için KÖK NEDEN analizi yap
+5. Her sorun için birden fazla çözüm alternatifi sun
+6. Stratejik öneriler için uygulama adımlarını belirt`,
+        messages:[{role:'user',content:`Konuşmayı analiz et:\n\n"${text}"\n\n📋 TOPLANTI ÖZETİ\n[2-3 cümle, yalnızca kritik bilgi]\n\n🎯 ALINAN KARARLAR\n• [Net karar 1]\n• [Net karar 2]\n\n✅ AKSİYON NOKTALARI\n• [Sorumlu kişi] — [Görev] — [Teslim tarihi/süresi]\n\n⚠️ TESPİT EDİLEN SORUNLAR & DERİNLEMESİNE ANALİZ\n\nSorun 1: [Sorunun net tanımı]\n→ Kök Neden: [Neden ortaya çıktı?]\n→ Kısa Vadeli Çözüm: [Hemen yapılabilecek]\n→ Uzun Vadeli Çözüm: [Kalıcı çözüm]\n→ Risk: [Bu çözümlerin riskleri]\n\n(Birden fazla sorun varsa aynı formatta devam et)\n\n💡 STRATEJİK ÖNERİLER & UYGULAMA PLANI\n\nÖneri 1: [Öneri başlığı]\n→ Neden gerekli: [Gerekçe]\n→ Uygulama adımları: [1. adım, 2. adım, 3. adım]\n→ Beklenen fayda: [Somut fayda]\n→ Süre: [Tahmini süre]\n\n(Birden fazla öneri varsa aynı formatta devam et)\n\n📊 GENEL DEĞERLENDİRME\n[Toplantının genel değerlendirmesi ve bir sonraki adım için tavsiye]`}]
       })
     });
     const data=await res.json();
@@ -549,22 +671,15 @@ function saveToNotes(){
   document.getElementById('nb').value=b;sw('notes');
 }
 
-// SİLME FONKSİYONU
-function delItem(btn,type){
-  if(!confirm('Silmek istediğinize emin misiniz?'))return;
-  const item=btn.closest('.ncard,.appt,.rem');
-  if(!item)return;
-  item.style.transition='opacity .25s,transform .25s';
-  item.style.opacity='0';item.style.transform='translateX(20px)';
-  setTimeout(()=>{
-    item.remove();
-    // Sayaç güncelle
-    if(type==='note'){const n=document.getElementById('kn');n.textContent=Math.max(0,parseInt(n.textContent)-1)}
-    if(type==='rem'){const r=document.getElementById('kr');r.textContent=Math.max(0,parseInt(r.textContent)-1)}
-  },250);
+function delItem(btn){
+  if(!confirm('Silinsin mi?'))return;
+  const item=btn.closest('.ncard,.appt,.rem');if(!item)return;
+  item.style.transition='opacity .25s,transform .25s';item.style.opacity='0';item.style.transform='translateX(20px)';
+  setTimeout(()=>item.remove(),250);
 }
 
 function sw(tab){
+  stopSectionMic();
   document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
   document.querySelectorAll('.pill,.bni').forEach(n=>n.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
@@ -578,7 +693,7 @@ function addNote(){
   if(!t)return;
   const l=document.getElementById('nlist'),c=document.createElement('div');c.className='ncard';
   const d=new Date(),pc=pri==='Acil'?'badge-red':pri==='Öncelikli'?'badge-gold':'badge-green';
-  c.innerHTML='<div class="ncard-top"><div class="ncard-title">'+t+'</div><div class="ncard-actions"><div class="ncard-date">'+d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')+'</div><button class="del-btn" onclick="delItem(this,\'note\')">×</button></div></div><div class="ncard-body">'+(b||'—')+'</div><span class="badge badge-blue">'+cat+'</span><span class="badge '+pc+'">'+pri+'</span>';
+  c.innerHTML='<div class="ncard-top"><div class="ncard-title">'+t+'</div><div class="ncard-actions"><div class="ncard-date">'+d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')+'</div><button class="del-btn" onclick="delItem(this)">×</button></div></div><div class="ncard-body">'+(b||'—')+'</div><span class="badge badge-blue">'+cat+'</span><span class="badge '+pc+'">'+pri+'</span>';
   l.prepend(c);document.getElementById('ni').value='';document.getElementById('nb').value='';
   document.getElementById('kn').textContent=parseInt(document.getElementById('kn').textContent)+1;
 }
@@ -587,10 +702,11 @@ function addAppt(){
   const name=document.getElementById('ain').value.trim(),t=document.getElementById('atm').value;
   if(!name||!t){alert('Başlık ve saat zorunlu.');return}
   const d=document.getElementById('adt').value,loc=document.getElementById('alc').value.trim();
+  const note=document.getElementById('anote').value.trim();
   const [h,m]=t.split(':'),c=document.createElement('div');c.className='appt';
-  c.innerHTML='<div class="appt-time" style="background:var(--blue)"><div class="appt-h">'+h+'</div><div class="appt-m">:'+m+'</div></div><div class="appt-info"><div class="appt-name">'+name+'</div><div class="appt-sub">'+(loc||'—')+' · '+(d||'Bugün')+'</div></div><button class="del-btn" onclick="delItem(this,\'appt\')">×</button>';
+  c.innerHTML='<div class="appt-time" style="background:var(--blue)"><div class="appt-h">'+h+'</div><div class="appt-m">:'+m+'</div></div><div class="appt-info"><div class="appt-name">'+name+'</div><div class="appt-sub">'+(loc||'—')+' · '+(d||'Bugün')+(note?' · '+note.substring(0,30):'')+'</div></div><button class="del-btn" onclick="delItem(this)">×</button>';
   document.getElementById('alist').prepend(c);
-  document.getElementById('ain').value='';document.getElementById('alc').value='';
+  document.getElementById('ain').value='';document.getElementById('alc').value='';document.getElementById('anote').value='';
 }
 
 function addRem(){
@@ -598,7 +714,7 @@ function addRem(){
   if(!text)return;
   const l=document.getElementById('rlist'),item=document.createElement('div');item.className='rem';
   let w='BUGÜN';if(dt){const d=new Date(dt);w=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')}
-  item.innerHTML='<div class="rem-check" onclick="chk(this)"></div><div class="rem-text">'+text+'</div><div class="rem-when">'+w+'</div><button class="del-btn" style="margin-left:8px" onclick="delItem(this,\'rem\')">×</button>';
+  item.innerHTML='<div class="rem-check" onclick="chk(this)"></div><div class="rem-text">'+text+'</div><div class="rem-when">'+w+'</div><button class="del-btn" style="margin-left:8px" onclick="delItem(this)">×</button>';
   l.prepend(item);document.getElementById('rin').value='';document.getElementById('rdt').value='';
   document.getElementById('kr').textContent=parseInt(document.getElementById('kr').textContent)+1;
 }
