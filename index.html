@@ -745,44 +745,28 @@ function doSearch(q){
 
 // ─── AUDIO METRE (sadece görsel, mikrofonu tutmaz) ────────────
 function startMetre(){
-  // AudioContext SADECE ses seviyesi göstergesi için
-  // SpeechRecognition kendi ayrı erişimini kullanır
-  navigator.mediaDevices.getUserMedia({audio:{
-    echoCancellation:true, noiseSuppression:true, autoGainControl:true,
-    sampleRate:{ideal:48000}, channelCount:1
-  }}).then(function(stream){
-    mStream=stream;
-    try{
-      mCtx=new(window.AudioContext||window.webkitAudioContext)({latencyHint:'interactive'});
-      var src=mCtx.createMediaStreamSource(stream);
-      mAna=mCtx.createAnalyser(); mAna.fftSize=256; mAna.smoothingTimeConstant=0.8;
-      src.connect(mAna);
-      // ÖNEMLİ: destination'a BAĞLAMA — hoparlörden ses çıkmaz
-      $('METER').classList.add('on'); drawMetre();
-    }catch(e){}
-  }).catch(function(){});
+  // getUserMedia KULLANMIYORUZ — ikinci mikrofon bildirimi çıkarıyor
+  // Sadece CSS animasyonu ile görsel gösterge yapıyoruz
+  $('METER').classList.add('on');
+  var lvl=0, dir=1;
+  mRaf=setInterval(function(){
+    if(!isRec){return}
+    lvl+=dir*(Math.random()*2);
+    if(lvl>7)dir=-1; if(lvl<1)dir=1;
+    lvl=Math.max(1,Math.min(8,lvl));
+    for(var j=1;j<=8;j++){
+      var b=$('MB'+j);
+      if(b){
+        b.classList.toggle('on',j<=Math.round(lvl));
+        b.style.height=(j<=Math.round(lvl)?Math.max(4,3+j*2.5):4)+'px';
+      }
+    }
+  },120);
 }
-function drawMetre(){
-  if(!mAna||!isRec){return}
-  var d=new Uint8Array(mAna.frequencyBinCount);
-  mAna.getByteFrequencyData(d);
-  var avg=0; for(var i=4;i<60;i++)avg+=d[i]; avg=avg/56;
-  var lvl=Math.min(8,Math.round(avg/10));
-  for(var j=1;j<=8;j++){
-    var b=$('MB'+j);
-    if(b){b.classList.toggle('on',j<=lvl);b.style.height=(j<=lvl?Math.max(4,3+j*2.5):4)+'px'}
-  }
-  mRaf=requestAnimationFrame(drawMetre);
-}
+function drawMetre(){}
 function stopMetre(){
-  if(mRaf){cancelAnimationFrame(mRaf);mRaf=null}
-  // Mikrofon stream'ini TAMAMEN kapat — "Bir site mikrofonunuzu kullanıyor" bildirimi kaybolur
-  if(mStream){
-    mStream.getTracks().forEach(function(t){t.enabled=false;t.stop()});
-    mStream=null;
-  }
-  if(mCtx){try{mCtx.close()}catch(e){} mCtx=null}
-  mAna=null;
+  if(mRaf){clearInterval(mRaf);mRaf=null}
+  mStream=null; mCtx=null; mAna=null;
   var m=$('METER'); if(m)m.classList.remove('on');
   for(var i=1;i<=8;i++){var b=$('MB'+i);if(b){b.classList.remove('on');b.style.height='4px'}}
 }
@@ -870,12 +854,12 @@ function startRec(){
     if(recSec===2700)$('TWARN').classList.add('on');
   },1000);
 
-  // SR başlat
+  // SR başlat — tek mikrofon erişimi
   srMain=initSR();
   if(srMain){
     try{srMain.start();}catch(e){console.warn('SR start:',e)}
   }
-  // Metre başlat (ayrı mikrofon stream — SR'dan bağımsız)
+  // Görsel animasyon başlat (mikrofon AÇMIYOR)
   startMetre();
 }
 
