@@ -399,12 +399,18 @@ select.fi option{background:var(--sur2);color:var(--t1)}
       <div class="rec-lbl" id="REC_LBL">Kaydı Başlat</div>
       <div class="rec-tm" id="REC_TM"><span class="rdot" id="RDOT"></span>00:00</div>
     </div>
+    <!-- Kayıt durdurulunca çıkan butonlar -->
+    <div id="REC_ACTIONS" style="display:none;gap:8px;margin-bottom:8px">
+      <button onclick="toggleEdit()" id="TR_EDIT_BTN" style="flex:1;padding:11px;background:var(--sur2);color:var(--gold2);border:1px solid var(--goldbrd);border-radius:var(--r2);font-family:'Inter';font-size:13px;font-weight:500;cursor:pointer">✏ Düzenle</button>
+      <button onclick="clearTranscript()" style="flex:1;padding:11px;background:var(--redbg);color:var(--red);border:1px solid var(--redbrd);border-radius:var(--r2);font-family:'Inter';font-size:13px;font-weight:500;cursor:pointer">✕ Temizle &amp; Yeniden Başlat</button>
+    </div>
     <div class="tbox">
       <div class="tbox-hdr">
-        <span class="tbox-lbl">Canlı Transkript</span>
+        <span class="tbox-lbl" id="TR_LBL">Canlı Transkript</span>
         <button class="tbox-copy" onclick="copyText(finalT,'Kopyalandı')">Kopyala</button>
       </div>
       <div id="TR"><span class="ph">Kayıt başlatıldığında konuşmanız burada görünecek...</span></div>
+      <textarea id="TR_EDIT" style="display:none;width:100%;min-height:80px;border:1px solid var(--gold);border-radius:var(--r);background:var(--sur2);padding:10px;font-size:13px;font-family:inherit;color:var(--t1);resize:vertical;outline:none;font-weight:300;margin-top:8px" placeholder="Yanlış kelimeleri düzeltin..." oninput="finalT=this.value;$('ANA_BTN').disabled=this.value.trim().length<10"></textarea>
     </div>
     <button class="btn btn-main" id="ANA_BTN" disabled onclick="doAnalyze()">✦  Yapay Zeka ile Derin Analiz</button>
     <div class="ares" id="ARES">
@@ -772,76 +778,82 @@ function stopMetre(){
 }
 
 // ─── SPEECH RECOGNITION (Ana Kayıt) ──────────────────────────
+function createSR(){
+  if(!SR)return null;
+  var r=new SR();
+  r.continuous=true;       // Tek uzun oturum — kesme yok
+  r.interimResults=true;
+  r.lang='tr-TR';
+  r.maxAlternatives=1;
+  if('audioFeedback' in r)r.audioFeedback=false;
+
+  // Daha önce kaydedilen final metin uzunluğunu takip et
+  // Böylece her onresult'ta sadece YENİ kısımlar eklenir
+  var confirmedLen=0; // finalT'nin SR başlamadan önceki uzunluğu
+
+  r.onstart=function(){
+    // Bu SR oturumu başladığında finalT'nin mevcut uzunluğunu kaydet
+    confirmedLen=finalT.length;
+  };
+
+  r.onresult=function(e){
+    // resultIndex'ten itibaren sadece yeni sonuçları işle
+    var newFinal='';
+    for(var i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal){
+        newFinal+=e.results[i][0].transcript;
+      } else {
+        interimT=e.results[i][0].transcript;
+      }
+    }
+    if(newFinal){
+      finalT+=newFinal+' ';
+      interimT='';
+    }
+    _doRender();
+  };
+
+  r.onerror=function(e){
+    console.log('SR hata:',e.error);
+    if(e.error==='not-allowed'||e.error==='permission-denied'){
+      $('TR').innerHTML='<span style="color:var(--red);font-size:12px">Mikrofon izni gerekli.</span>';
+      stopRec(); return;
+    }
+    // no-speech = sessizlik, normal — onend zaten tetiklenecek
+    // aborted = biz durdurduk — normal
+  };
+
+  r.onend=function(){
+    interimT='';
+    _doRender();
+    // Kayıt devam ediyorsa ve bu SR hâlâ aktif oturumsa yeniden başlat
+    if(isRec&&srMain===r){
+      setTimeout(function(){
+        if(isRec&&srMain===r){
+          try{
+            r.start(); // Aynı nesneyi yeniden başlat — resultIndex devam eder
+          }catch(ex){
+            // Başlatılamadı — yeni nesne oluştur
+            var r2=createSR();
+            if(r2){srMain=r2;try{r2.start()}catch(e2){}}
+          }
+        }
+      },150);
+    }
+  };
+
+  return r;
+}
+
+
 function initSR(){
   if(!SR){
     $('TR').innerHTML='<textarea id="MANUAL_T" style="width:100%;min-height:64px;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--t1);resize:none;outline:none;font-weight:300" placeholder="Ses tanıma desteklenmiyor. Yazın..."></textarea>';
     return null;
   }
-  var r=new SR();
-  r.continuous=true;
-  r.interimResults=true;
-  r.lang='tr-TR';
-  r.maxAlternatives=1;
-  // Ses feedback'i kapat (bazı Android'lerde desteklenir)
-  if('audioFeedback' in r)r.audioFeedback=false;
-
-  // Tekrar yazma sorununu önlemek için resultIndex takibi
-  var lastResultIndex=0;
-
-  r.onresult=function(e){
-    // Sadece YENİ sonuçları al — eski index'leri atlıyoruz
-    for(var i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal){
-        // Final sonucu ekle, duplicate kontrolü yap
-        var txt=e.results[i][0].transcript.trim();
-        if(txt && finalT.slice(-txt.length-2).trim()!==txt){
-          finalT+=txt+' ';
-        }
-        interimT='';
-      } else {
-        interimT=e.results[i][0].transcript;
-      }
-    }
-    lastResultIndex=e.results.length;
-    renderTranscript();
-  };
-
-  r.onstart=function(){
-    // SR yeniden başladığında resultIndex sıfırlanır — lastResultIndex sıfırla
-    lastResultIndex=0;
-  };
-
-  r.onerror=function(e){
-    if(e.error==='not-allowed'||e.error==='permission-denied'){
-      $('TR').innerHTML='<span style="color:var(--red);font-size:12px">Mikrofon izni gerekli.</span>';
-      stopRec(); return;
-    }
-    // no-speech normal — sessizlik demek, devam et
-    // aborted = biz durdurduk — devam etme
-  };
-
-  r.onend=function(){
-    interimT=''; // interim'i temizle
-    if(isRec && srMain===r){
-      // 300ms bekle, sonra yeniden başlat
-      setTimeout(function(){
-        if(isRec && srMain===r){
-          try{
-            r.start();
-          }catch(ex){
-            // Başlatılamadı — yeni SR oluştur
-            srMain=null;
-            var r2=initSR();
-            if(r2){srMain=r2;try{r2.start()}catch(e2){}}
-          }
-        }
-      },300);
-    }
-    renderTranscript(); // interim temizlenince ekranı güncelle
-  };
-
-  return r;
+  return createSR();
 }
+
 
 var _rtTmr=null;
 function renderTranscript(){
@@ -869,11 +881,16 @@ function _doRender(){
 
 function startRec(){
   isRec=true;
+  // Butonları gizle, edit modunu kapat
+  var ra=$('REC_ACTIONS'); if(ra)ra.style.display='none';
+  var te=$('TR_EDIT'); if(te)te.style.display='none';
+  var tr=$('TR'); if(tr)tr.style.display='block';
+  var eb=$('TR_EDIT_BTN'); if(eb)eb.textContent='✏ Düzenle';
   // UI güncelle
-  var ring=$('REC_RING'),ico=$('REC_ICO'),lbl=$('REC_LBL'),dot=$('RDOT');
+  var ring=$('REC_RING'),ico=$('REC_ICO'),dot=$('RDOT');
   ring.classList.add('on');
   ico.innerHTML='<rect x="6" y="6" width="4" height="12" rx="1" fill="var(--red)"/><rect x="14" y="6" width="4" height="12" rx="1" fill="var(--red)"/>';
-  lbl.textContent='Kaydediliyor...';
+  $('REC_LBL').textContent='Kaydediliyor...';
   dot.classList.add('on');
   document.querySelectorAll('.wb').forEach(function(w){w.classList.add('on')});
   $('ARES').classList.remove('on');
@@ -884,15 +901,12 @@ function startRec(){
     $('REC_TM').innerHTML='<span class="rdot on"></span>'+p2(Math.floor(recSec/60))+':'+p2(recSec%60);
     if(recSec===2700)$('TWARN').classList.add('on');
   },1000);
-
-  // Metni sıfırla
-  finalT=''; interimT=''; _doRender();
-  // SR başlat — tek mikrofon erişimi
-  srMain=initSR();
-  if(srMain){
-    try{srMain.start();}catch(e){console.warn('SR start:',e)}
-  }
-  // Görsel animasyon başlat (mikrofon AÇMIYOR)
+  // interimT sıfırla, finalT KORU (üzerine devam edebilsin)
+  interimT='';
+  _doRender();
+  // SR başlat
+  srMain=createSR();
+  if(srMain){try{srMain.start()}catch(e){console.warn('SR:',e)}}
   startMetre();
 }
 
@@ -902,20 +916,21 @@ function stopRec(){
   // SR durdur
   var r=srMain; srMain=null;
   if(r){try{r.abort()}catch(e){}}
-  // Metre mikrofon stream'ini kapat
   stopMetre();
   // UI sıfırla
-  var ring=$('REC_RING'),ico=$('REC_ICO'),lbl=$('REC_LBL'),dot=$('RDOT');
+  var ring=$('REC_RING'),ico=$('REC_ICO'),dot=$('RDOT');
   ring.classList.remove('on');
   ico.innerHTML='<path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/>';
-  lbl.textContent='Kaydı Başlat';
+  $('REC_LBL').textContent='Kaydı Başlat';
   dot.classList.remove('on');
   document.querySelectorAll('.wb').forEach(function(w){w.classList.remove('on')});
-  // Süreyi göster
   $('REC_TM').textContent=p2(Math.floor(recSec/60))+':'+p2(recSec%60);
   // Manuel metin varsa al
   var mt=$('MANUAL_T'); if(mt&&mt.value.trim())finalT+=mt.value.trim()+' ';
   interimT=''; _doRender();
+  // Metin varsa DÜZENLE + TEMİZLE butonlarını göster
+  var ra=$('REC_ACTIONS');
+  if(ra)ra.style.display=finalT.trim().length>0?'flex':'none';
 }
 
 function toggleRec(){
@@ -1050,68 +1065,116 @@ function saveModal(){
 
 // ─── RANDEVU PARSE ───────────────────────────────────────────
 function parseAppt(text){
-  var title=text, time='', date='', loc='', rem='30';
+  var time='',date='',loc='',rem='30';
   var now=new Date();
 
+  // ADIM 1: Tarih
   function nwd(d){
-    var nd=new Date(now), diff=d-nd.getDay();
-    if(diff<=0)diff+=7; nd.setDate(nd.getDate()+diff);
+    var nd=new Date(now),diff=d-nd.getDay();
+    if(diff<=0)diff+=7;nd.setDate(nd.getDate()+diff);
     return nd.toISOString().split('T')[0];
   }
+  if(/bug[üu]n/i.test(text))date=now.toISOString().split('T')[0];
+  else if(/yar[ıi]n/i.test(text)){var d1=new Date(now);d1.setDate(d1.getDate()+1);date=d1.toISOString().split('T')[0];}
+  else if(/pazartesi/i.test(text))date=nwd(1);
+  else if(/sal[ıi]/i.test(text))date=nwd(2);
+  else if(/[cç]ar[sş]amba/i.test(text))date=nwd(3);
+  else if(/per[sş]embe/i.test(text))date=nwd(4);
+  else if(/cuma/i.test(text)&&!/cumartesi/i.test(text))date=nwd(5);
+  else if(/cumartesi/i.test(text))date=nwd(6);
+  else if(/pazar/i.test(text)&&!/pazartesi/i.test(text))date=nwd(0);
 
-  // Tarih
-  if(/bug[üu]n/i.test(text)) date=now.toISOString().split('T')[0];
-  else if(/yar[ıi]n/i.test(text)){var d1=new Date(now);d1.setDate(d1.getDate()+1);date=d1.toISOString().split('T')[0]}
-  else if(/pazartesi/i.test(text)) date=nwd(1);
-  else if(/sal[ıi]/i.test(text)) date=nwd(2);
-  else if(/[cç]ar[sş]amba/i.test(text)) date=nwd(3);
-  else if(/per[sş]embe/i.test(text)) date=nwd(4);
-  else if(/cuma/i.test(text)&&!/cumartesi/i.test(text)) date=nwd(5);
-  else if(/cumartesi/i.test(text)) date=nwd(6);
-  else if(/pazar/i.test(text)&&!/pazartesi/i.test(text)) date=nwd(0);
-
-  // Saat
-  var sm=text.match(/(\d{1,2})[.:](\d{2})/);
-  if(sm){time=p2(parseInt(sm[1]))+':'+sm[2]}
+  // ADIM 2: Saat — "14:30", "14.30", "saat 14", "9'da"
+  var sm=text.match(/(?:saat\s+)?(\d{1,2})[.:h](\d{2})/i);
+  if(sm){time=p2(parseInt(sm[1]))+':'+sm[2];}
   else{
-    var sm2=text.match(/(\d{1,2})\s*(?:'?de|'?da|'?te|'?ta)\b/i);
-    if(sm2){var h=parseInt(sm2[1]);if(h>=0&&h<=23)time=p2(h)+':00'}
+    var sm2=text.match(/(?:saat\s+)?(\d{1,2})\s*(?:'da|'de|'ta|'te|da|de|ta|te)/i);
+    if(sm2){var h=parseInt(sm2[1]);if(h>=0&&h<=23)time=p2(h)+':00';}
   }
-  if(time&&/bu[cç]u[kğ]/i.test(text)){var pt=time.split(':');time=pt[0]+':30'}
-  if(time&&/[cç]eyrek/i.test(text)){var pt2=time.split(':');time=pt2[0]+':15'}
+  if(time&&/bu[cç]u[kğ]/i.test(text)){var pt=time.split(':');time=pt[0]+':30';}
+  if(time&&/[cç]eyrek/i.test(text)){var pt2=time.split(':');time=pt2[0]+':15';}
 
-  // Yer
-  if(/zoom/i.test(text)) loc='Zoom';
-  else if(/teams/i.test(text)) loc='Microsoft Teams';
-  else if(/meet/i.test(text)) loc='Google Meet';
-  else if(/ofis/i.test(text)) loc='Ofis';
-  else if(/kafe|cafe/i.test(text)) loc='Kafe';
-  else if(/online|uzaktan/i.test(text)) loc='Online';
+  // ADIM 3: Yer
+  if(/zoom/i.test(text))loc='Zoom';
+  else if(/teams/i.test(text))loc='Microsoft Teams';
+  else if(/google\s*meet|gmeet/i.test(text))loc='Google Meet';
+  else if(/ofis/i.test(text))loc='Ofis';
+  else if(/kafe|cafe/i.test(text))loc='Kafe';
+  else if(/online|uzaktan/i.test(text))loc='Online';
 
-  // Hatırlatıcı
+  // ADIM 4: Hatırlatıcı
   if(/hat[ıi]rlat/i.test(text)){
-    if(/1\s*g[üu]n|bir\s*g[üu]n/i.test(text)) rem='1440';
-    else if(/2\s*saat|iki\s*saat/i.test(text)) rem='120';
-    else if(/1\s*saat|bir\s*saat/i.test(text)) rem='60';
-    else if(/15\s*(dk|dakika)/i.test(text)) rem='15';
+    if(/1\s*g[üu]n|bir\s*g[üu]n/i.test(text))rem='1440';
+    else if(/2\s*saat|iki\s*saat/i.test(text))rem='120';
+    else if(/1\s*saat|bir\s*saat/i.test(text))rem='60';
+    else if(/15\s*(?:dk|dakika)/i.test(text))rem='15';
     else rem='30';
   }
 
-  // Başlık temizle
-  title=text
-    .replace(/\d{1,2}[.:]\d{2}/g,'')
-    .replace(/\d{1,2}\s*(?:'?de|'?da|'?te|'?ta)\b/gi,'')
-    .replace(/bug[üu]n|yar[ıi]n|pazartesi|cumartesi|cuma|pazar/gi,'')
-    .replace(/sal[ıi]|[cç]ar[sş]amba|per[sş]embe/gi,'')
-    .replace(/hat[ıi]rlat\w*/gi,'')
-    .replace(/\d+\s*(dk|dakika|saat|g[üu]n)\s*(önce|sonra)/gi,'')
-    .replace(/zoom|teams|meet|ofis|kafe|online|uzaktan/gi,'')
-    .replace(/\s{2,}/g,' ').trim();
-  if(title.length<3) title=text.substring(0,50);
-  return{title:title.charAt(0).toUpperCase()+title.slice(1),time:time,date:date,loc:loc,rem:rem};
+  // ADIM 5: Başlık — akıllı çıkarım
+  var title='';
+  // "ile [KİŞİ ADI]" kalıbı — büyük harfle başlayan veya bilinen isim
+  // Türkçede kişi adı "ile"den ÖNCE gelir: "Ahmet ile toplantı"
+  var kisiMatch=text.match(/([A-Z\u00c7\u011e\u0130\u00d6\u015e\u00dc][a-z\u00e7\u011f\u0131\u015f\u00f6\u00fc]+)\s+ile\s/);
+  // Yer adlarını filtrele
+  var yerAdlari=/^(Zoom|Teams|Meet|Ofis|Kafe|Online|Google)$/i;
+  if(kisiMatch&&yerAdlari.test(kisiMatch[1]))kisiMatch=null;
+  // Toplantı türü
+  var turMatch=text.match(/(toplant[ıi]|görüşme|gorusme|brifing|brifink|sunum|seminer|randevu)/i);
+  if(kisiMatch&&turMatch){
+    title=kisiMatch[1]+' ile '+turMatch[1];
+  } else if(kisiMatch){
+    title=kisiMatch[1]+' görüşmesi';
+  } else if(turMatch){
+    // Tur varsa önündeki modifier'ı da al (ekip, müşteri, satış vb)
+    var turIdx=text.toLowerCase().indexOf(turMatch[1].toLowerCase());
+    var oncesi=text.substring(Math.max(0,turIdx-15),turIdx).trim();
+    var modifier=oncesi.match(/([a-zçğışöşüA-ZÇĞİÖŞÜ]+)\s*$/);
+    title=(modifier?modifier[1]+' ':'')+turMatch[1];
+  } else {
+    title=text.substring(0,40).trim();
+  }
+  title=title.charAt(0).toUpperCase()+title.slice(1);
+
+  return{title:title,time:time,date:date,loc:loc,rem:rem};
 }
 
-// ─── ANALİZ ──────────────────────────────────────────────────
+
+function toggleEdit(){
+  var te=$('TR_EDIT'), tr=$('TR'), btn=$('TR_EDIT_BTN');
+  if(!te)return;
+  if(te.style.display!=='block'){
+    // Aç — metni textarea'ya yükle, düzenlenebilir yap
+    te.value=finalT.trimEnd();
+    te.style.display='block';
+    if(tr)tr.style.display='none';
+    if(btn)btn.textContent='✓ Tamam';
+    setTimeout(function(){te.focus();te.setSelectionRange(te.value.length,te.value.length)},80);
+  } else {
+    // Kapat — değişiklikleri kaydet
+    finalT=te.value.trim()+' ';
+    te.style.display='none';
+    if(tr)tr.style.display='block';
+    if(btn)btn.textContent='✏ Düzenle';
+    _doRender();
+    toast('Kaydedildi ✓');
+  }
+}
+
+function clearTranscript(){
+  if(!confirm('Metin silinsin mi?'))return;
+  finalT=''; interimT='';
+  var te=$('TR_EDIT'), ra=$('REC_ACTIONS'), eb=$('TR_EDIT_BTN'), tr=$('TR');
+  if(te)te.style.display='none';
+  if(ra)ra.style.display='none';
+  if(eb)eb.textContent='✏ Düzenle';
+  if(tr)tr.style.display='block';
+  _doRender();
+  $('ANA_BTN').disabled=true;
+  toast('Temizlendi — Kaydı başlatın');
+}
+
+
 function doAnalyze(){
   var text=finalT.trim(); if(!text)return;
   var key=localStorage.getItem(K.K); if(!key){toast('API anahtarı yok');return}
@@ -1119,7 +1182,7 @@ function doAnalyze(){
   box.classList.add('on'); spin.style.display='block'; body.textContent='Analiz yapılıyor...'; btn.disabled=true;
   var name=localStorage.getItem(K.N)||'Yönetici';
 
-  var sys='Sen '+name+' icin calisan Turkce kurumsal danismansin.\nKESINLIKLE DUZ METIN YALNIZCA. Hic markdown yok: yildiz, kare, tire, boru, sembol yasak.\nBolum basliklarini buyuk harfle yaz, baska isaret yok.\nDolgu kelimeleri sil: yani, sey, hmm, ee, iste, aslinda.';
+  var sys='Sen '+name+' icin Turkce kurumsal danismansin. DUZ METIN YALNIZCA: yildiz/kare/boru/tire sembol YASAK. Buyuk harf baslik. Dolgu kelime sil (yani sey hmm ee iste).';
 
   var prom='Konusmayi analiz et. SADECE DUZ METIN:\n\n'+text.substring(0,4000)+'\n\n'
     +'YONETICI OZETI\n[2-3 cumle: amac, konular, sonuc]\n\n'
@@ -1134,7 +1197,7 @@ function doAnalyze(){
   fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4000,system:sys,messages:[{role:'user',content:prom}]})
+    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:2500,system:sys,messages:[{role:'user',content:prom}]})
   }).then(function(r){return r.json()}).then(function(d){
     spin.style.display='none'; btn.disabled=false;
     if(d.error){body.textContent='Hata: '+d.error.message;return}
@@ -1146,18 +1209,11 @@ function doAnalyze(){
            .replace(/[━─═┌┐└┘├┤│]/g,'')
            .replace(/\|/g,' ')
            .replace(/`/g,'').trim();
-    // Satır satır göster
-    body.textContent='';
-    var lines=res.split('\n'), li=0;
-    function nl(){
-      if(li>=lines.length){
-        hist.unshift({id:Date.now(),title:'Analiz '+new Date().toLocaleString('tr-TR'),body:res,dur:p2(Math.floor(recSec/60))+':'+p2(recSec%60)});
-        ss(K.HI,hist); updateKpi(); return;
-      }
-      body.textContent+=lines[li]+'\n'; body.scrollTop=body.scrollHeight; li++;
-      setTimeout(nl,16);
-    }
-    nl();
+    // Direkt göster — typewriter efekti kaldırıldı (çok yavaşlatıyordu)
+    body.textContent=res;
+    body.scrollTop=0;
+    hist.unshift({id:Date.now(),title:'Analiz '+new Date().toLocaleString('tr-TR'),body:res,dur:p2(Math.floor(recSec/60))+':'+p2(recSec%60)});
+    ss(K.HI,hist); updateKpi();
   }).catch(function(e){
     spin.style.display='none'; btn.disabled=false;
     body.textContent='Bağlantı hatası: '+e.message;
