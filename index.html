@@ -774,7 +774,6 @@ function stopMetre(){
 // ─── SPEECH RECOGNITION (Ana Kayıt) ──────────────────────────
 function initSR(){
   if(!SR){
-    // SR yoksa manuel textarea göster
     $('TR').innerHTML='<textarea id="MANUAL_T" style="width:100%;min-height:64px;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--t1);resize:none;outline:none;font-weight:300" placeholder="Ses tanıma desteklenmiyor. Yazın..."></textarea>';
     return null;
   }
@@ -783,46 +782,79 @@ function initSR(){
   r.interimResults=true;
   r.lang='tr-TR';
   r.maxAlternatives=1;
+  // Ses feedback'i kapat (bazı Android'lerde desteklenir)
+  if('audioFeedback' in r)r.audioFeedback=false;
+
+  // Tekrar yazma sorununu önlemek için resultIndex takibi
+  var lastResultIndex=0;
 
   r.onresult=function(e){
+    // Sadece YENİ sonuçları al — eski index'leri atlıyoruz
     for(var i=e.resultIndex;i<e.results.length;i++){
       if(e.results[i].isFinal){
-        finalT+=e.results[i][0].transcript+' ';
+        // Final sonucu ekle, duplicate kontrolü yap
+        var txt=e.results[i][0].transcript.trim();
+        if(txt && finalT.slice(-txt.length-2).trim()!==txt){
+          finalT+=txt+' ';
+        }
         interimT='';
       } else {
         interimT=e.results[i][0].transcript;
       }
     }
+    lastResultIndex=e.results.length;
     renderTranscript();
+  };
+
+  r.onstart=function(){
+    // SR yeniden başladığında resultIndex sıfırlanır — lastResultIndex sıfırla
+    lastResultIndex=0;
   };
 
   r.onerror=function(e){
     if(e.error==='not-allowed'||e.error==='permission-denied'){
-      $('TR').innerHTML='<span style="color:var(--red);font-size:12px">Mikrofon izni gerekli. Ayarlardan izin verin.</span>';
-      stopRec();
+      $('TR').innerHTML='<span style="color:var(--red);font-size:12px">Mikrofon izni gerekli.</span>';
+      stopRec(); return;
     }
-    // no-speech, network → onend yeniden başlatacak
+    // no-speech normal — sessizlik demek, devam et
+    // aborted = biz durdurduk — devam etme
   };
 
   r.onend=function(){
-    // SADECE kayıt devam ediyorsa ve bu hâlâ aktif SR ise yeniden başlat
-    if(isRec&&srMain===r){
+    interimT=''; // interim'i temizle
+    if(isRec && srMain===r){
+      // 300ms bekle, sonra yeniden başlat
       setTimeout(function(){
-        if(isRec&&srMain===r){try{r.start()}catch(e){}}
-      },200);
+        if(isRec && srMain===r){
+          try{
+            r.start();
+          }catch(ex){
+            // Başlatılamadı — yeni SR oluştur
+            srMain=null;
+            var r2=initSR();
+            if(r2){srMain=r2;try{r2.start()}catch(e2){}}
+          }
+        }
+      },300);
     }
+    renderTranscript(); // interim temizlenince ekranı güncelle
   };
 
   return r;
 }
 
+var _rtTmr=null;
 function renderTranscript(){
+  // Throttle: 200ms'den sık render etme (performans)
+  if(_rtTmr)clearTimeout(_rtTmr);
+  _rtTmr=setTimeout(function(){_doRender()},150);
+}
+function _doRender(){
   var el=$('TR');
   if(!finalT&&!interimT){
     el.innerHTML='<span class="ph">Kayıt başlatıldığında konuşmanız burada görünecek...</span>';
     return;
   }
-  // Güvenli DOM — XSS yok, encoding sorunu yok
   el.textContent='';
   el.appendChild(document.createTextNode(finalT));
   if(interimT){
@@ -846,7 +878,6 @@ function startRec(){
   document.querySelectorAll('.wb').forEach(function(w){w.classList.add('on')});
   $('ARES').classList.remove('on');
   $('TWARN').classList.remove('on');
-  finalT=''; interimT=''; renderTranscript();
   recSec=0;
   recTimer=setInterval(function(){
     recSec++;
@@ -854,6 +885,8 @@ function startRec(){
     if(recSec===2700)$('TWARN').classList.add('on');
   },1000);
 
+  // Metni sıfırla
+  finalT=''; interimT=''; _doRender();
   // SR başlat — tek mikrofon erişimi
   srMain=initSR();
   if(srMain){
@@ -882,7 +915,7 @@ function stopRec(){
   $('REC_TM').textContent=p2(Math.floor(recSec/60))+':'+p2(recSec%60);
   // Manuel metin varsa al
   var mt=$('MANUAL_T'); if(mt&&mt.value.trim())finalT+=mt.value.trim()+' ';
-  renderTranscript();
+  interimT=''; _doRender();
 }
 
 function toggleRec(){
