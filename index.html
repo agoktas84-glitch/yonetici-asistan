@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="theme-color" content="#0A0A12"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>Executive Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0A0A12;--bg2:#12121E;--sur:#1C1C2E;--sur2:#242438;
+  --brd:rgba(255,255,255,0.08);--brd2:rgba(255,255,255,0.14);
+  --gold:#C8A84B;--gold2:#E0C068;--goldbg:rgba(200,168,75,0.1);--goldbrd:rgba(200,168,75,0.25);
+  --t1:#F0EFE8;--t2:#C0BEB6;--t3:#808078;--t4:#484844;
+  --green:#22C87A;--greenbg:rgba(34,200,122,0.1);
+  --red:#E05555;--redbg:rgba(224,85,85,0.1);--redbrd:rgba(224,85,85,0.25);
+  --blue:#5B9EF5;--bluebg:rgba(91,158,245,0.1);
+  --amber:#F0A030;--amberbg:rgba(240,160,48,0.1);--amberbrd:rgba(240,160,48,0.25);
+  --r:10px;--r2:14px;--r3:20px;
+}
+html,body{height:100%;overflow:hidden;background:#000}
+body{font-family:'Inter',sans-serif;color:var(--t1);font-size:14px;line-height:1.5}
+.shell{width:100%;height:100vh;max-width:480px;margin:0 auto;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
+
+.ov{position:absolute;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px}
+.ov-logo{font-size:10px;color:var(--gold2);letter-spacing:.3em;text-transform:uppercase;margin-bottom:32px;opacity:.7}
+.ov-title{font-family:'Playfair Display';font-size:28px;color:var(--t1);text-align:center;margin-bottom:8px}
+.ov-sub{font-size:12px;color:var(--t3);text-align:center;line-height:1.7;margin-bottom:28px}
+.ov-hr{width:36px;height:1px;background:var(--goldbrd);margin:0 auto 28px}
+.ov-lbl{font-size:10px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;margin-top:12px;align-self:flex-start;width:100%}
+.ov-inp{width:100%;padding:13px 15px;border-radius:var(--r);border:1px solid var(--brd2);background:var(--sur);color:var(--t1);font-size:14px;font-family:'Inter';outline:none}
+.ov-inp:focus{border-color:var(--gold)}
+.ov-btn{width:100%;padding:14px;background:var(--goldbg);color:var(--gold2);border:1px solid var(--goldbrd);border-radius:var(--r);font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;margin-top:20px}
+.ov-err{margin-top:10px;font-size:11px;color:var(--red);text-align:center}
+.ov-note{font-size:11px;color:var(--t4);text-align:center;margin-top:10px}
+.ov-note a{color:var(--gold)}
+
+.sbar{background:var(--bg);padding:max(env(safe-area-inset-top),14px) 20px 10px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.sbar-time{font-family:'Playfair Display';font-size:17px;color:var(--t1)}
+.sbar-r{display:flex;gap:8px;align-items:center}
+.theme-btn{height:26px;padding:0 10px;border-radius:20px;border:1px solid var(--brd2);background:transparent;cursor:pointer;font-size:10px;color:var(--t2)}
+
+.hdr{background:var(--bg);padding:4px 20px 18px;flex-shrink:0}
+.hdr-line{height:1px;background:linear-gradient(90deg,transparent,var(--goldbrd),transparent);margin-bottom:16px}
+.hdr-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:16px}
+.hdr-ey{font-size:9px;color:var(--gold);letter-spacing:.22em;text-transform:uppercase;margin-bottom:5px;font-weight:600}
+.hdr-name{font-family:'Playfair Display';font-size:22px;color:var(--t1);line-height:1.1}
+.hdr-name span{color:var(--gold2)}
+.hdr-sub{font-size:11px;color:var(--t3);margin-top:3px}
+.av-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--goldbrd);background:var(--goldbg);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.kpi{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r2);padding:11px 10px}
+.kpi-n{font-family:'Playfair Display';font-size:24px;color:var(--gold2);line-height:1}
+.kpi-l{font-size:9px;color:var(--t3);margin-top:4px;letter-spacing:.1em;text-transform:uppercase}
+
+.tabs{display:flex;gap:5px;padding:10px 14px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--brd)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:7px 14px;border-radius:var(--r);font-size:11px;font-weight:500;border:1px solid transparent;background:transparent;color:var(--t3);cursor:pointer;white-space:nowrap}
+.tab.active{background:var(--sur2);color:var(--t1);border-color:var(--brd2)}
+
+.srch{padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--brd);flex-shrink:0;display:none}
+.srch.on{display:block}
+.srch-wrap{position:relative}
+.srch-ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--t3);fill:none}
+.srch-in{width:100%;padding:9px 12px 9px 32px;border-radius:var(--r);border:1px solid var(--brd2);background:var(--sur);color:var(--t1);font-size:13px;font-family:'Inter';outline:none}
+
+.pane{flex:1;overflow-y:auto;padding:14px;display:none}
+.pane.on{display:block}
+.sec{font-size:9px;font-weight:600;color:var(--t3);letter-spacing:.16em;text-transform:uppercase;margin:16px 0 10px;display:flex;align-items:center;gap:10px}
+.sec:first-child{margin-top:0}
+.sec::after{content:'';flex:1;height:1px;background:var(--brd)}
+
+.meter{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:10px 14px;margin-bottom:12px;display:none;align-items:center;gap:12px}
+.meter.on{display:flex}
+.mbars{display:flex;align-items:center;gap:2px;height:18px}
+.mb{width:3px;border-radius:2px;background:var(--brd2);height:4px}
+.mb.on{background:var(--green)}
+.minfo{flex:1}
+.mttl{font-size:12px;font-weight:600;color:var(--t1)}
+.msub{font-size:10px;color:var(--t3)}
+.mbdg{font-size:9px;padding:2px 8px;border-radius:20px;background:var(--greenbg);color:var(--green);font-weight:600}
+
+.rec-card{background:var(--sur);border-radius:var(--r3);border:1px solid var(--brd);padding:24px 18px 20px;text-align:center;margin-bottom:12px;position:relative}
+.rec-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:160px;height:1px;background:linear-gradient(90deg,transparent,var(--goldbrd),transparent)}
+.wave-row{display:flex;align-items:center;justify-content:center;gap:4px;height:30px;margin-bottom:16px}
+.wb{width:3px;border-radius:2px;height:4px;background:var(--brd2)}
+.wb.on{background:var(--gold);animation:wv .9s ease-in-out infinite}
+.wb:nth-child(2){animation-delay:.07s}.wb:nth-child(3){animation-delay:.14s}
+.wb:nth-child(4){animation-delay:.21s}.wb:nth-child(5){animation-delay:.10s}
+.wb:nth-child(6){animation-delay:.17s}.wb:nth-child(7){animation-delay:.03s}
+@keyframes wv{0%,100%{height:4px}50%{height:26px}}
+.rec-ring{width:74px;height:74px;border-radius:50%;border:1px solid var(--brd2);background:var(--sur2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;cursor:pointer}
+.rec-ring.on{background:var(--redbg);border-color:var(--redbrd);animation:rp 2s infinite}
+@keyframes rp{0%,100%{box-shadow:0 0 0 0 rgba(224,85,85,.2)}50%{box-shadow:0 0 0 12px rgba(224,85,85,0)}}
+.rec-ring svg{width:28px;height:28px;fill:var(--gold2)}
+.rec-ring.on svg{fill:var(--red)}
+.rec-lbl{font-size:13px;color:var(--t2)}
+.rec-tm{font-family:'Playfair Display';font-size:14px;color:var(--t3);margin-top:5px}
+.rdot{width:6px;height:6px;border-radius:50%;background:var(--red);display:none;margin-right:5px;animation:bl 1s infinite}
+.rdot.on{display:inline-block}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.1}}
+
+.twarn{background:var(--amberbg);border:1px solid var(--amberbrd);border-radius:var(--r);padding:8px 12px;font-size:11px;color:var(--amber);margin-bottom:12px;display:none;text-align:center}
+.twarn.on{display:block}
+
+.tbox{background:var(--sur2);border-radius:var(--r2);border:1px solid var(--brd);padding:13px 15px;margin-bottom:12px}
+.tbox-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tbox-lbl{font-size:9px;font-weight:600;color:var(--t3);letter-spacing:.14em;text-transform:uppercase}
+.tbox-copy{font-size:11px;color:var(--gold);cursor:pointer;padding:2px 8px;border-radius:6px;background:transparent}
+#TR{font-size:13px;line-height:1.75;color:var(--t1);min-height:56px;max-height:120px;overflow-y:auto;font-weight:300}
+.ph{color:var(--t4);font-style:italic}
+
+.action-row{display:flex;gap:8px;margin-bottom:12px}
+.action-btn{flex:1;padding:11px;border-radius:var(--r2);font-family:'Inter';font-size:12px;font-weight:600;cursor:pointer;text-align:center}
+.action-edit{background:var(--sur2);color:var(--gold2);border:1px solid var(--goldbrd)}
+.action-clear{background:var(--redbg);color:var(--red);border:1px solid var(--redbrd)}
+
+.btn{width:100%;padding:13px;border-radius:var(--r2);font-family:'Inter';font-size:13px;font-weight:500;cursor:pointer;margin-bottom:8px;border:none}
+.btn:disabled{opacity:.35}
+.btn-main{background:var(--sur2);color:var(--t1);border:1px solid var(--brd2)}
+.btn-gold{background:var(--goldbg);color:var(--gold2);border:1px solid var(--goldbrd)}
+.btn-red{background:transparent;color:var(--red);border:1px solid var(--redbrd)}
+.btn-ghost{background:transparent;color:var(--t3);border:1px solid var(--brd)}
+
+.ares{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:16px;margin-top:10px;display:none}
+.ares.on{display:block}
+.ares-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+.ares-ico{width:30px;height:30px;border-radius:8px;background:var(--goldbg);border:1px solid var(--goldbrd);display:flex;align-items:center;justify-content:center}
+.ares-ttl{font-size:13px;font-weight:600;color:var(--t1)}
+.ares-sub{font-size:10px;color:var(--t3)}
+.spin{width:12px;height:12px;border:1.5px solid var(--brd2);border-top-color:var(--gold);border-radius:50%;animation:sp .8s linear infinite;display:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ares-body{font-size:13px;line-height:1.85;color:var(--t1);white-space:pre-wrap;max-height:420px;overflow-y:auto}
+.ares-acts{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.ares-act{padding:8px 12px;border-radius:var(--r);border:1px solid var(--brd2);background:transparent;font-size:11px;color:var(--t2);cursor:pointer}
+
+.card{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:16px;margin-bottom:12px}
+.card-ttl{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:12px}
+.fi{width:100%;padding:11px 13px;border:1px solid var(--brd2);border-radius:var(--r);font-size:13px;color:var(--t1);background:var(--sur2);font-family:'Inter';resize:none}
+.fi:focus{outline:none;border-color:var(--gold)}
+.fi-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.fi-lbl{font-size:11px;font-weight:500;color:var(--t3);margin-bottom:5px;margin-top:10px;display:block}
+.vrow{display:flex;gap:8px;align-items:flex-start;margin-top:8px}
+.vrow .fi{margin:0;flex:1}
+.mic-mini{width:42px;height:42px;border-radius:var(--r);background:var(--sur2);border:1px solid var(--brd2);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mic-mini.on{background:var(--redbg);border-color:var(--redbrd)}
+.mic-mini svg{width:18px;height:18px;fill:var(--t3)}
+.mic-mini.on svg{fill:var(--red)}
+
+.vq{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:13px 15px;margin-bottom:12px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.vq-ico{width:36px;height:36px;border-radius:50%;background:var(--goldbg);border:1px solid var(--goldbrd);display:flex;align-items:center;justify-content:center}
+.vq-ico svg{width:16px;height:16px;fill:var(--gold2)}
+.vq-ttl{font-size:13px;font-weight:500;color:var(--t1)}
+.vq-sub{font-size:11px;color:var(--t3)}
+.vq-arr{font-size:18px;color:var(--t4)}
+
+.nc{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);border-left:3px solid var(--gold);padding:14px;margin-bottom:10px;position:relative}
+.nc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;padding-right:30px}
+.nc-ttl{font-size:13px;font-weight:600;color:var(--t1)}
+.nc-dt{font-size:10px;color:var(--t4)}
+.nc-body{font-size:12px;color:var(--t2);line-height:1.6}
+.badge{display:inline-block;font-size:9px;font-weight:600;padding:2px 8px;border-radius:20px;margin:6px 3px 0 0}
+.b-blue{background:var(--bluebg);color:var(--blue)}
+.b-green{background:var(--greenbg);color:var(--green)}
+.b-amber{background:var(--amberbg);color:var(--amber)}
+.b-red{background:var(--redbg);color:var(--red)}
+.del{width:24px;height:24px;border-radius:6px;border:1px solid var(--brd);background:transparent;cursor:pointer;color:var(--t4);font-size:16px;display:flex;align-items:center;justify-content:center;position:absolute;top:12px;right:12px}
+
+.ap{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);padding:13px 14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;position:relative}
+.ap-clk{background:var(--sur2);border:1px solid var(--goldbrd);border-radius:var(--r);min-width:50px;height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ap-h{font-family:'Playfair Display';font-size:17px;color:var(--gold2);line-height:1}
+.ap-m{font-size:9px;color:var(--t3)}
+.ap-inf{flex:1;min-width:0;padding-right:28px}
+.ap-nm{font-size:13px;font-weight:600;color:var(--t1)}
+.ap-sb{font-size:11px;color:var(--t3)}
+.rem-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 8px;border-radius:20px;margin-top:6px;background:var(--amberbg);color:var(--amber)}
+
+.tk{background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.tk-chk{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--brd2);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.tk-chk.done{background:var(--green);border-color:var(--green)}
+.tk-chk.done::after{content:'✓';color:#fff;font-size:12px}
+.tk-txt{flex:1;font-size:13px;color:var(--t1)}
+.tk-txt.done{text-decoration:line-through;color:var(--t4)}
+.tk-wh{font-size:10px;color:var(--gold)}
+.qi-row{display:flex;gap:8px;margin-bottom:8px}
+.qi{flex:1;padding:10px 12px;border:1px solid var(--brd2);border-radius:var(--r);font-size:13px;color:var(--t1);background:var(--sur);font-family:'Inter'}
+.qi-btn{padding:10px 14px;background:var(--sur2);color:var(--t1);border:1px solid var(--brd2);border-radius:var(--r);font-size:13px;cursor:pointer}
+
+.hi{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);border-left:3px solid var(--gold2);padding:14px;margin-bottom:10px;position:relative}
+.hi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;padding-right:30px}
+.hi-ttl{font-size:13px;font-weight:600;color:var(--t1)}
+.hi-dur{font-size:10px;color:var(--t4)}
+.hi-body{font-size:12px;color:var(--t2);line-height:1.55;max-height:68px;overflow:hidden}
+
+.set-g{background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd);overflow:hidden;margin-bottom:12px}
+.set-r{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--brd)}
+.set-r:last-child{border-bottom:none}
+.set-l{font-size:13px;color:var(--t1)}
+.set-v{font-size:12px;color:var(--t3)}
+.set-in{border:none;background:transparent;font-size:13px;color:var(--t1);text-align:right;outline:none}
+.tog{width:38px;height:22px;border-radius:11px;border:2px solid var(--brd2);background:var(--sur2);cursor:pointer;position:relative}
+.tog.on{background:var(--green);border-color:var(--green)}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .25s}
+.tog.on::after{transform:translateX(16px)}
+
+.bnav{background:var(--bg2);border-top:1px solid var(--brd);padding:8px 4px;padding-bottom:max(8px,env(safe-area-inset-bottom));display:flex;justify-content:space-around}
+.bni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 8px;border-radius:var(--r);min-width:50px}
+.bni.active{background:var(--sur)}
+.bni svg{width:19px;height:19px;fill:var(--t3)}
+.bni.active svg{fill:var(--gold2)}
+.bni-l{font-size:8px;color:var(--t3);font-weight:500;text-transform:uppercase}
+.bni.active .bni-l{color:var(--gold2)}
+.bni-dot{position:absolute;top:3px;right:7px;min-width:15px;height:15px;border-radius:8px;background:var(--red);color:#fff;font-size:8px;display:none;align-items:center;justify-content:center}
+.bni-dot.on{display:flex}
+
+.empty{text-align:center;padding:28px 16px;background:var(--sur);border-radius:var(--r2);border:1px solid var(--brd)}
+.empty-ico{font-size:24px;margin-bottom:8px;opacity:.4}
+.empty-txt{font-size:12px;color:var(--t4)}
+.hint{font-size:10px;color:var(--t4);margin-bottom:8px}
+#toast{position:fixed;bottom:82px;left:16px;right:16px;max-width:444px;margin:0 auto;background:var(--sur2);color:var(--t1);padding:13px 16px;border-radius:var(--r2);font-size:13px;z-index:9999;transform:translateY(120px);transition:transform .3s ease;border-left:4px solid var(--gold)}
+#toast.on{transform:translateY(0)}
+
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;display:none;align-items:flex-end;justify-content:center}
+.modal-bg.on{display:flex}
+.modal-box{background:var(--sur);border-radius:var(--r3) var(--r3) 0 0;padding:20px 18px 36px;width:100%;max-width:480px}
+.modal-handle{width:32px;height:4px;border-radius:2px;background:var(--brd2);margin:0 auto 18px}
+.modal-ttl{font-family:'Playfair Display';font-size:18px;color:var(--t1);text-align:center;margin-bottom:5px}
+.modal-sub{font-size:12px;color:var(--t3);text-align:center;margin-bottom:18px}
+.modal-mic{width:64px;height:64px;border-radius:50%;background:var(--sur2);border:1px solid var(--brd2);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;cursor:pointer}
+.modal-mic.on{background:var(--redbg);border-color:var(--redbrd);animation:rp 1.8s infinite}
+.modal-mic svg{width:26px;height:26px;fill:var(--gold2)}
+.modal-mic.on svg{fill:var(--red)}
+.modal-st{font-size:12px;color:var(--t3);text-align:center;margin-bottom:14px}
+.modal-ta{width:100%;padding:11px 13px;border:1px solid var(--brd2);border-radius:var(--r);font-size:13px;color:var(--t1);font-family:'Inter';resize:none;min-height:76px;outline:none;background:var(--sur2);margin-bottom:13px}
+.modal-ta:focus{border-color:var(--gold)}
+.modal-row{display:flex;gap:8px}
+.modal-cancel{flex:1;padding:12px;border-radius:var(--r);border:1px solid var(--brd2);background:transparent;font-size:13px;color:var(--t2);cursor:pointer}
+.modal-save{flex:1;padding:12px;border-radius:var(--r);border:none;background:var(--goldbg);color:var(--gold2);font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--goldbrd)}
+</style>
+</head>
+<body>
+<div class="shell">
+<div id="toast"></div>
+
+<div class="ov" id="OV_SETUP">
+  <div class="ov-logo">Executive Assistant Pro</div>
+  <div class="ov-title">Hoş Geldiniz</div>
+  <div class="ov-hr"></div>
+  <div class="ov-sub">Asistanınızı kişiselleştirmek için<br>adınızı ve unvanınızı girin</div>
+  <div class="ov-lbl">Ad Soyad</div>
+  <input class="ov-inp" id="I_NAME" placeholder="Ali Yılmaz" maxlength="30"/>
+  <div class="ov-lbl">Unvan / Pozisyon</div>
+  <input class="ov-inp" id="I_TITLE" placeholder="Genel Müdür" maxlength="40"/>
+  <button class="ov-btn" onclick="doSetup()">BAŞLAT →</button>
+  <div class="ov-err" id="E_SETUP"></div>
+</div>
+
+<div class="ov" id="OV_KEY" style="display:none">
+  <div class="ov-logo">Executive Assistant Pro</div>
+  <div class="ov-title">API Kurulumu</div>
+  <div class="ov-hr"></div>
+  <div class="ov-sub">Anthropic API anahtarınızı girin.<br>Cihazınızda güvenle saklanır.</div>
+  <div class="ov-lbl">API Anahtarı</div>
+  <input class="ov-inp" id="I_KEY" type="password" placeholder="sk-ant-api03-..." autocomplete="off"/>
+  <button class="ov-btn" onclick="doKey()">BAĞLAN →</button>
+  <div class="ov-err" id="E_KEY"></div>
+  <div class="ov-note"><a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a>'dan alabilirsiniz</div>
+</div>
+
+<div class="modal-bg" id="MODAL">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-ttl" id="M_TTL">Sesle Oluştur</div>
+    <div class="modal-sub" id="M_SUB">Mikrofona basın ve konuşun</div>
+    <div class="modal-mic" id="M_MIC" onclick="toggleModalMic()">
+      <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
+    </div>
+    <div class="modal-st" id="M_ST">Başlamak için mikrofona basın</div>
+    <textarea class="modal-ta" id="M_TA" placeholder="Konuşmanız burada görünecek veya elle yazabilirsiniz..."></textarea>
+    <div class="modal-row">
+      <button class="modal-cancel" onclick="closeModal()">İptal</button>
+      <button class="modal-save" onclick="saveModal()">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<div id="APP" style="display:none;flex-direction:column;height:100%">
+  <div class="sbar">
+    <span class="sbar-time" id="CLK">--:--</span>
+    <div class="sbar-r">
+      <button class="theme-btn" id="THEME_BTN" onclick="toggleTheme()">☀ Aydınlık</button>
+      <span style="font-size:9px;color:var(--t4);letter-spacing:.1em">PRO</span>
+    </div>
+  </div>
+
+  <div class="hdr">
+    <div class="hdr-line"></div>
+    <div class="hdr-row">
+      <div>
+        <div class="hdr-ey">Yönetici Asistan</div>
+        <div class="hdr-name">Merhaba, <span id="HDR_NAME">—</span></div>
+        <div class="hdr-sub" id="HDR_SUB"></div>
+      </div>
+      <div class="av-btn" onclick="sw('settings')">⚙️</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-n" id="KPI_R">0</div><div class="kpi-l">Kayıt</div></div>
+      <div class="kpi"><div class="kpi-n" id="KPI_N">0</div><div class="kpi-l">Not</div></div>
+      <div class="kpi"><div class="kpi-n" id="KPI_T">0</div><div class="kpi-l">Görev</div></div>
+    </div>
+  </div>
+
+  <div class="srch" id="SRCH">
+    <div class="srch-wrap">
+      <svg class="srch-ico" viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input class="srch-in" id="SRCH_IN" placeholder="Ara..." oninput="doSearch(this.value)"/>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="sw('record')">Kayıt</div>
+    <div class="tab" onclick="sw('history')">Geçmiş</div>
+    <div class="tab" onclick="sw('notes')">Notlar</div>
+    <div class="tab" onclick="sw('appt')">Randevu</div>
+    <div class="tab" onclick="sw('remind')">Görevler</div>
+    <div class="tab" onclick="sw('settings')">Ayarlar</div>
+  </div>
+
+  <div class="pane on" id="pane-record">
+    <div class="meter" id="METER">
+      <div class="mbars" id="MBARS"></div>
+      <div class="minfo"><div class="mttl">Ses İşleme Aktif</div><div class="msub">Gürültü filtresi</div></div>
+      <div class="mbdg">HD</div>
+    </div>
+    <div class="twarn" id="TWARN">⏱ 45 dakika geçti — transkripti kaydedin</div>
+    <div class="rec-card">
+      <div class="wave-row" id="WAVES"></div>
+      <div class="rec-ring" id="REC_RING" onclick="toggleRec()">
+        <svg id="REC_ICO" viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/></svg>
+      </div>
+      <div class="rec-lbl" id="REC_LBL">Kaydı Başlat</div>
+      <div class="rec-tm" id="REC_TM"><span class="rdot" id="RDOT"></span>00:00</div>
+    </div>
+    
+    <div class="action-row" id="REC_ACTIONS" style="display:none">
+      <button class="action-btn action-edit" onclick="toggleEdit()">✏ Düzenle</button>
+      <button class="action-btn action-clear" onclick="clearTranscript()">🗑 Temizle & Yeniden Başlat</button>
+    </div>
+    
+    <div class="tbox">
+      <div class="tbox-hdr">
+        <span class="tbox-lbl">Canlı Transkript</span>
+        <button class="tbox-copy" onclick="copyText(finalT,'Kopyalandı')">Kopyala</button>
+      </div>
+      <div id="TR"><span class="ph">Kayıt başlatıldığında konuşmanız burada görünecek...</span></div>
+      <textarea id="TR_EDIT" style="display:none;width:100%;min-height:80px;border:1px solid var(--gold);border-radius:var(--r);background:var(--sur2);padding:10px;font-size:13px;font-family:inherit;color:var(--t1);resize:vertical;outline:none;margin-top:8px" placeholder="Metni düzenleyin..." oninput="updateFromEdit()"></textarea>
+    </div>
+    <button class="btn btn-main" id="ANA_BTN" disabled onclick="doAnalyze()">✦ Yapay Zeka ile Derin Analiz</button>
+    <div class="ares" id="ARES">
+      <div class="ares-hdr">
+        <div class="ares-ico">✦</div>
+        <div><div class="ares-ttl">Derin Analiz Sonucu</div><div class="ares-sub">Claude AI</div></div>
+        <div class="spin" id="SPIN"></div>
+      </div>
+      <div class="ares-body" id="ARES_BODY"></div>
+      <div class="ares-acts">
+        <button class="ares-act" onclick="copyText(document.getElementById('ARES_BODY').textContent,'Kopyalandı')">Kopyala</button>
+        <button class="ares-act" onclick="anaToNote()">Nota Kaydet</button>
+        <button class="ares-act" onclick="anaToHist()">Geçmişe Ekle</button>
+        <button class="ares-act" onclick="exportTxt(document.getElementById('ARES_BODY').textContent,'analiz')">Dışa Aktar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane" id="pane-history">
+    <div class="sec">Kayıt Geçmişi</div>
+    <div id="LIST_HIST"></div>
+  </div>
+
+  <div class="pane" id="pane-notes">
+    <div class="vq" onclick="openModal('note')">
+      <div class="vq-ico"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4z"/></svg></div>
+      <div style="flex:1"><div class="vq-ttl">Sesle Not Oluştur</div><div class="vq-sub">Konuşun, AI düzenleyip kaydeder</div></div>
+      <div class="vq-arr">›</div>
+    </div>
+    <div class="card">
+      <div class="card-ttl">Elle Not Ekle</div>
+      <label class="fi-lbl">Başlık</label>
+      <input class="fi" id="N_TTL" placeholder="Not başlığı..."/>
+      <label class="fi-lbl">İçerik</label>
+      <div class="vrow"><textarea class="fi" id="N_BODY" rows="3" placeholder="Not içeriği..."></textarea><button class="mic-mini" id="MIC_N" onclick="toggleMini('MIC_N','N_BODY')"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4z"/></svg></button></div>
+      <div class="fi-row"><div><label class="fi-lbl">Kategori</label><select class="fi" id="N_CAT"><option>Toplantı</option><option>Müşteri</option><option>Strateji</option><option>Kişisel</option><option>Diğer</option></select></div><div><label class="fi-lbl">Öncelik</label><select class="fi" id="N_PRI"><option>Normal</option><option>Öncelikli</option><option>Acil</option></select></div></div>
+      <button class="btn btn-main" style="margin-top:12px" onclick="addNote()">Kaydet</button>
+    </div>
+    <div class="sec">Notlarım</div>
+    <div class="hint">Silmek için × butonuna basın</div>
+    <div id="LIST_NOTES"></div>
+  </div>
+
+  <div class="pane" id="pane-appt">
+    <div id="REM_BAR"></div>
+    <div class="vq" onclick="openModal('appt')">
+      <div class="vq-ico"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4z"/></svg></div>
+      <div style="flex:1"><div class="vq-ttl">Sesle Randevu Oluştur</div><div class="vq-sub">"Yarın 14:00'de Ali ile toplantı"</div></div>
+      <div class="vq-arr">›</div>
+    </div>
+    <div class="card">
+      <div class="card-ttl">Randevu Ekle</div>
+      <label class="fi-lbl">Başlık</label>
+      <input class="fi" id="A_TTL" placeholder="Toplantı başlığı..."/>
+      <div class="fi-row"><div><label class="fi-lbl">Tarih</label><input class="fi" type="date" id="A_DT"/></div><div><label class="fi-lbl">Saat</label><input class="fi" type="time" id="A_TM"/></div></div>
+      <label class="fi-lbl">Yer / Link</label>
+      <input class="fi" id="A_LOC" placeholder="Zoom, Ofis..."/>
+      <div class="fi-row"><div><label class="fi-lbl">Hatırlatıcı</label><select class="fi" id="A_REM"><option value="0">Yok</option><option value="15">15 dk önce</option><option value="30" selected>30 dk önce</option><option value="60">1 saat önce</option><option value="120">2 saat önce</option></select></div><div><label class="fi-lbl">Bildirim</label><select class="fi" id="A_REM_TYPE"><option value="toast">Uygulama içi</option><option value="both">Bildirim + Uygulama</option></select></div></div>
+      <button class="btn btn-main" style="margin-top:12px" onclick="addAppt()">Randevu Ekle</button>
+    </div>
+    <div class="sec">Randevularım</div>
+    <div class="hint">Silmek için × butonuna basın</div>
+    <div id="LIST_APPT"></div>
+  </div>
+
+  <div class="pane" id="pane-remind">
+    <div class="vq" onclick="openModal('task')">
+      <div class="vq-ico"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4z"/></svg></div>
+      <div style="flex:1"><div class="vq-ttl">Sesle Görev Ekle</div><div class="vq-sub">"Cuma günü raporu tamamla"</div></div>
+      <div class="vq-arr">›</div>
+    </div>
+    <div class="card">
+      <div class="card-ttl">Hızlı Görev Ekle</div>
+      <div class="qi-row"><input class="qi" id="TK_IN" placeholder="Görev metni..." onkeydown="if(event.key==='Enter')addTask()"/><button class="qi-btn" onclick="addTask()">Ekle</button></div>
+      <input class="fi" type="datetime-local" id="TK_DT" style="margin-top:6px"/>
+    </div>
+    <div class="sec">Görevlerim</div>
+    <div class="hint">Silmek için × butonuna basın</div>
+    <div id="LIST_TASKS"></div>
+  </div>
+
+  <div class="pane" id="pane-settings">
+    <div class="sec">Profil</div>
+    <div class="set-g"><div class="set-r"><span class="set-l">Ad Soyad</span><input class="set-in" id="S_NAME" onchange="saveProfile()"/></div><div class="set-r"><span class="set-l">Unvan</span><input class="set-in" id="S_TTL" onchange="saveProfile()"/></div></div>
+    <div class="sec">Tercihler</div>
+    <div class="set-g"><div class="set-r"><span class="set-l">Karanlık Mod</span><div class="tog on" id="DARK_TOG" onclick="toggleTheme()"></div></div><div class="set-r"><span class="set-l">Bildirimler</span><div class="tog" id="NOTIF_TOG" onclick="toggleNotif()"></div></div></div>
+    <div class="sec">Sistem</div>
+    <div class="set-g"><div class="set-r"><span class="set-l">API</span><span class="set-v ok" id="API_ST">✓ Aktif</span></div><div class="set-r"><span class="set-l">Model</span><span class="set-v">Claude Haiku</span></div></div>
+    <div class="sec">Veri</div>
+    <button class="btn btn-gold" onclick="exportAll()">Tüm Verileri Dışa Aktar</button>
+    <button class="btn btn-red" onclick="doResetKey()">API Anahtarını Sıfırla</button>
+    <button class="btn btn-ghost" onclick="doResetAll()">Tüm Verileri Sil</button>
+    <div style="font-size:11px;color:var(--t4);text-align:center;margin-top:10px">Veriler yalnızca bu cihazda saklanır.</div>
+  </div>
+
+  <div class="bnav">
+    <div class="bni active" onclick="sw('record')"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4z"/></svg><span class="bni-l">Kayıt</span></div>
+    <div class="bni" onclick="sw('notes')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg><span class="bni-l">Notlar</span></div>
+    <div class="bni" onclick="sw('appt')"><div class="bni-dot" id="APPT_DOT"></div><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2z"/></svg><span class="bni-l">Randevu</span></div>
+    <div class="bni" onclick="sw('remind')"><svg viewBox="0 0 24 24"><path d="M18 16v-5a6 6 0 00-5-5.92V4a1 1 0 00-2 0v1.08A6 6 0 006 11v5l-2 2v1h16v-1z"/></svg><span class="bni-l">Görevler</span></div>
+    <div class="bni" onclick="sw('settings')"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96a7 7 0 00-1.62-.94l-.36-2.54A.484.484 0 0014 2h-3.84a.484.484 0 00-.48.41l-.36 2.54a7.38 7.38 0 00-1.62.94l-2.39-.96a.48.48 0 00-.59.22L2.74 8.87a.47.47 0 00.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.47.47 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.36 1.04.67 1.62.94l.36 2.54c.05.24.27.41.48.41H14c.24 0 .44-.17.47-.41l.36-2.54a7.38 7.38 0 001.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 00-.12-.61l-2.09-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg><span class="bni-l">Ayarlar</span></div>
+  </div>
+</div>
+</div>
+
+<script>
+var K={K:'ep9k',N:'ep9n',TL:'ep9tl',TH:'ep9th',NF:'ep9nf',NO:'ep9no',AP:'ep9ap',TA:'ep9ta',HI:'ep9hi'};
+function $(id){return document.getElementById(id)}
+function ss(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function sg(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+function p2(n){return String(n).padStart(2,'0')}
+function xss(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+var isRec=false, recSec=0, recTimer=null;
+var finalT='', interimT='', lastAddedText='';
+var srMain=null, srMini=null, miniId=null, srModal=null, modalOn=false, modalType='';
+var mRaf=null;
+var notes=[], appts=[], tasks=[], hist=[];
+var theme='dark', notifOn=false, curTab='record';
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+function boot(){
+  tick(); setInterval(tick,30000);
+  theme=localStorage.getItem(K.TH)||'dark'; applyTheme();
+  notes=sg(K.NO)||[]; appts=sg(K.AP)||[]; tasks=sg(K.TA)||[]; hist=sg(K.HI)||[];
+  notifOn=!!sg(K.NF);
+  var name=localStorage.getItem(K.N), key=localStorage.getItem(K.K);
+  if(!name){$('OV_SETUP').style.display='flex';}
+  else if(!key){$('OV_SETUP').style.display='none';$('OV_KEY').style.display='flex';}
+  else{$('OV_SETUP').style.display='none';$('OV_KEY').style.display='none';startApp();}
+  initWavesAndMeters();
+}
+function initWavesAndMeters(){
+  var waves=''; for(var i=1;i<=7;i++) waves+='<div class="wb" id="WB'+i+'"></div>';
+  if($('WAVES')) $('WAVES').innerHTML=waves;
+  var mbars=''; for(var i=1;i<=8;i++) mbars+='<div class="mb" id="MB'+i+'"></div>';
+  if($('MBARS')) $('MBARS').innerHTML=mbars;
+}
+function tick(){var d=new Date();var e=$('CLK');if(e)e.textContent=p2(d.getHours())+':'+p2(d.getMinutes())}
+function applyTheme(){
+  var r=document.documentElement;
+  if(theme==='light'){
+    r.style.setProperty('--bg','#F5F4F0');r.style.setProperty('--bg2','#ECEAE4');
+    r.style.setProperty('--sur','#FFFFFF');r.style.setProperty('--sur2','#F0EDE5');
+    r.style.setProperty('--brd','rgba(0,0,0,0.07)');r.style.setProperty('--brd2','rgba(0,0,0,0.13)');
+    r.style.setProperty('--t1','#0A0A12');r.style.setProperty('--t2','#3C3A34');
+    r.style.setProperty('--t3','#7C7A72');r.style.setProperty('--t4','#BCBAB2');
+  } else {
+    r.style.setProperty('--bg','#0A0A12');r.style.setProperty('--bg2','#12121E');
+    r.style.setProperty('--sur','#1C1C2E');r.style.setProperty('--sur2','#242438');
+    r.style.setProperty('--brd','rgba(255,255,255,0.08)');r.style.setProperty('--brd2','rgba(255,255,255,0.14)');
+    r.style.setProperty('--t1','#F0EFE8');r.style.setProperty('--t2','#C0BEB6');
+    r.style.setProperty('--t3','#808078');r.style.setProperty('--t4','#484844');
+  }
+  var b=$('THEME_BTN');if(b)b.textContent=theme==='dark'?'☀ Aydınlık':'☾ Karanlık';
+  var t=$('DARK_TOG');if(t)t.classList.toggle('on',theme==='dark');
+}
+function toggleTheme(){theme=theme==='dark'?'light':'dark';localStorage.setItem(K.TH,theme);applyTheme()}
+function toggleNotif(){
+  notifOn=!notifOn; ss(K.NF,notifOn);
+  var t=$('NOTIF_TOG');if(t)t.classList.toggle('on',notifOn);
+  if(notifOn&&'Notification' in window) Notification.requestPermission();
+}
+function toast(msg,dur){var e=$('toast');e.textContent=msg||'';e.classList.add('on');setTimeout(function(){e.classList.remove('on')},dur||2800);}
+
+function doSetup(){
+  var n=$('I_NAME').value.trim();
+  if(!n){$('E_SETUP').textContent='Adınızı girin.';return}
+  localStorage.setItem(K.N,n); localStorage.setItem(K.TL,$('I_TITLE').value.trim());
+  $('OV_SETUP').style.display='none';
+  if(!localStorage.getItem(K.K))$('OV_KEY').style.display='flex';
+  else startApp();
+}
+function doKey(){
+  var k=$('I_KEY').value.trim();
+  if(k.indexOf('sk-')!==0){$('E_KEY').textContent='Geçersiz';return}
+  localStorage.setItem(K.K,k);
+  $('OV_KEY').style.display='none';
+  startApp();
+}
+function doResetKey(){if(confirm('API anahtarı silinecek?')){localStorage.removeItem(K.K);location.reload()}}
+function doResetAll(){if(confirm('Tüm veriler silinecek?')){localStorage.clear();location.reload()}}
+function startApp(){
+  $('APP').style.display='flex';
+  $('HDR_NAME').textContent=localStorage.getItem(K.N)||'';
+  $('HDR_SUB').textContent=localStorage.getItem(K.TL)||'';
+  $('S_NAME').value=localStorage.getItem(K.N)||'';
+  $('S_TTL').value=localStorage.getItem(K.TL)||'';
+  if(notifOn && $('NOTIF_TOG')) $('NOTIF_TOG').classList.add('on');
+  renderAll(); setInterval(checkReminders,60000); checkReminders();
+}
+function saveProfile(){
+  var n=$('S_NAME').value.trim(), t=$('S_TTL').value.trim();
+  if(n){localStorage.setItem(K.N,n);localStorage.setItem(K.TL,t);$('HDR_NAME').textContent=n;$('HDR_SUB').textContent=t;toast('Profil güncellendi');}
+}
+function checkReminders(){
+  var now=new Date(), cnt=0;
+  appts=sg(K.AP)||[];
+  appts.forEach(function(a,i){
+    if(!a.rem||a.rem==='0'||!a.date||!a.time)return;
+    var at=new Date(a.date+'T'+a.time);
+    var rt=new Date(at.getTime()-parseInt(a.rem)*60000);
+    if(now>=rt&&now<at&&!a.reminded){
+      appts[i].reminded=true; ss(K.AP,appts);
+      toast('Randevu: '+a.title+' '+a.time,8000);
+      if(notifOn&&'Notification' in window&&Notification.permission==='granted')
+        new Notification('Randevu',{body:a.title+' — '+a.time});
+      if(curTab==='appt')renderAppts(appts);
+    }
+    var diff=(at-now)/60000; if(diff>0&&diff<=60)cnt++;
+  });
+  var dot=$('APPT_DOT'); if(dot){dot.textContent=cnt||'';dot.classList.toggle('on',cnt>0)}
+}
+function sw(tab){
+  stopMini(); curTab=tab;
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.tab,.bni').forEach(function(n){n.classList.remove('active')});
+  var pane=$('pane-'+tab); if(pane)pane.classList.add('on');
+  var tabs=document.querySelectorAll('.tab'); for(var i=0;i<tabs.length;i++){if(tabs[i].textContent.toLowerCase().includes(tab.substring(0,3)))tabs[i].classList.add('active');}
+  var bni=document.querySelectorAll('.bni'); for(var i=0;i<bni.length;i++){if(bni[i].querySelector('.bni-l')&&bni[i].querySelector('.bni-l').textContent.toLowerCase().includes(tab.substring(0,3)))bni[i].classList.add('active');}
+  var s=$('SRCH'); if(s){var show=['notes','appt','remind','history'].indexOf(tab)>=0;s.classList.toggle('on',show);if(show){if($('SRCH_IN'))$('SRCH_IN').value='';doSearch('');}}
+  if(tab==='appt')checkReminders();
+}
+function doSearch(q){
+  var lq=q.toLowerCase();
+  if(curTab==='notes')renderNotes(lq?notes.filter(function(n){return(n.title+n.body).toLowerCase().indexOf(lq)>=0}):notes);
+  else if(curTab==='appt')renderAppts(lq?appts.filter(function(a){return(a.title+(a.loc||'')).toLowerCase().indexOf(lq)>=0}):appts);
+  else if(curTab==='remind')renderTasks(lq?tasks.filter(function(t){return t.text.toLowerCase().indexOf(lq)>=0}):tasks);
+  else if(curTab==='history')renderHist(lq?hist.filter(function(h){return(h.title+h.body).toLowerCase().indexOf(lq)>=0}):hist);
+}
+function renderTranscript(){
+  var tr=$('TR'); if(!tr)return;
+  var txt=finalT.trim().replace(/\s+/g,' ');
+  if(interimT&&interimT.trim()) txt+=' <span style="color:var(--gold2);opacity:0.7;font-style:italic;">'+xss(interimT)+'</span>';
+  if(!txt) tr.innerHTML='<span class="ph">Kayıt başlatıldığında konuşmanız burada görünecek...</span>';
+  else tr.innerHTML='<div style="white-space:pre-wrap;">'+xss(txt)+'</div>';
+  tr.scrollTop=tr.scrollHeight;
+  var btn=$('ANA_BTN'); if(btn)btn.disabled=(finalT.trim().length<10);
+}
+function startMetre(){
+  if($('METER'))$('METER').classList.add('on');
+  var lvl=0,dir=1;
+  mRaf=setInterval(function(){
+    if(!isRec)return;
+    lvl+=dir*(Math.random()*2);
+    if(lvl>7)dir=-1; if(lvl<1)dir=1;
+    lvl=Math.max(1,Math.min(8,lvl));
+    for(var j=1;j<=8;j++){var b=$('MB'+j);if(b){b.classList.toggle('on',j<=Math.round(lvl));b.style.height=(j<=Math.round(lvl)?Math.max(4,3+j*2.5):4)+'px';}}
+  },120);
+}
+function stopMetre(){if(mRaf){clearInterval(mRaf);mRaf=null}if($('METER'))$('METER').classList.remove('on');for(var i=1;i<=8;i++){var b=$('MB'+i);if(b){b.classList.remove('on');b.style.height='4px'}}}
+function createSR(){
+  if(!SR)return null;
+  var r=new SR();
+  r.continuous=true; r.interimResults=true; r.lang='tr-TR';
+  r.onerror=function(e){if(e.error==='not-allowed'){$('TR').innerHTML='<span style="color:red">Mikrofon izni gerekli.</span>';stopRec();}};
+  r.onend=function(){if(isRec){setTimeout(function(){if(isRec&&srMain){try{srMain.start();}catch(e){}}},50);}};
+  r.onresult=function(e){
+    if(!isRec)return;
+    for(var i=e.resultIndex;i<e.results.length;i++){
+      var res=e.results[i], txt=res[0].transcript.trim();
+      if(res.isFinal&&txt){
+        if(txt===lastAddedText) continue;
+        if(txt.length<4&&finalT.endsWith(' '+txt+' ')) continue;
+        finalT+=txt+' ';
+        lastAddedText=txt;
+        interimT='';
+      } else if(!res.isFinal){
+        interimT=txt;
+      }
+    }
+    renderTranscript();
+  };
+  return r;
+}
+function startRec(){
+  if(isRec)return;
+  isRec=true;
+  if($('REC_ACTIONS'))$('REC_ACTIONS').style.display='none';
+  if($('TR_EDIT'))$('TR_EDIT').style.display='none';
+  if($('TR'))$('TR').style.display='block';
+  var ring=$('REC_RING'),ico=$('REC_ICO'),dot=$('RDOT');
+  if(ring)ring.classList.add('on');
+  if(ico)ico.innerHTML='<rect x="6" y="6" width="4" height="12" rx="1" fill="var(--red)"/><rect x="14" y="6" width="4" height="12" rx="1" fill="var(--red)"/>';
+  if(dot)dot.classList.add('on');
+  if($('REC_LBL'))$('REC_LBL').textContent='Kaydediliyor...';
+  document.querySelectorAll('.wb').forEach(function(w){w.classList.add('on')});
+  if(!recTimer){recTimer=setInterval(function(){if(isRec)recSec++;var tm=$('REC_TM');if(tm)tm.innerHTML='<span class="rdot on"></span>'+p2(Math.floor(recSec/60))+':'+p2(recSec%60);if(recSec===2700 && $('TWARN'))$('TWARN').classList.add('on');},1000);}
+  interimT=''; renderTranscript();
+  if(!srMain)srMain=createSR();
+  if(srMain){try{srMain.start();}catch(e){}}
+  startMetre();
+}
+function stopRec(){
+  if(!isRec&&srMain){if(srMain){try{srMain.abort();}catch(e){}}srMain=null;return;}
+  isRec=false;
+  if(recTimer){clearInterval(recTimer);recTimer=null;}
+  if(srMain){try{srMain.stop();}catch(e){}}srMain=null;
+  stopMetre();
+  var ring=$('REC_RING'),ico=$('REC_ICO'),dot=$('RDOT');
+  if(ring)ring.classList.remove('on');
+  if(ico)ico.innerHTML='<path d="M12 1a4 4 0 014 4v6a4 4 0 01-8 0V5a4 4 0 014-4zm0 2a2 2 0 00-2 2v6a2 2 0 004 0V5a2 2 0 00-2-2zm-7 9h2a5 5 0 0010 0h2a7 7 0 01-6 6.92V21h3v2H8v-2h3v-2.08A7 7 0 015 12z"/>';
+  if(dot)dot.classList.remove('on');
+  if($('REC_LBL'))$('REC_LBL').textContent='Kaydı Başlat';
+  document.querySelectorAll('.wb').forEach(function(w){w.classList.remove('on')});
+  var tm=$('REC_TM');if(tm)tm.innerHTML=p2(Math.floor(recSec/60))+':'+p2(recSec%60);
+  var actions=$('REC_ACTIONS');
+  if(actions) actions.style.display=(finalT.trim().length>0)?'flex':'none';
+  renderTranscript();
+  toast('Kayıt durduruldu.');
+}
+function toggleRec(){if(isRec)stopRec();else startRec();}
+function toggleEdit(){
+  var te=$('TR_EDIT'), tr=$('TR');
+  if(te.style.display!=='block'){
+    te.value=finalT.trim();
+    te.style.display='block';
+    if(tr)tr.style.display='none';
+    setTimeout(function(){te.focus();te.setSelectionRange(te.value.length,te.value.length);},80);
+  } else {
+    finalT=te.value.trim()+' ';
+    te.style.display='none';
+    if(tr)tr.style.display='block';
+    renderTranscript();
+    toast('Metin güncellendi');
+  }
+}
+function updateFromEdit(){
+  var te=$('TR_EDIT');
+  if(te && te.style.display==='block'){finalT=te.value.trim()+' ';renderTranscript();}
+}
+function clearTranscript(){
+  if(!confirm('Tüm metin silinsin mi? Kayıt varsa durdurulacak.'))return;
+  if(isRec)stopRec();
+  finalT=''; interimT=''; lastAddedText=''; recSec=0;
+  if($('TR_EDIT'))$('TR_EDIT').style.display='none';
+  if($('REC_ACTIONS'))$('REC_ACTIONS').style.display='none';
+  if($('TR'))$('TR').style.display='block';
+  renderTranscript();
+  if($('ANA_BTN'))$('ANA_BTN').disabled=true;
+  if($('REC_TM'))$('REC_TM').innerHTML='00:00';
+  toast('Metin temizlendi. Yeniden başlayabilirsiniz.');
+}
+function doAnalyze(){
+  var text=finalT.trim(); if(!text)return;
+  var key=localStorage.getItem(K.K); if(!key){toast('API anahtarı yok');return}
+  var box=$('ARES'), body=$('ARES_BODY'), spin=$('SPIN'), btn=$('ANA_BTN');
+  if(box)box.classList.add('on'); if(spin)spin.style.display='block'; if(body)body.textContent='Analiz yapılıyor...'; if(btn)btn.disabled=true;
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1500,messages:[{role:'user',content:'Konuşmayı analiz et:\n\n'+text.substring(0,3000)}]})
+  }).then(function(r){return r.json()}).then(function(d){
+    if(spin)spin.style.display='none'; if(btn)btn.disabled=false;
+    var res=(d.content&&d.content[0]&&d.content[0].text)||'Hata oluştu';
+    if(body)body.textContent=res;
+    hist.unshift({title:'Analiz '+new Date().toLocaleString('tr-TR'),body:res});
+    ss(K.HI,hist); updateKpi();
+  }).catch(function(){if(spin)spin.style.display='none'; if(btn)btn.disabled=false; if(body)body.textContent='Bağlantı hatası';});
+}
+function anaToNote(){var b=$('ARES_BODY').textContent;if(b){notes.unshift({title:'Analiz',body:b,cat:'Toplantı',pri:'Öncelikli',dt:new Date().toLocaleTimeString()});ss(K.NO,notes);renderNotes(notes);updateKpi();toast('Nota kaydedildi');sw('notes');}}
+function anaToHist(){var b=$('ARES_BODY').textContent;if(b){hist.unshift({title:'Kayıt',body:b});ss(K.HI,hist);renderHist(hist);updateKpi();toast('Geçmişe eklendi');}}
+function exportTxt(text,name){var b=new Blob([text],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name+'-'+Date.now()+'.txt';a.click();toast('Dışa aktarıldı');}
+function toggleMini(btnId,targetId){
+  if(miniId&&miniId!==btnId)stopMini();
+  if(miniId===btnId){stopMini();return}
+  if(!SR){toast('Ses tanıma desteklenmiyor');return}
+  miniId=btnId;
+  var btn=$(btnId); if(btn)btn.classList.add('on');
+  srMini=new SR(); srMini.continuous=true; srMini.interimResults=false; srMini.lang='tr-TR';
+  srMini.onresult=function(e){var t='';for(var i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)t+=e.results[i][0].transcript+' ';var el=$(targetId);if(el)el.value=(el.value+t).trim();};
+  srMini.onerror=function(){stopMini()};
+  srMini.onend=function(){if(miniId===btnId)try{srMini.start()}catch(e){}};
+  try{srMini.start()}catch(e){stopMini()}
+}
+function stopMini(){if(srMini){try{srMini.stop()}catch(e){} srMini=null}if(miniId){var b=$(miniId);if(b)b.classList.remove('on')}miniId=null;}
+function openModal(type){
+  if(!SR){toast('Ses tanıma desteklenmiyor');return}
+  modalType=type;
+  var titles={note:'Sesle Not Oluştur',appt:'Sesle Randevu',task:'Sesle Görev Ekle'};
+  var subs={note:'Notunuzu sesli dikte edin',appt:'"Yarın 14:00\'de toplantı"',task:'"Cuma günü raporu tamamla"'};
+  if($('M_TTL'))$('M_TTL').textContent=titles[type];
+  if($('M_SUB'))$('M_SUB').textContent=subs[type];
+  if($('M_TA'))$('M_TA').value='';
+  if($('M_ST'))$('M_ST').textContent='Başlamak için mikrofona basın';
+  if($('M_MIC'))$('M_MIC').classList.remove('on');
+  if($('MODAL'))$('MODAL').classList.add('on');
+}
+function closeModal(){stopModalMic();if($('MODAL'))$('MODAL').classList.remove('on');}
+function toggleModalMic(){if(modalOn)stopModalMic();else startModalMic();}
+function startModalMic(){
+  if(!SR)return;
+  modalOn=true;
+  if($('M_MIC'))$('M_MIC').classList.add('on');
+  if($('M_ST'))$('M_ST').textContent='Dinleniyor...';
+  srModal=new SR(); srModal.continuous=true; srModal.interimResults=true; srModal.lang='tr-TR';
+  srModal.onresult=function(e){var f='',it='';for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)f+=e.results[i][0].transcript+' ';else it+=e.results[i][0].transcript;}var ta=$('M_TA');if(ta&&f)ta.value=(ta.value+f).trim();if($('M_ST'))$('M_ST').textContent=it||'Dinleniyor...';};
+  srModal.onerror=function(){stopModalMic()};
+  srModal.onend=function(){if(modalOn)try{srModal.start()}catch(e){}};
+  try{srModal.start()}catch(e){stopModalMic()}
+}
+function stopModalMic(){modalOn=false;if(srModal){try{srModal.stop()}catch(e){} srModal=null}if($('M_MIC'))$('M_MIC').classList.remove('on');if($('M_ST'))$('M_ST').textContent='Durduruldu — Kaydet\'e basın';}
+function saveModal(){
+  var text=($('M_TA').value||'').trim();
+  if(!text){toast('Önce konuşun veya yazın');return}
+  stopModalMic();
+  if(modalType==='task'){
+    tasks.unshift({text:text,done:false,due:''});
+    ss(K.TA,tasks); renderTasks(tasks); updateKpi();
+    closeModal(); toast('Görev eklendi'); sw('remind'); return;
+  }
+  if(modalType==='appt'){
+    var p=parseAppt(text);
+    if($('A_TTL'))$('A_TTL').value=p.title;
+    if(p.time && $('A_TM'))$('A_TM').value=p.time;
+    if(p.date && $('A_DT'))$('A_DT').value=p.date;
+    if(p.loc && $('A_LOC'))$('A_LOC').value=p.loc;
+    if($('A_REM'))$('A_REM').value=p.rem;
+    if($('A_NOT'))$('A_NOT').value=text;
+    closeModal(); toast('Randevu bilgileri dolduruldu'); sw('appt'); return;
+  }
+  notes.unshift({title:'Sesli Not',body:text,cat:'Diğer',pri:'Normal',dt:new Date().toLocaleTimeString()});
+  ss(K.NO,notes); renderNotes(notes); updateKpi();
+  closeModal(); toast('Not kaydedildi'); sw('notes');
+}
+function parseAppt(text){
+  var time='',date='',loc='',rem='30',now=new Date();
+  function nwd(d){var nd=new Date(now),diff=d-nd.getDay();if(diff<=0)diff+=7;nd.setDate(nd.getDate()+diff);return nd.toISOString().split('T')[0];}
+  if(/bugün/i.test(text))date=now.toISOString().split('T')[0];
+  else if(/yarın/i.test(text)){var d1=new Date(now);d1.setDate(d1.getDate()+1);date=d1.toISOString().split('T')[0];}
+  else if(/pazartesi/i.test(text))date=nwd(1);
+  else if(/salı/i.test(text))date=nwd(2);
+  else if(/çarşamba/i.test(text))date=nwd(3);
+  else if(/perşembe/i.test(text))date=nwd(4);
+  else if(/cuma/i.test(text)&&!/cumartesi/i.test(text))date=nwd(5);
+  else if(/cumartesi/i.test(text))date=nwd(6);
+  else if(/pazar/i.test(text)&&!/pazartesi/i.test(text))date=nwd(0);
+  var sm=text.match(/(?:saat\s+)?(\d{1,2})[.:h](\d{2})/i);
+  if(sm)time=p2(parseInt(sm[1]))+':'+sm[2];
+  else{var sm2=text.match(/(?:saat\s+)?(\d{1,2})\s*(?:'da|'de)/i);if(sm2){var h=parseInt(sm2[1]);if(h>=0&&h<=23)time=p2(h)+':00';}}
+  if(/zoom/i.test(text))loc='Zoom';
+  else if(/ofis/i.test(text))loc='Ofis';
+  if(/hatırlat/i.test(text)){if(/1\s*gün/i.test(text))rem='1440';else if(/1\s*saat/i.test(text))rem='60';else rem='30';}
+  var kisiMatch=text.match(/([A-Z][a-z]+)\s+ile\s/);
+  var turMatch=text.match(/(toplantı|görüşme|randevu)/i);
+  var title=kisiMatch&&turMatch?kisiMatch[1]+' ile '+turMatch[1]:kisiMatch?kisiMatch[1]+' görüşmesi':turMatch?turMatch[1]:text.substring(0,40);
+  title=title.charAt(0).toUpperCase()+title.slice(1);
+  return{title:title,time:time,date:date,loc:loc,rem:rem};
+}
+function addNote(){
+  var t=$('N_TTL').value.trim(); if(!t){toast('Başlık gerekli');return}
+  notes.unshift({title:t,body:$('N_BODY').value.trim()||'—',cat:$('N_CAT').value,pri:$('N_PRI').value,dt:new Date().toLocaleTimeString()});
+  ss(K.NO,notes); $('N_TTL').value=''; $('N_BODY').value='';
+  renderNotes(notes); updateKpi(); toast('Not kaydedildi');
+}
+function addAppt(){
+  var title=$('A_TTL').value.trim(), time=$('A_TM').value;
+  if(!title||!time){toast('Başlık ve saat zorunlu');return}
+  appts.unshift({title:title,time:time,date:$('A_DT').value,loc:$('A_LOC').value.trim(),rem:$('A_REM').value,remType:$('A_REM_TYPE').value,not:$('A_NOT').value.trim(),reminded:false});
+  ss(K.AP,appts);
+  $('A_TTL').value=''; $('A_TM').value=''; $('A_DT').value=''; $('A_LOC').value=''; $('A_NOT').value=''; $('A_REM').value='30';
+  renderAppts(appts); checkReminders(); toast('Randevu eklendi');
+}
+function addTask(){
+  var text=$('TK_IN').value.trim(); if(!text){toast('Görev metni girin');return}
+  tasks.unshift({text:text,done:false,due:$('TK_DT').value});
+  ss(K.TA,tasks); $('TK_IN').value=''; $('TK_DT').value='';
+  renderTasks(tasks); updateKpi(); toast('Görev eklendi');
+}
+function renderNotes(list){
+  var el=$('LIST_NOTES'); if(!el)return;
+  if(!list.length){el.innerHTML='<div class="empty"><span class="empty-ico">📝</span><div class="empty-txt">Not yok. Sesle veya elle ekleyin.</div></div>';return}
+  var h=''; list.forEach(function(n,i){var pc=n.pri==='Acil'?'b-red':n.pri==='Öncelikli'?'b-amber':'b-green';h+='<div class="nc"><div class="nc-top"><div class="nc-ttl">'+xss(n.title)+'</div><div class="nc-dt">'+xss(n.dt||'')+'</div></div><div class="nc-body">'+xss((n.body||'').substring(0,150))+'</div><span class="badge b-blue">'+xss(n.cat||'')+'</span><span class="badge '+pc+'">'+xss(n.pri||'')+'</span><button class="del" onclick="delNote('+i+')">×</button></div>';});el.innerHTML=h;
+}
+function delNote(i){notes.splice(i,1);ss(K.NO,notes);renderNotes(notes);updateKpi();toast('Silindi');}
+function renderAppts(list){
+  var el=$('LIST_APPT'); if(!el)return;
+  if(!list.length){el.innerHTML='<div class="empty"><span class="empty-ico">📅</span><div class="empty-txt">Randevu yok. Sesle veya elle ekleyin.</div></div>';return}
+  var h=''; list.forEach(function(a,i){var parts=(a.time||'00:00').split(':');h+='<div class="ap"><div class="ap-clk"><div class="ap-h">'+parts[0]+'</div><div class="ap-m">:'+parts[1]+'</div></div><div class="ap-inf"><div class="ap-nm">'+xss(a.title)+'</div><div class="ap-sb">'+(a.date||'')+(a.loc?' · '+xss(a.loc):'')+'</div></div><button class="del" onclick="delAppt('+i+')">×</button></div>';});el.innerHTML=h;
+}
+function delAppt(i){appts.splice(i,1);ss(K.AP,appts);renderAppts(appts);toast('Silindi');}
+function renderTasks(list){
+  var el=$('LIST_TASKS'); if(!el)return;
+  if(!list.length){el.innerHTML='<div class="empty"><span class="empty-ico">✅</span><div class="empty-txt">Görev yok. Sesle veya elle ekleyin.</div></div>';return}
+  var h=''; list.forEach(function(t,i){h+='<div class="tk"><div class="tk-chk'+(t.done?' done':'')+'" onclick="toggleTask('+i+')"></div><div class="tk-txt'+(t.done?' done':'')+'">'+xss(t.text)+'</div><div class="tk-wh">'+(t.due?new Date(t.due).toLocaleDateString():'Bugün')+'</div><button class="del" style="position:static;margin-left:8px" onclick="delTask('+i+')">×</button></div>';});el.innerHTML=h;
+}
+function toggleTask(i){tasks[i].done=!tasks[i].done;ss(K.TA,tasks);renderTasks(tasks);updateKpi();}
+function delTask(i){tasks.splice(i,1);ss(K.TA,tasks);renderTasks(tasks);updateKpi();toast('Silindi');}
+function renderHist(list){
+  var el=$('LIST_HIST'); if(!el)return;
+  if(!list.length){el.innerHTML='<div class="empty"><span class="empty-ico">🎙</span><div class="empty-txt">Geçmiş kayıt yok.</div></div>';return}
+  var h=''; list.forEach(function(item,i){h+='<div class="hi"><div class="hi-top"><div class="hi-ttl">'+xss(item.title)+'</div><div class="hi-dur">'+xss(item.dur||'')+'</div><button class="del" style="position:static" onclick="delHist('+i+')">×</button></div><div class="hi-body">'+xss((item.body||'').substring(0,100))+'</div></div>';});el.innerHTML=h;
+}
+function delHist(i){hist.splice(i,1);ss(K.HI,hist);renderHist(hist);updateKpi();toast('Silindi');}
+function updateKpi(){if($('KPI_R'))$('KPI_R').textContent=hist.length;if($('KPI_N'))$('KPI_N').textContent=notes.length;if($('KPI_T'))$('KPI_T').textContent=tasks.filter(function(t){return!t.done}).length;}
+function renderAll(){renderNotes(notes);renderAppts(appts);renderTasks(tasks);renderHist(hist);updateKpi();}
+function copyText(text,msg){navigator.clipboard.writeText(text||'').then(function(){toast(msg||'Kopyalandı')});}
+function exportAll(){var d={notes:notes,appts:appts,tasks:tasks,history:hist};var b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='executive-pro-'+Date.now()+'.json';a.click();toast('Dışa aktarıldı');}
+boot();
+</script>
+</body>
+</html>
