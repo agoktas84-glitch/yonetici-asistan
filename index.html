@@ -625,7 +625,22 @@ function makeSR(){
 function srStart(){
   srObj=makeSR();
   if(!srObj)return;
-  try{srObj.start();}catch(e){}
+  // Android'de önceki SR tam kapanmadan start() InvalidStateError verebilir
+  // 300ms bekle, güvenli başlat
+  setTimeout(function(){
+    if(recOn&&srObj){
+      try{srObj.start();}
+      catch(e){
+        // Hata varsa 500ms daha bekle
+        setTimeout(function(){
+          if(recOn){
+            srObj=makeSR();
+            if(srObj)try{srObj.start()}catch(e2){}
+          }
+        },500);
+      }
+    }
+  },300);
 }
 
 
@@ -652,7 +667,7 @@ function toggleRec(){
     recOn=false;
     clearInterval(recTmr);
     // SR'ı durdur - onend tetiklenince recOn=false görür, yeni başlatmaz
-    if(srObj){srObj.onend=null;try{srObj.stop()}catch(e){}srObj=null;}
+    if(srObj){try{srObj.stop()}catch(e){}srObj=null;}
     interimT='';
     updateRecUI();
     renderT();
