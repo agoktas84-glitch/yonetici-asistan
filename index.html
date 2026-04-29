@@ -2,11 +2,14 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="theme-color" content="#0A0A12"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<title>Executive Pro v11</title>
+<title>Executive Pro v4049</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -574,24 +577,20 @@ function startMicAnim(){
   },180);
 }
 
-// SR - continuous:true, tek oturum
-// Durdurulunca SR kapatılmaz, sadece recOn=false yapılır
-// Yazıya dökme onresult içinde recOn kontrolü ile durur
-function initSR(){
-  if(!SR){
-    G('TR').innerHTML='<span style="color:var(--red);font-size:12px">Ses tanıma bu cihazda desteklenmiyor.</span>';
-    return;
-  }
-  if(srObj)return; // Zaten var
-  srObj=new SR();
-  srObj.continuous=true;
-  srObj.interimResults=true;
-  srObj.lang='tr-TR';
-  srObj.maxAlternatives=1;
+// SR - continuous:false, her utterance yeni nesne
+// Android Chrome'da continuous:true tekrar sorununa kesin çözüm
+function makeSR(){
+  if(!SR)return null;
+  var r=new SR();
+  r.continuous=false;
+  r.interimResults=true;
+  r.lang='tr-TR';
+  r.maxAlternatives=1;
 
-  srObj.onresult=function(e){
-    if(!recOn)return; // Durdurulduysa yoksay
-    for(var i=e.resultIndex;i<e.results.length;i++){
+  r.onresult=function(e){
+    if(!recOn)return;
+    // continuous:false = e.results[0] sadece bu utterance
+    for(var i=0;i<e.results.length;i++){
       if(e.results[i].isFinal){
         finalT+=e.results[i][0].transcript+' ';
         interimT='';
@@ -602,31 +601,31 @@ function initSR(){
     renderT();
   };
 
-  srObj.onerror=function(e){
+  r.onerror=function(e){
     if(e.error==='not-allowed'||e.error==='permission-denied'){
       G('TR').innerHTML='<span style="color:var(--red);font-size:12px">Mikrofon izni gerekli.</span>';
       recOn=false;updateRecUI();
     }
-    // Diğer hatalar: onend yeniden başlatacak
   };
 
-  srObj.onend=function(){
+  r.onend=function(){
     interimT='';renderT();
-    // SR beklenmedik kapandı — eğer kayıt devam ediyorsa yeniden başlat
     if(recOn){
-      setTimeout(function(){
+      // Yeni nesne oluştur - eski sonuçlar gelmiyor
+      srObj=makeSR();
+      if(srObj)setTimeout(function(){
         if(recOn)try{srObj.start()}catch(e){}
-      },300);
+      },100);
     }
   };
+  return r;
 }
 
+
 function srStart(){
-  initSR();
+  srObj=makeSR();
   if(!srObj)return;
-  try{srObj.start();}catch(e){
-    // "already started" hatası olabilir, sorun değil
-  }
+  try{srObj.start();}catch(e){}
 }
 
 
@@ -649,10 +648,11 @@ function updateRecUI(){
 
 function toggleRec(){
   if(recOn){
-    // DURDUR — sadece flag kapat, SR çalışmaya devam eder
-    // ama onresult içinde recOn=false görünce yazmaz
+    // DURDUR
     recOn=false;
     clearInterval(recTmr);
+    // SR'ı durdur - onend tetiklenince recOn=false görür, yeni başlatmaz
+    if(srObj){srObj.onend=null;try{srObj.stop()}catch(e){}srObj=null;}
     interimT='';
     updateRecUI();
     renderT();
