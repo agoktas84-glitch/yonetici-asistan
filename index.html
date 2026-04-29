@@ -574,64 +574,58 @@ function startMicAnim(){
   },180);
 }
 
-// SR — tek nesne, hiç yok edilmez
-// stop() yerine recOn flag ile kontrol
+// SR - continuous:true, tek oturum
+// Durdurulunca SR kapatılmaz, sadece recOn=false yapılır
+// Yazıya dökme onresult içinde recOn kontrolü ile durur
 function initSR(){
-  if(!SR)return;
+  if(!SR){
+    G('TR').innerHTML='<span style="color:var(--red);font-size:12px">Ses tanıma bu cihazda desteklenmiyor.</span>';
+    return;
+  }
+  if(srObj)return; // Zaten var
   srObj=new SR();
-  srObj.continuous=false;
+  srObj.continuous=true;
   srObj.interimResults=true;
   srObj.lang='tr-TR';
   srObj.maxAlternatives=1;
 
   srObj.onresult=function(e){
-    if(!recOn)return;
-    var f='',it='';
-    for(var i=0;i<e.results.length;i++){
-      if(e.results[i].isFinal)f+=e.results[i][0].transcript+' ';
-      else it=e.results[i][0].transcript;
+    if(!recOn)return; // Durdurulduysa yoksay
+    for(var i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal){
+        finalT+=e.results[i][0].transcript+' ';
+        interimT='';
+      } else {
+        interimT=e.results[i][0].transcript;
+      }
     }
-    if(f)finalT+=f;
-    interimT=it;
     renderT();
   };
 
   srObj.onerror=function(e){
     if(e.error==='not-allowed'||e.error==='permission-denied'){
       G('TR').innerHTML='<span style="color:var(--red);font-size:12px">Mikrofon izni gerekli.</span>';
-      recOn=false;updateRecUI();return;
+      recOn=false;updateRecUI();
     }
-    // no-speech, network vb: onend tetiklenecek, devam edecek
+    // Diğer hatalar: onend yeniden başlatacak
   };
 
   srObj.onend=function(){
     interimT='';renderT();
+    // SR beklenmedik kapandı — eğer kayıt devam ediyorsa yeniden başlat
     if(recOn){
-      // Aynı nesneyi tekrar başlat
       setTimeout(function(){
-        if(recOn){
-          try{srObj.start();}
-          catch(e){
-            // Başlamazsa yeni nesne oluştur
-            initSR();
-            try{srObj.start();}catch(e2){}
-          }
-        }
-      },150);
+        if(recOn)try{srObj.start()}catch(e){}
+      },300);
     }
   };
 }
 
 function srStart(){
-  if(!recOn)return;
-  if(!srObj)initSR();
-  try{srObj.start();}
-  catch(e){
-    // Already started veya başka hata — yeni nesne dene
-    initSR();
-    setTimeout(function(){
-      if(recOn)try{srObj.start()}catch(e2){}
-    },200);
+  initSR();
+  if(!srObj)return;
+  try{srObj.start();}catch(e){
+    // "already started" hatası olabilir, sorun değil
   }
 }
 
@@ -655,18 +649,16 @@ function updateRecUI(){
 
 function toggleRec(){
   if(recOn){
-    // DURDUR — sadece flag kapat, SR nesnesini koru
+    // DURDUR — sadece flag kapat, SR çalışmaya devam eder
+    // ama onresult içinde recOn=false görünce yazmaz
     recOn=false;
     clearInterval(recTmr);
-    // SR'ı durdurmaya çalış ama nesneyi yok etme
-    // onend tetiklenince recOn=false görür, yeniden başlatmaz
-    if(srObj){try{srObj.stop()}catch(e){}}
     interimT='';
     updateRecUI();
     renderT();
     G('TBOXL').textContent='Transkript';
   }else{
-    // BAŞLAT — finalT korunur, üzerine devam
+    // BAŞLAT
     recOn=true;
     interimT='';
     recSec=0;
@@ -680,7 +672,7 @@ function toggleRec(){
     G('ARES').classList.remove('on');
     renderT();
     startMicAnim();
-    srStart();
+    srStart(); // Zaten çalışıyorsa hata vermez
   }
 }
 
