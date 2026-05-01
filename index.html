@@ -552,7 +552,7 @@ async function startRecording() {
     G('MIC_STATUS').textContent = "Dinleniyor...";
     G('MIC_BTN').classList.add('listening');
 
-    // Web Speech önizleme — anlık metin göster
+    // Web Speech önizleme — sadece masaüstünde (Android çakışma yapar)
     var SR2=window.SpeechRecognition||window.webkitSpeechRecognition;
     if(SR2){
       previewSR=new SR2();
