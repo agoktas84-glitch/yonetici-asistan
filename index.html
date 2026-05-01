@@ -517,7 +517,7 @@ var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 // İnternete gönderilmez, tarayıcı yerel işler
 // ══════════════════════════════════════════════════════
 // YENİ SES SİSTEMİ (WHISPER)
-let mediaRecorder;
+let mediaRecorder, previewSR=null;
 let audioChunks = [];
 let isRecording = false;
 
@@ -546,12 +546,36 @@ async function startRecording() {
     };
 
     mediaRecorder.onstop = sendToWhisper;
-
     mediaRecorder.start();
     isRecording = true;
 
     G('MIC_STATUS').textContent = "Dinleniyor...";
     G('MIC_BTN').classList.add('listening');
+
+    // Web Speech önizleme — anlık metin göster
+    var SR2=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(SR2){
+      previewSR=new SR2();
+      previewSR.continuous=false;
+      previewSR.interimResults=true;
+      previewSR.lang='tr-TR';
+      previewSR.onresult=function(e){
+        var it='';
+        for(var i=0;i<e.results.length;i++){
+          if(!e.results[i].isFinal)it+=e.results[i][0].transcript;
+        }
+        // Sadece interim önizleme göster (gri)
+        var el=G('SPEECH_TEXT');
+        el.textContent='';
+        if(speechText)el.appendChild(document.createTextNode(speechText));
+        if(it){var s=document.createElement('span');s.style.color='var(--gold)';s.style.opacity='.5';s.textContent=it;el.appendChild(s);}
+      };
+      previewSR.onend=function(){
+        // Kayıt devam ediyorsa yeniden başlat
+        if(isRecording){try{previewSR.start();}catch(e){}}
+      };
+      try{previewSR.start();}catch(e){}
+    }
 
   } catch (e) {
     alert("Mikrofon izni verilmedi veya mikrofon bulunamadı");
@@ -562,6 +586,8 @@ function stopRecording() {
   if (mediaRecorder && isRecording) {
     mediaRecorder.stop();
     isRecording = false;
+    // Önizleme SR'ı durdur
+    if(previewSR){try{previewSR.stop();}catch(e){}previewSR=null;}
 
     G('MIC_STATUS').textContent = "İşleniyor...";
     G('MIC_BTN').classList.remove('listening');
